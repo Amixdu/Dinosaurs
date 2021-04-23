@@ -20,7 +20,8 @@ the design.
 I accept this WBA - Abhishek Shrestha (21st April 2021) <br>
 I accept this WBA - Amindu Kumarasinghe (21st April 2021) <br>
 <br>
-I accept the edit on 23rd April 2021 - Abhishek Shrestha (23rd April 2021) <br> 
+I accept the edit on 23rd April 2021 - Abhishek Shrestha (23rd April 2021) <br>
+I accept the edit on 23rd April 2021 - Amindu Kumarasinghe (23rd April 2021) <br> 
 
 
 
