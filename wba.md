@@ -9,10 +9,18 @@
 | reviewing all material                    | All members     | 23rd April 2021 |
 
 <br><br>
+### Edit [23rd April 2021] : Poorna left the group on 21st April 2021 **
+**We can see that Poorna was assigned the design rationale. Submitting the diagrams without a 
+rationale would not make sense and would greatly decrease the comprehension of the diagrams. <br>
+Thus, Amindu and Abhishek will complete the design rationale for the sake of the overall readability of
+the design. 
+
 
 # Acknowledgement 
 I accept this WBA - Abhishek Shrestha (21st April 2021) <br>
 I accept this WBA - Amindu Kumarasinghe (21st April 2021) <br>
+<br>
+I accept the edit on 23rd April 2021 - Abhishek Shrestha (23rd April 2021) <br> 
 
 
 
