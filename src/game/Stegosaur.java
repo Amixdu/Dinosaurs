@@ -30,13 +30,16 @@ public class Stegosaur extends Actor {
 
 		wBehaviour = new WanderBehaviour();
 		hBehaviour = new SeekFruitBehaviour();
-		foodLevel = 10;
+		foodLevel = 50;
 		unconsciousCount = 0;
 	}
 
 	@Override
 	public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
-		return new Actions(new AttackAction(this));
+		Actions actions = new Actions();
+		actions.add(new AttackAction(this));
+		actions.add(new FeedStegosaurAction(this));
+		return actions;
 	}
 
 	/**
@@ -91,6 +94,13 @@ public class Stegosaur extends Actor {
 //		return new DoNothingAction();
 	}
 
+	public String getName(){
+		return this.name;
+	}
+
+	public int getFoodLevel() {
+		return foodLevel;
+	}
 
 	public void increaseFoodLevel(int amount){
 		this.foodLevel += amount;
