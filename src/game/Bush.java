@@ -11,6 +11,7 @@ public class Bush extends Ground {
      */
     public Bush() {
         super('b');
+        this.fruits = 1;
     }
 
     public int getFruits() {
