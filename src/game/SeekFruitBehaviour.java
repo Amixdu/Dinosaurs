@@ -8,9 +8,15 @@ public class SeekFruitBehaviour implements Behaviour{
 
     @Override
     public Action getAction(Actor actor, GameMap map) {
-        Boolean success = false;
+
         Location minLocation = map.locationOf(actor);
         Location closestFruit = closestFood(actor, map);
+
+        // to test fruits in bush before eating
+//        Bush bush = (Bush) closestFruit.getGround();
+//        System.out.println(bush.getFruits());
+
+        // to test location of fruit
 //        System.out.println("x:"+closestFruit.x() + "y:" + closestFruit.y());
         int minDistance = distance(closestFruit, map.locationOf(actor));
         String name ="";
@@ -22,17 +28,19 @@ public class SeekFruitBehaviour implements Behaviour{
                     minDistance = newDistance;
                     minLocation = destination;
                     name = exit.getName();
-                    success = true;
                 }
 
             }
         }
-        if (success){
-            return new MoveActorAction(minLocation, name);
+
+        if (minDistance == 0){
+            // On same ground as fruit, so eating it
+            eatFood(actor, map, closestFruit);
+            // to test fruits in bush before eating
+//            System.out.println(bush.getFruits());
+
         }
-        else{
-            return null;
-        }
+        return new MoveActorAction(minLocation, name);
 
     }
 
@@ -47,13 +55,15 @@ public class SeekFruitBehaviour implements Behaviour{
                 Location newLocation = map.at(i, j);
                 if (newLocation.getGround() != null){
                     if (newLocation.getGround().getDisplayChar() == 'b'){
-
-                        int distance = distance(stegLocation, newLocation);
-                        if (distance < minDistance){
-
-                            minDistance = distance;
-                            bestLocation = newLocation;
+                        Bush currentBush = (Bush) newLocation.getGround();
+                        if (currentBush.getFruits() > 0){
+                            int distance = distance(stegLocation, newLocation);
+                            if (distance < minDistance){
+                                minDistance = distance;
+                                bestLocation = newLocation;
+                            }
                         }
+
                     }
                 }
 
@@ -65,5 +75,12 @@ public class SeekFruitBehaviour implements Behaviour{
 
     private int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
+    }
+
+    private void eatFood(Actor actor, GameMap map, Location fruitLocation){
+        Stegosaur steg = (Stegosaur) actor;
+        steg.increaseFoodLevel(10);
+        Bush bush = (Bush) fruitLocation.getGround();
+        bush.removeFruit();
     }
 }
