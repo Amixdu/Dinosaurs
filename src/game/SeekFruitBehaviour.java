@@ -11,6 +11,9 @@ public class SeekFruitBehaviour implements Behaviour{
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
+
+        // uncomment below statement and line 131 to enable fruit falling
+//        fallFruit(map);
         Location minLocation = map.locationOf(actor);
         Location closestFruit = closestFood(actor, map);
         if (closestFruit == null){
@@ -125,4 +128,20 @@ public class SeekFruitBehaviour implements Behaviour{
 
     }
 
+    // testing method to drop fruits from trees
+//    public void fallFruit(GameMap map){
+//        NumberRange width = map.getXRange();
+//        NumberRange height = map.getYRange();
+//        for (int i : width){
+//            for (int j : height){
+//                Location newLocation = map.at(i, j);
+//                if (newLocation.getGround().getDisplayChar() == '+') {
+//                    if (Math.random() < 0.05){
+//                        Fruit fruit = new Fruit();
+//                        newLocation.addItem(fruit);
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
