@@ -17,6 +17,7 @@ public class Stegosaur extends Actor {
 	private Behaviour wBehaviour;
 	private Behaviour hBehaviour;
 	int foodLevel;
+	int unconsciousCount;
 
 	/**
 	 * Constructor.
@@ -29,7 +30,8 @@ public class Stegosaur extends Actor {
 
 		wBehaviour = new WanderBehaviour();
 		hBehaviour = new SeekFruitBehaviour();
-		foodLevel = 50;
+		foodLevel = 10;
+		unconsciousCount = 0;
 	}
 
 	@Override
@@ -47,28 +49,51 @@ public class Stegosaur extends Actor {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+
+//		System.out.println(this.foodLevel);
+
 		// reduce food level each turn
-		this.foodLevel = this.foodLevel - 1;
-		if (this.foodLevel < 45){
-			System.out.println("Stegosaur is getting hungry!");
-			Action wander = hBehaviour.getAction(this, map);
-			if (wander != null)
-				return wander;
+		if (this.foodLevel > 0){
+			this.foodLevel = this.foodLevel - 1;
+			if (this.foodLevel < 7){
+				System.out.println("Stegosaur at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+				Action wander = hBehaviour.getAction(this, map);
+				if (wander != null)
+					return wander;
+				else{
+					return new DoNothingAction();
+				}
+			}
 			else{
-				return new DoNothingAction();
+				Action wander = wBehaviour.getAction(this, map);
+				if (wander != null)
+					return wander;
+				else{
+					return new DoNothingAction();
+				}
 			}
 		}
-		else{
-			Action wander = wBehaviour.getAction(this, map);
-			if (wander != null)
-				return wander;
-			else{
-				return new DoNothingAction();
+		else {
+			if (unconsciousCount < 5){
+				this.unconsciousCount += 1;
+				System.out.println("Stegosaur at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
 			}
+			else {
+				System.out.println("Stegosaur at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
+				map.removeActor(this);
+			}
+
+			return new DoNothingAction();
 		}
+
 
 
 //		return new DoNothingAction();
+	}
+
+
+	public void increaseFoodLevel(int amount){
+		this.foodLevel += amount;
 	}
 
 }
