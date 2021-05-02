@@ -39,7 +39,7 @@ public class Stegosaur extends Actor {
 		Actions actions = new Actions();
 		actions.add(new AttackAction(this));
 		actions.add(new FeedStegosaurAction(this));
-		actions.add(new FeedStegasourMealKitAction(this));
+		actions.add(new FeedStegosaurMealKitAction(this));
 		return actions;
 	}
 

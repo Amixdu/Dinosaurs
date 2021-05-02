@@ -7,10 +7,10 @@ import edu.monash.fit2099.engine.Item;
 
 import java.util.List;
 
-public class FeedStegasourMealKitAction extends Action {
+public class FeedStegosaurMealKitAction extends Action {
     protected Stegosaur stegosaur;
 
-    public FeedStegasourMealKitAction(Stegosaur stegosaur) {
+    public FeedStegosaurMealKitAction(Stegosaur stegosaur) {
         this.stegosaur = stegosaur;
     }
 
