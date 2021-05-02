@@ -15,32 +15,24 @@ public class FeedStegosaurAction extends Action {
     public String execute(Actor actor, GameMap map) {
         String result = actor.toString() + " tries to feed " + stegosaur.getName();
         List<Item> inventory = actor.getInventory();
-        boolean success = false;
-        boolean full = false;
         int beforeFeeding = stegosaur.getFoodLevel();
         int afterFeeding;
         // add fruit to inventory for testing
-//        actor.addItemToInventory(new Fruit());
+        actor.addItemToInventory(new Fruit());
+
+        // Cant feed if stegosaur is already full
+        if (stegosaur.getFoodLevel() >= 100){
+            return (result + ", but " + stegosaur.getName() + " is full!");
+        }
+
+        // Going through inventory searching for fruit, feed if found
         for (int i = 0; i < inventory.size(); i++){
             if (inventory.get(i).getDisplayChar() == 'f'){
                 actor.removeItemFromInventory(inventory.get(i));
-                if (stegosaur.getFoodLevel() < 100){
-                    stegosaur.increaseFoodLevel(20);
-                    success = true;
-                }
-                else {
-                    full = true;
-
-                }
+                stegosaur.increaseFoodLevel(20);
+                afterFeeding = stegosaur.getFoodLevel();
+                return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
-        }
-
-        if (success){
-            afterFeeding = stegosaur.getFoodLevel();
-            return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
-        }
-        else if (full){
-            return (result + ", but " + stegosaur.getName() + " is full!");
         }
 
         return ("No fruit in inventory");
