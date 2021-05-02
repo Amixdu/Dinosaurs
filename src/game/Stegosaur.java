@@ -39,6 +39,7 @@ public class Stegosaur extends Actor {
 		Actions actions = new Actions();
 		actions.add(new AttackAction(this));
 		actions.add(new FeedStegosaurAction(this));
+		actions.add(new FeedStegasourMealKitAction(this));
 		return actions;
 	}
 
@@ -104,6 +105,9 @@ public class Stegosaur extends Actor {
 
 	public void increaseFoodLevel(int amount){
 		this.foodLevel += amount;
+		if (this.foodLevel > 100){
+			this.foodLevel = 100;
+		}
 	}
 
 }

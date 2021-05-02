@@ -41,7 +41,7 @@ public class FeedStegosaurAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor.toString() + " feeds " + stegosaur.getName();
+        return actor.toString() + " feeds fruit" + stegosaur.getName();
     }
 
 }
