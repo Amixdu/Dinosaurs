@@ -25,13 +25,10 @@ public class FeedStegosaurAction extends Action {
         boolean hasVmKits = false;
         int beforeFeeding = stegosaur.getFoodLevel();
         int afterFeeding;
-        // add fruit to inventory for testing
-        actor.addItemToInventory(new Fruit());
-        actor.addItemToInventory(new VegetarianMealKit());
 
 
         // Cant feed if stegosaur is already full
-        if (stegosaur.getFoodLevel() >= 100){
+        if (stegosaur.getFoodLevel() >= stegosaur.getMaxFoodLevel()){
             return (result + ", but " + stegosaur.getName() + " is full!");
         }
 

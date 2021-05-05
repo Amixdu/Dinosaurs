@@ -18,6 +18,7 @@ public class Stegosaur extends Actor {
 	private Behaviour hBehaviour;
 	int foodLevel;
 	int unconsciousCount;
+	int maxFoodLevel = 100;
 
 	/**
 	 * Constructor.
@@ -58,7 +59,7 @@ public class Stegosaur extends Actor {
 		// reduce food level each turn
 		if (this.foodLevel > 0){
 			this.foodLevel = this.foodLevel - 1;
-			if (this.foodLevel < 7){
+			if (this.foodLevel < 90){
 				System.out.println("Stegosaur at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
 				Action wander = hBehaviour.getAction(this, map);
 				if (wander != null)
@@ -77,7 +78,7 @@ public class Stegosaur extends Actor {
 			}
 		}
 		else {
-			if (unconsciousCount < 5){
+			if (unconsciousCount < 20){
 				this.unconsciousCount += 1;
 				System.out.println("Stegosaur at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
 			}
@@ -104,9 +105,13 @@ public class Stegosaur extends Actor {
 
 	public void increaseFoodLevel(int amount){
 		this.foodLevel += amount;
-		if (this.foodLevel > 100){
-			this.foodLevel = 100;
+		if (this.foodLevel > maxFoodLevel){
+			this.foodLevel = maxFoodLevel;
 		}
+	}
+
+	public int getMaxFoodLevel(){
+		return this.maxFoodLevel;
 	}
 
 }
