@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class FeedStegosaurAction extends Action {
     Stegosaur stegosaur;
-    String message;
 
     public FeedStegosaurAction(Stegosaur stegosaur) {
         this.stegosaur = stegosaur;
@@ -49,12 +48,12 @@ public class FeedStegosaurAction extends Action {
         if (hasFruits && hasVmKits){
             String option = userInput();
             if (option.equals("A")){
-                afterFeeding = feedFruit(actor);
+                afterFeeding = feedFruit();
                 actor.removeItemFromInventory(inventory.get(fruitPosition));
                 return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
             else if(option.equals("B")){
-                afterFeeding = feedMealKit(actor);
+                afterFeeding = feedMealKit();
                 actor.removeItemFromInventory(inventory.get(mealKitPosition));
                 return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
@@ -63,12 +62,12 @@ public class FeedStegosaurAction extends Action {
             }
         }
         else if(hasFruits && !hasVmKits){
-            afterFeeding = feedFruit(actor);
+            afterFeeding = feedFruit();
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
         else if(!hasFruits && hasVmKits){
-            afterFeeding = feedMealKit(actor);
+            afterFeeding = feedMealKit();
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
@@ -84,17 +83,16 @@ public class FeedStegosaurAction extends Action {
     public String userInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press A to feed fruit\nPress B to feed vegetarian meal kit");
-        String result = scanner.next();
-        return result;
+        return scanner.next();
 
     }
 
-    public int feedFruit(Actor actor){
+    public int feedFruit(){
         stegosaur.increaseFoodLevel(20);
         return stegosaur.getFoodLevel();
     }
 
-    public int feedMealKit(Actor actor){
+    public int feedMealKit(){
         stegosaur.increaseFoodLevel(100);
         return stegosaur.getFoodLevel();
     }
