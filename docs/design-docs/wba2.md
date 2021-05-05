@@ -7,9 +7,10 @@
 | Implementation of "Hungry dinosaurs"             | Amindu          | 6th May 2021    |
 | Implementation of "Brachiosaur"                  | Abhsihek        | 6th May 2021    |
 | Implementation of "Breeding"                     | Abhishek        | 6th May 2021    |
-| Implementation of "Eco points and purchasing"    | Amindu          | 6th May 2021    |
+| Implementation of "Purchasing(Vending machine)"  | Amindu          | 6th May 2021    |
 | Implementation of "Allosaurs"                    | Amindu          | 6th May 2021    |
 | Implementation of "Death"                        | Amindu          | 6th May 2021    |
+| Implementation of "Eco points"                   | Collabarative   | 6th May 2021    |
 <br><br>
 
 # Acknowledgement 
