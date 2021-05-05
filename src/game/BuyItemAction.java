@@ -95,7 +95,7 @@ public class BuyItemAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return "Purchase item from vending machine";
+        return actor.toString() + " purchases item from vending machine";
     }
 
     public String userInput(){

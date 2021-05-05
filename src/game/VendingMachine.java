@@ -52,7 +52,10 @@ public class VendingMachine extends Ground {
 
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction) {
-        return super.allowableActions(actor, location, direction);
+        Actions actions = new Actions();
+        actions.add(new BuyItemAction());
+//		actions.add(new FeedStegosaurMealKitAction(this));
+        return actions;
     }
 
 }

@@ -48,7 +48,7 @@ public class FeedStegosaurAction extends Action {
         if (hasFruits && hasVmKits){
             String option = userInput();
             if (option.equals("A")){
-                afterFeeding = feedFruit();
+                afterFeeding = feedFruit(actor);
                 actor.removeItemFromInventory(inventory.get(fruitPosition));
                 return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
@@ -62,7 +62,7 @@ public class FeedStegosaurAction extends Action {
             }
         }
         else if(hasFruits && !hasVmKits){
-            afterFeeding = feedFruit();
+            afterFeeding = feedFruit(actor);
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
@@ -87,7 +87,9 @@ public class FeedStegosaurAction extends Action {
 
     }
 
-    public int feedFruit(){
+    public int feedFruit(Actor actor){
+        Player player = (Player) actor;
+        player.increaseEcoPoints(1000);
         stegosaur.increaseFoodLevel(20);
         return stegosaur.getFoodLevel();
     }
