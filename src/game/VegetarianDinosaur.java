@@ -52,11 +52,17 @@ public class VegetarianDinosaur extends Actor {
             this.foodLevel = this.foodLevel - 1;
             if (this.foodLevel < hungerAmount){
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
-                Action wander = hBehaviour.getAction(this, map);
-                if (wander != null)
-                    return wander;
+                Action hungerMovement = hBehaviour.getAction(this, map);
+                if (hungerMovement != null)
+                    return hungerMovement;
                 else{
-                    return new DoNothingAction();
+                    // If null is returned, it means no food in map, so dinosaur just wanders
+                    Action wander = wBehaviour.getAction(this, map);
+                    if (wander != null)
+                        return wander;
+                    else{
+                        return new DoNothingAction();
+                    }
                 }
             }
             else{
