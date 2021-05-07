@@ -22,8 +22,8 @@ public class Stegosaur extends VegetarianDinosaur {
 	 *
 	 * @param name the name of this Stegosaur
 	 */
-	public Stegosaur(String name) {
-		super(name, 's', 100, 50, 100, 20, 90, 203);
+	public Stegosaur(String name, char displayChar) {
+		super(name, displayChar, 100, 50, 100, 20, 90, 203);
 
 	}
 
