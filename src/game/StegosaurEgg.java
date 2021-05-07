@@ -1,7 +1,7 @@
 package game;
 
-public class StegosaurEgg extends PortableItem{
+public class StegosaurEgg extends Egg{
     public StegosaurEgg() {
-        super("Stegosaur Egg", 'q');
+        super("Stegosaur Egg", 'q', 25);
     }
 }
