@@ -81,14 +81,9 @@ public class VegetarianDinosaur extends Actor {
             }
             else {
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-//                map.removeActor(this);
-                if (deathCount < maxDeadRounds){
-                    deathCount += 1;
-                }
-                else{
-                    map.removeActor(this);
-                }
-
+                Corpse corpse = new Corpse("Corpse", 'C', false, this.getDisplayChar());
+                map.locationOf(this).addItem(corpse);
+                map.removeActor(this);
             }
 
             return new DoNothingAction();
