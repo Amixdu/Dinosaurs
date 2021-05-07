@@ -16,7 +16,7 @@ public class Egg extends PortableItem{
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
-        if (rounds >= hatchPeriod){
+        if (rounds >= hatchPeriod + 1){
             // q : stegosaur egg, w : brachiosaur egg, e : allosaur egg
             // s : baby stegosaur, b : baby brachiosaur, a : baby allosaur
             if (displayChar == 'q'){
@@ -28,7 +28,7 @@ public class Egg extends PortableItem{
                 currentLocation.removeItem(this);
             }
             else if (displayChar == 'e'){
-                currentLocation.addActor(new Stegosaur("Allosaur", 'a'));
+                currentLocation.addActor(new BabyAllosaur("Allosaur", 'a', 20));
                 currentLocation.removeItem(this);
             }
 
