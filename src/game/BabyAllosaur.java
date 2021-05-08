@@ -82,6 +82,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
         if (growth >= timeToGrow){
             Location location = map.locationOf(this);
             int currentHitPoints = this.hitPoints;
+            System.out.println("The baby allosaur at (" + location.x() + "," + location.y() + ") grew into an adult!");
             map.removeActor(this);
             location.addActor(new Allosaur("Allosaur", 'A', currentHitPoints));
             return true;

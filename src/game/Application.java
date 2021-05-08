@@ -50,6 +50,21 @@ public class Application {
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
+
+		// Tests created to manually test my portion of the project:
+
+//		Add an allosaur egg to inventory, to see egg hatching and growing into an adult
+//		and looking for meat or eggs when hungry
+		player.addItemToInventory(new AllosaurEgg());
+
+//		Add a fruit to inventory to test if dropping it causes hungry stegosaurs to follow it
+//		player.addItemToInventory(new Fruit());
+
+//		Downcasting the instance of Actor to player and increase eco points to test buying items from vending machin
+//		Player p = (Player) player;
+//		p.increaseEcoPoints(1000);
+
+
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
