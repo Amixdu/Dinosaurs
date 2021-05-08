@@ -17,12 +17,12 @@ public class VegetarianDinosaur extends Actor {
      *
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display
-     * @param hitPoints   the Actor's starting hit points
+     * @param startingHitPoints   the Actor's starting hit points
      */
-    public VegetarianDinosaur(String name, char displayChar, int hitPoints, int foodLevel, int maxFoodLevel, int maxUconsciousRounds, int hungerAmount, int maxDeadRounds) {
-        super(name, displayChar, hitPoints);
-        this.foodLevel = foodLevel;
-        this.maxFoodLevel = maxFoodLevel;
+    public VegetarianDinosaur(String name, char displayChar, int startingHitPoints, int maxHitPoints, int maxUconsciousRounds, int hungerAmount, int maxDeadRounds) {
+        super(name, displayChar, maxHitPoints);
+        // Sets the starting level to value indicated by startingHitPoints
+        this.hurt(maxHitPoints - startingHitPoints);
         this.maxUconsciousRounds = maxUconsciousRounds;
         this.hungerAmount = hungerAmount;
         this.maxDeadRounds = maxDeadRounds;
@@ -48,9 +48,9 @@ public class VegetarianDinosaur extends Actor {
 //		System.out.println(this.foodLevel);
 
         // reduce food level each turn
-        if (this.foodLevel > 0){
-            this.foodLevel = this.foodLevel - 1;
-            if (this.foodLevel < hungerAmount){
+        if (this.isConscious()){
+            this.hurt(1);
+            if (this.hitPoints < hungerAmount){
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
                 if (hungerMovement != null)
@@ -80,10 +80,19 @@ public class VegetarianDinosaur extends Actor {
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
             }
             else {
+
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
                 Corpse corpse = new Corpse("Corpse", 'C', false, this.getDisplayChar());
                 map.locationOf(this).addItem(corpse);
                 map.removeActor(this);
+
+//                if (deathCount < maxDeadRounds){
+//                    deathCount += 1;
+//                }
+//                else{
+//                    map.removeActor(this);
+//                }
+
             }
 
             return new DoNothingAction();
