@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public class SeekFruitBehaviour implements Behaviour{
-    char type;
+    private char type;
 
     /**
      * Constructor
@@ -63,13 +63,13 @@ public class SeekFruitBehaviour implements Behaviour{
      * @param map map on which the dinosaur is currently on
      * @return location of closest food when calculated from current position of dinosaur
      */
-    public Location closestFood(Actor actor,GameMap map){
+    private Location closestFood(Actor actor,GameMap map){
         boolean foundFood = false;
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         Location dinoLocation = map.locationOf(actor);
         // This method is used to initialize bestLocation
-        Location bestLocation = firstLocationWithFood(actor, map);
+        Location bestLocation = firstLocationWithFood(map);
         if (bestLocation != null){
             int minDistance = distance(dinoLocation, bestLocation);
             for (int i : width){
@@ -115,11 +115,10 @@ public class SeekFruitBehaviour implements Behaviour{
 
     /**
      * Used to get the first location in the map that contains either a fruit or a bush with fruits
-     * @param actor  vegetarian dinosaur seeking for fruit
      * @param map map which dinosaur is on
      * @return first location in the map that contains either a fruit or a bush with fruits
      */
-    private Location firstLocationWithFood(Actor actor, GameMap map){
+    private Location firstLocationWithFood(GameMap map){
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         for (int i : width){

@@ -3,8 +3,8 @@ package game;
 import edu.monash.fit2099.engine.Location;
 
 public class Egg extends PortableItem{
-    int hatchPeriod;
-    int rounds;
+    private int hatchPeriod;
+    private int rounds;
 
     /**
      * Constructor

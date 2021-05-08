@@ -1,21 +1,17 @@
 package game;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
 
 public class Corpse extends Item {
-    char corpseType;
-    int rounds;
-    GameMap map;
+    private char corpseType;
+    private int rounds;
     /***
      * Constructor.
      *  @param name the name of this Item
-     * @param displayChar the character to use to represent this item if it is on the ground
      * @param portable true if and only if the Item can be picked up
      */
-    public Corpse(String name, char displayChar, boolean portable, char corpseType) {
+    public Corpse(String name,  boolean portable, char corpseType) {
         super(name, 'C', portable);
         this.corpseType = corpseType;
         rounds = 0;

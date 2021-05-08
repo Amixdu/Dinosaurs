@@ -3,9 +3,9 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 public class BabyAllosaur extends CarnivorousDinosaur {
-    int growth;
-    int unconsciousCount;
-    int timeToGrow;
+    private int growth;
+    private int unconsciousCount;
+    private int timeToGrow;
     Behaviour wBehaviour;
     Behaviour hBehaviour;
     /**
@@ -41,7 +41,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
         if (!isAdult){
             if (this.isConscious()){
                 this.hurt(1);
-                if (this.hitPoints < hungerAmount){
+                if (this.hitPoints < this.getHungerAmount()){
                     System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                     Action hungerMovement = hBehaviour.getAction(this, map);
                     if (hungerMovement != null)
@@ -66,13 +66,13 @@ public class BabyAllosaur extends CarnivorousDinosaur {
                 }
             }
             else {
-                if (unconsciousCount < maxUnconsciousRounds){
+                if (unconsciousCount < this.getMaxUnconsciousRounds()){
                     this.unconsciousCount += 1;
                     System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
                 }
                 else {
                     System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                    Corpse corpse = new Corpse("Corpse", 'C', false, this.getDisplayChar());
+                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
                     map.locationOf(this).addItem(corpse);
                     map.removeActor(this);
                 }

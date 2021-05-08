@@ -6,31 +6,31 @@ public class VendingMachine extends Ground {
     /**
      * price of a fruit
      */
-    int fruitPrice;
+    final private int fruitPrice;
     /**
      * price of a vegetarian meal kit
      */
-    int vMealKitPrice;
+    final private int vMealKitPrice;
     /**
      * price of a carnivore meal kit
      */
-    int cMealKitPrice;
+    final private int cMealKitPrice;
     /**
      * price of a stegosaur egg
      */
-    int stegEggPrice;
+    final private int stegEggPrice;
     /**
      * price of a brachiosaur egg
      */
-    int brachEggPrice;
+    final private int brachEggPrice;
     /**
      * price of a an allosaur egg
      */
-    int alloEggPrice;
+    final private int alloEggPrice;
     /**
      * price of a laser gun
      */
-    int laserGunPrice;
+    final private int laserGunPrice;
 
     /**
      * Constructor

@@ -12,7 +12,7 @@ public class FeedCarnivoreAction extends Action {
     /**
      * The dinosaur to feed
      */
-    CarnivorousDinosaur carnivorousDinosaur;
+    private CarnivorousDinosaur carnivorousDinosaur;
 
     /**
      * Constructor

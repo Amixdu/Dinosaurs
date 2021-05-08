@@ -3,12 +3,21 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 public class CarnivorousDinosaur extends Actor {
-    int unconsciousCount;
-    int maxUnconsciousRounds;
-    int hungerAmount;
-    int foodLevel;
+    /**
+     * Number of rounds that dinosaur has been unconscious for
+     */
+    private int unconsciousCount;
+
+    /**
+     * Maximum number of rounds the dinosaur can go without dying
+     */
+    private int maxUnconsciousRounds;
+
+    /**
+     * Amount of hit points below which dinosaur starts to feel hunger
+     */
+    private int hungerAmount;
     Behaviour wBehaviour;
-    Behaviour hBehaviour;
     /**
      * Constructor.
      *
@@ -24,7 +33,6 @@ public class CarnivorousDinosaur extends Actor {
         this.hungerAmount = hungerAmount;
         unconsciousCount = 0;
         wBehaviour = new WanderBehaviour();
-        hBehaviour = new SeekMeatBehaviour(false);
     }
 
     /**
@@ -80,5 +88,21 @@ public class CarnivorousDinosaur extends Actor {
      */
     public int getMaxHitPoints(){
         return this.maxHitPoints;
+    }
+
+    /**
+     * Getter method to retrieve the max unconscious rounds of dinosaur before dying
+     * @return max unconscious rounds of dinosaur before dying
+     */
+    public int getMaxUnconsciousRounds() {
+        return maxUnconsciousRounds;
+    }
+
+    /**
+     * Getter method to retrieve the hit points below which the dinosaur feels hunger
+     * @return hit points below which the dinosaur feels hunger
+     */
+    public int getHungerAmount() {
+        return hungerAmount;
     }
 }

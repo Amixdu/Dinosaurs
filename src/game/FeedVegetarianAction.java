@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FeedVegetarianAction extends Action {
-    VegetarianDinosaur vegetarianDinosaur;
+    private VegetarianDinosaur vegetarianDinosaur;
 
     /**
      * Constructor
@@ -99,7 +99,7 @@ public class FeedVegetarianAction extends Action {
      * Method to get user input on whether to feed fruit or vegetarian meal kit
      * @return string represnting user input
      */
-    public String userInput(){
+    private String userInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press A to feed fruit\nPress B to feed vegetarian meal kit");
         String result = scanner.next();
@@ -112,7 +112,7 @@ public class FeedVegetarianAction extends Action {
      * @param actor Player that is feeding
      * @return Amount of hit points after healing
      */
-    public int feedFruit(Actor actor){
+    private int feedFruit(Actor actor){
         Player player = (Player) actor;
         vegetarianDinosaur.heal(20);
         player.increaseEcoPoints(1);
@@ -122,7 +122,7 @@ public class FeedVegetarianAction extends Action {
     /**eals dinosaur from vegetarian meal kit and increases players eco points
      * @return Amount of hit points after healing
      */
-    public int feedMealKit(){
+    private int feedMealKit(){
         vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
         return vegetarianDinosaur.getHitPoints();
     }

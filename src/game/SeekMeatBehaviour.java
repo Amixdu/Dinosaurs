@@ -2,7 +2,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeekMeatBehaviour implements Behaviour {
@@ -67,7 +66,7 @@ public class SeekMeatBehaviour implements Behaviour {
      * @param map map on which the dinosaur is currently on
      * @return location of closest food when calculated from current position of dinosaur
      */
-    public Tuple closestFood(Actor actor,GameMap map){
+    private Tuple closestFood(Actor actor,GameMap map){
         boolean foundFood = false;
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
@@ -125,8 +124,7 @@ public class SeekMeatBehaviour implements Behaviour {
                 }
             }
             if (foundFood){
-                Tuple returnTuple = new Tuple(bestLocation, type);
-                return returnTuple;
+                return new Tuple(bestLocation, type);
             }
         }
 
@@ -149,18 +147,15 @@ public class SeekMeatBehaviour implements Behaviour {
                     for (Item item : items){
                         if (item.getDisplayChar() == 'C'){
                             Corpse corpse = (Corpse) item;
-                            Tuple tuple = new Tuple(newLocation, corpse.getCorpseType());
-                            return tuple;
+                            return new Tuple(newLocation, corpse.getCorpseType());
                         }
                         // q = Stegosaur egg
                         else if (item.getDisplayChar() == 'q'){
-                            Tuple tuple = new Tuple(newLocation, 'q');
-                            return tuple;
+                            return new Tuple(newLocation, 'q');
                         }
                         // w = Brachiosaur egg
                         else if (item.getDisplayChar() == 'w'){
-                            Tuple tuple = new Tuple(newLocation, 'w');
-                            return tuple;
+                            return new Tuple(newLocation, 'w');
                         }
                     }
 

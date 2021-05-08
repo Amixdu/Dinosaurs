@@ -3,11 +3,9 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 public class VegetarianDinosaur extends Actor {
-    int foodLevel;
-    int maxFoodLevel;
-    int unconsciousCount;
-    int maxUconsciousRounds;
-    int hungerAmount;
+    private int unconsciousCount;
+    private int maxUconsciousRounds;
+    private int hungerAmount;
     private Behaviour wBehaviour;
     private Behaviour hBehaviour;
     /**
@@ -98,7 +96,7 @@ public class VegetarianDinosaur extends Actor {
             else {
 
                 System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", 'C', false, this.getDisplayChar());
+                Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
                 map.locationOf(this).addItem(corpse);
                 map.removeActor(this);
             }
