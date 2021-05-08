@@ -76,7 +76,7 @@ public class FeedVegetarianAction extends Action {
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
-        return ("No fruit in inventory");
+        return ("No feedable items in inventory");
 
     }
 
