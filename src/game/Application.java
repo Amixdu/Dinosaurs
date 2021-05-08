@@ -53,16 +53,16 @@ public class Application {
 
 		// Tests created to manually test my portion of the project:
 
-		// Add a fruit to inventory to test if dropping it causes hungry stegosaurs to follow it and can try to feed it:
-		// player.addItemToInventory(new Fruit());
-		// player.addItemToInventory(new VegetarianMealKit());
+//		 Add a fruit to inventory to test if dropping it causes hungry stegosaurs to follow it and can try to feed it:
+//		 player.addItemToInventory(new Fruit());
+//		 player.addItemToInventory(new VegetarianMealKit());
 
 //		 Add an allosaur egg to inventory, to see egg hatching and growing into an adult
 //		 and looking for meat or eggs when hungry:
-		 player.addItemToInventory(new AllosaurEgg());
+//		 player.addItemToInventory(new AllosaurEgg());
 
 //		 Add a carnivore meal kit in map to test feeding allosaurs:
-		 player.addItemToInventory (new CarnivoreMealKit());
+//		 player.addItemToInventory (new CarnivoreMealKit());
 
 
 //		 Down casting the instance of Actor to player and increase eco points to test buying items from vending machine:

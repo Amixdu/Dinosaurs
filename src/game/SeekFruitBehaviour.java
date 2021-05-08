@@ -90,8 +90,10 @@ public class SeekFruitBehaviour implements Behaviour{
                                 }
                             }
                         }
+                        // iterate through all items in current location
                         List<Item> items = newLocation.getItems();
                         for (Item item : items){
+                            // check if fruit is there
                             if (item.getDisplayChar() == 'f'){
                                 foundFood = true;
                                 int distance = distance(dinoLocation, newLocation);
@@ -102,7 +104,6 @@ public class SeekFruitBehaviour implements Behaviour{
                                 }
                             }
                         }
-
                     }
                 }
             }
@@ -125,20 +126,20 @@ public class SeekFruitBehaviour implements Behaviour{
             for (int j : height){
                 Location newLocation = map.at(i, j);
                 if (newLocation.getGround() != null){
+                    // if location with bush found, return location
                     if (newLocation.getGround().getDisplayChar() == 'b') {
                         Bush currentBush = (Bush) newLocation.getGround();
                         if (currentBush.getFruits() > 0){
                             return newLocation;
                         }
                     }
+                    // if location with fruit found, return location
                     List<Item> items = newLocation.getItems();
                     for (Item item : items){
                         if (item.getDisplayChar() == 'f'){
                             return newLocation;
                         }
                     }
-
-
                 }
             }
         }
@@ -186,6 +187,8 @@ public class SeekFruitBehaviour implements Behaviour{
         return "nowhere";
 
     }
+
+//    Below method can be used to simulate fruits falling from trees for testing :
 
 //    public void fallFruit(GameMap map){
 //        NumberRange width = map.getXRange();

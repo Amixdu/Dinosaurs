@@ -52,8 +52,6 @@ public class FeedCarnivoreAction extends Action {
                 return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
             }
         }
-
-
         return ("No carnivore carnivore meal kits in inventory");
     }
 

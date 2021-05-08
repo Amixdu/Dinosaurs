@@ -51,6 +51,7 @@ public class Allosaur extends CarnivorousDinosaur {
                     }
                 }
             }
+            // if not hungry, wander
             else{
                 Action wander = wBehaviour.getAction(this, map);
                 if (wander != null)
@@ -60,6 +61,7 @@ public class Allosaur extends CarnivorousDinosaur {
                 }
             }
         }
+        // if not conscious, update counter
         else {
             if (unconsciousCount < this.getMaxUnconsciousRounds()){
                 this.unconsciousCount += 1;

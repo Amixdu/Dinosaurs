@@ -147,6 +147,7 @@ public class SeekMeatBehaviour implements Behaviour {
                     for (Item item : items){
                         if (item.getDisplayChar() == 'C'){
                             Corpse corpse = (Corpse) item;
+                            // return location and the type of dinosaur who died
                             return new Tuple(newLocation, corpse.getCorpseType());
                         }
                         // q = Stegosaur egg

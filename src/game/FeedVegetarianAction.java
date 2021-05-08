@@ -36,10 +36,6 @@ public class FeedVegetarianAction extends Action {
         boolean hasVmKits = false;
         int beforeFeeding = vegetarianDinosaur.getHitPoints();
         int afterFeeding;
-        // add fruit to inventory for testing
-//        actor.addItemToInventory(new Fruit());
-//        actor.addItemToInventory(new VegetarianMealKit());
-
 
         // Cant feed if stegosaur is already full
         if (vegetarianDinosaur.getHitPoints() >= 100){
@@ -60,6 +56,7 @@ public class FeedVegetarianAction extends Action {
             }
         }
 
+        // if has both fruits and vegetarian meal kits, let user choose what to feed
         if (hasFruits && hasVmKits){
             String option = userInput();
             if (option.equals("A")){
@@ -76,11 +73,15 @@ public class FeedVegetarianAction extends Action {
                 return "Enter a valid input";
             }
         }
+
+        // if inventory has only fruit, feed fruit
         else if(hasFruits && !hasVmKits){
             afterFeeding = feedFruit(actor);
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
+
+        // if inventory has only vegetarian meal kit, feed vegetarian meal kit
         else if(!hasFruits && hasVmKits){
             afterFeeding = feedMealKit();
             actor.removeItemFromInventory(inventory.get(fruitPosition));
