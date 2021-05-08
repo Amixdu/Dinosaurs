@@ -66,8 +66,8 @@ public class Application {
 
 
 		// Down casting the instance of Actor to player and increase eco points to test buying items from vending machine:
-		// Player p = (Player) player;
-		// p.increaseEcoPoints(1000);
+//		Player p = (Player) player;
+//		p.increaseEcoPoints(1000);
 
 
 		world.addPlayer(player, gameMap.at(9, 4));

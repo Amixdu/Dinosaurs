@@ -117,4 +117,23 @@ public class VendingMachine extends Ground {
         return actions;
     }
 
+    /**
+     * To define if the actor can enter a vending machin square
+     * @param actor the Actor to check
+     * @return false
+     */
+    @Override
+    public boolean canActorEnter(Actor actor) {
+        return false;
+    }
+
+    /**
+     * to define if a vending machine can block any thrown object
+     * @return true
+     */
+    @Override
+    public boolean blocksThrownObjects() {
+        return true;
+    }
+
 }
