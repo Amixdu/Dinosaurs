@@ -21,6 +21,11 @@ public class Corpse extends Item {
         rounds = 0;
     }
 
+    /**
+     * Inform an Item on the ground of the passage of time.  After a set period of ticks, the corpse disappears
+     * This method is called once per turn, if the item rests upon the ground.
+     * @param currentLocation The location of the ground on which we lie.
+     */
     @Override
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
@@ -37,6 +42,10 @@ public class Corpse extends Item {
         }
     }
 
+    /**
+     * Method to retrieve the type of dinosaur to which the corpse belongs to
+     * @return display char of dinosaur to which the corpse belongs to
+     */
     public char getCorpseType() {
         return corpseType;
     }

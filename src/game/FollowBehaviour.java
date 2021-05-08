@@ -19,6 +19,12 @@ public class FollowBehaviour implements Behaviour {
 		this.target = subject;
 	}
 
+	/**
+	 * Obtain required action
+	 * @param actor the Actor acting
+	 * @param map the GameMap containing the Actor
+	 * @return MoveActorAction with destination and name(direction) of exit
+	 */
 	@Override
 	public Action getAction(Actor actor, GameMap map) {
 		if(!map.contains(target) || !map.contains(actor))
@@ -37,7 +43,6 @@ public class FollowBehaviour implements Behaviour {
 				}
 			}
 		}
-
 		return null;
 	}
 

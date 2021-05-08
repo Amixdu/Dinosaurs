@@ -9,10 +9,20 @@ import java.util.List;
 public class SeekFruitBehaviour implements Behaviour{
     char type;
 
+    /**
+     * Constructor
+     * @param type display char of dinosaur seeking for fruit (Stegosaur or Brachiosaur)
+     */
     public SeekFruitBehaviour(char type) {
         this.type = type;
     }
 
+    /**
+     * Obtain action which causes the dinosaur to move closer to the closest food
+     * @param actor the dinosaur seeking for food
+     * @param map the GameMap containing the Actor
+     * @return MoveActorAction with destination and name(direction) of exit
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
@@ -25,26 +35,12 @@ public class SeekFruitBehaviour implements Behaviour{
             return null;
         }
 
-
-
-        // to test fruits in bush before eating
-//        Bush bush = (Bush) closestFruit.getGround();
-//        System.out.println(bush.getFruits());
-
-        // to test location of closest fruit
-//        System.out.println("x:"+closestFruit.x() + "y:" + closestFruit.y());
-
         int minDistance = distance(closestFruit, map.locationOf(actor));
         String name ="";
         if (minDistance == 0){
             // On same ground as fruit, so eating it
-            name = eatFood(actor, map, closestFruit);
-            // to test fruits in bush before eating
-//            System.out.println(bush.getFruits());
-
+            name = eatFood(actor, closestFruit);
         }
-
-
 
         for (Exit exit : map.locationOf(actor).getExits()) {
             Location destination = exit.getDestination();
@@ -55,36 +51,42 @@ public class SeekFruitBehaviour implements Behaviour{
                     minLocation = destination;
                     name = exit.getName();
                 }
-
             }
         }
-
-
         return new MoveActorAction(minLocation, name);
 
     }
 
+    /**
+     * Gets the location of the closes food from the whole map
+     * @param actor vegetarian dinosaur seeking for fruit
+     * @param map map on which the dinosaur is currently on
+     * @return location of closest food when calculated from current position of dinosaur
+     */
     public Location closestFood(Actor actor,GameMap map){
         boolean foundFood = false;
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
-        Location stegLocation = map.locationOf(actor);
+        Location dinoLocation = map.locationOf(actor);
+        // This method is used to initialize bestLocation
         Location bestLocation = firstLocationWithFood(actor, map);
         if (bestLocation != null){
-            int minDistance = distance(stegLocation, bestLocation);
+            int minDistance = distance(dinoLocation, bestLocation);
             for (int i : width){
                 for (int j : height){
                     Location newLocation = map.at(i, j);
                     if (newLocation.getGround() != null){
+                        // if found a bush
                         if (newLocation.getGround().getDisplayChar() == 'b') {
                             Bush currentBush = (Bush) newLocation.getGround();
+                            // if bush has fruits
                             if (currentBush.getFruits() > 0){
                                 foundFood = true;
-                                int distance = distance(stegLocation, newLocation);
+                                int distance = distance(dinoLocation, newLocation);
+                                // compare and update best distance and best location
                                 if (distance < minDistance){
                                     minDistance = distance;
                                     bestLocation = newLocation;
-
                                 }
                             }
                         }
@@ -92,7 +94,7 @@ public class SeekFruitBehaviour implements Behaviour{
                         for (Item item : items){
                             if (item.getDisplayChar() == 'f'){
                                 foundFood = true;
-                                int distance = distance(stegLocation, newLocation);
+                                int distance = distance(dinoLocation, newLocation);
                                 if (distance < minDistance){
                                     minDistance = distance;
                                     bestLocation = newLocation;
@@ -108,10 +110,15 @@ public class SeekFruitBehaviour implements Behaviour{
                 return bestLocation;
             }
         }
-
         return null;
     }
 
+    /**
+     * Used to get the first location in the map that contains either a fruit or a bush with fruits
+     * @param actor  vegetarian dinosaur seeking for fruit
+     * @param map map which dinosaur is on
+     * @return first location in the map that contains either a fruit or a bush with fruits
+     */
     private Location firstLocationWithFood(Actor actor, GameMap map){
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
@@ -140,11 +147,25 @@ public class SeekFruitBehaviour implements Behaviour{
         return null;
     }
 
+    /**
+     * Compute the Manhattan distance between two locations.
+     *
+     * @param a the first location
+     * @param b the first location
+     * @return the number of steps between a and b if you only move in the four cardinal directions.
+     */
     private int distance(Location a, Location b) {
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
-    private String eatFood(Actor actor, GameMap map, Location fruitLocation){
+    /**
+     * Heal dinosaur and remove fruit from ground or bush
+     * @param actor vegetarian dinosaur seeking for fruit
+
+     * @param fruitLocation location of the closest fruit
+     * @return a string saying went nowhere, since dinosaur was eating
+     */
+    private String eatFood(Actor actor, Location fruitLocation){
         if (type == 'S'){
             Stegosaur steg = (Stegosaur) actor;
             steg.heal(10);
@@ -156,8 +177,6 @@ public class SeekFruitBehaviour implements Behaviour{
         }
         else {
             List<Item> items = fruitLocation.getItems();
-
-//            Fruit fruit = new Fruit();
             for (int i = 0; i<items.size(); i++ ){
                 if (items.get(i).getDisplayChar() == 'f'){
                     fruitLocation.removeItem(items.get(i));

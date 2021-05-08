@@ -14,10 +14,17 @@ public class Bush extends Ground {
         this.fruits = 1;
     }
 
+    /**
+     * Getter method for the number of fruits
+     * @return number of fruits in bush
+     */
     public int getFruits() {
         return fruits;
     }
 
+    /**
+     * Method for removing fruits off a bush one at a time
+     */
     public void removeFruit(){
         this.fruits -= 1;
     }

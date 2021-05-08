@@ -10,12 +10,22 @@ import java.util.Scanner;
 
 public class FeedVegetarianAction extends Action {
     VegetarianDinosaur vegetarianDinosaur;
-    String message;
 
+    /**
+     * Constructor
+     * @param dinosaur vegetarian dinosaur to feed
+     */
     public FeedVegetarianAction(VegetarianDinosaur dinosaur) {
         this.vegetarianDinosaur = dinosaur;
     }
 
+    /**
+     * Perform the Feed Action.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a description of what happened that can be displayed to the user.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
 
@@ -38,7 +48,7 @@ public class FeedVegetarianAction extends Action {
 
         int fruitPosition = 0;
         int mealKitPosition = 0;
-        // Going through inventory searching for fruit, feed if found
+        // Going through inventory searching for fruit or vegetarian meal kits
         for (int i = 0; i < inventory.size(); i++){
             if (inventory.get(i).getDisplayChar() == 'f'){
                 hasFruits = true;
@@ -58,7 +68,7 @@ public class FeedVegetarianAction extends Action {
                 return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
             else if(option.equals("B")){
-                afterFeeding = feedMealKit(actor);
+                afterFeeding = feedMealKit();
                 actor.removeItemFromInventory(inventory.get(mealKitPosition));
                 return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
@@ -72,7 +82,7 @@ public class FeedVegetarianAction extends Action {
             return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
         else if(!hasFruits && hasVmKits){
-            afterFeeding = feedMealKit(actor);
+            afterFeeding = feedMealKit();
             actor.removeItemFromInventory(inventory.get(fruitPosition));
             return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
@@ -85,6 +95,10 @@ public class FeedVegetarianAction extends Action {
         return actor.toString() + " feeds " + vegetarianDinosaur.getName();
     }
 
+    /**
+     * Method to get user input on whether to feed fruit or vegetarian meal kit
+     * @return string represnting user input
+     */
     public String userInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press A to feed fruit\nPress B to feed vegetarian meal kit");
@@ -93,14 +107,22 @@ public class FeedVegetarianAction extends Action {
 
     }
 
+    /**
+     * Heals dinosaur from fruit and increases players eco points
+     * @param actor Player that is feeding
+     * @return Amount of hit points after healing
+     */
     public int feedFruit(Actor actor){
         Player player = (Player) actor;
         vegetarianDinosaur.heal(20);
-        player.increaseEcoPoints(1000);
+        player.increaseEcoPoints(1);
         return vegetarianDinosaur.getHitPoints();
     }
 
-    public int feedMealKit(Actor actor){
+    /**eals dinosaur from vegetarian meal kit and increases players eco points
+     * @return Amount of hit points after healing
+     */
+    public int feedMealKit(){
         vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
         return vegetarianDinosaur.getHitPoints();
     }

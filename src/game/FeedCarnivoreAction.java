@@ -9,12 +9,26 @@ import java.util.List;
 
 public class FeedCarnivoreAction extends Action {
 
+    /**
+     * The dinosaur to feed
+     */
     CarnivorousDinosaur carnivorousDinosaur;
 
+    /**
+     * Constructor
+     * @param dinosaur carnivorous dinosaur to feed
+     */
     public FeedCarnivoreAction(CarnivorousDinosaur dinosaur) {
         this.carnivorousDinosaur = dinosaur;
     }
 
+    /**
+     * Perform the Feed Action.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a description of what happened that can be displayed to the user.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String result = actor.toString() + " tries to feed " + carnivorousDinosaur.getName();
@@ -22,8 +36,6 @@ public class FeedCarnivoreAction extends Action {
 
         int beforeFeeding = carnivorousDinosaur.getHitPoints();
         int afterFeeding;
-        // add CarnivoreMealKit to inventory for testing
-        actor.addItemToInventory(new CarnivoreMealKit());
 
 
         // Cant feed if stegosaur is already full
@@ -31,7 +43,7 @@ public class FeedCarnivoreAction extends Action {
             return (result + ", but " + carnivorousDinosaur.getName() + " is full!");
         }
 
-        // Going through inventory searching for fruit, feed if found
+        // Going through inventory searching for carnivore meal kit, feed if found
         for (int i = 0; i < inventory.size(); i++){
             if (inventory.get(i).getDisplayChar() == 'c'){
                 actor.removeItemFromInventory(inventory.get(i));
@@ -42,9 +54,14 @@ public class FeedCarnivoreAction extends Action {
         }
 
 
-        return ("No carnivore meal kits in inventory");
+        return ("No carnivore carnivore meal kits in inventory");
     }
 
+    /**
+     * Returns a descriptive string
+     * @param actor The actor performing the action.
+     * @return the text we put on the menu
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString() + " feeds " + carnivorousDinosaur.getName();

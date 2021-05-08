@@ -5,7 +5,6 @@ import edu.monash.fit2099.engine.*;
 public class BabyAllosaur extends CarnivorousDinosaur {
     int growth;
     int unconsciousCount;
-    int foodLevel;
     int timeToGrow;
     Behaviour wBehaviour;
     Behaviour hBehaviour;
@@ -26,6 +25,16 @@ public class BabyAllosaur extends CarnivorousDinosaur {
 
     }
 
+    /**
+     * Select and return an action to perform on the current turn and also keeps track of the growth of the baby.
+     *
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return the Action to be performed. This method returns either a wander movement,
+     *         a hunger movement(looking for food) or a DoNothingAction.
+     */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         boolean isAdult = growth(map);
@@ -77,6 +86,11 @@ public class BabyAllosaur extends CarnivorousDinosaur {
 
     }
 
+    /**
+     * Check whether a baby is grown and if so, create an adult allosaur, with starting hit points as the current hit points as the baby.
+     * @param map
+     * @return
+     */
     private boolean growth(GameMap map){
         growth = growth + 1;
         if (growth >= timeToGrow){

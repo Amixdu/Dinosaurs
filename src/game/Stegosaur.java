@@ -19,11 +19,11 @@ public class Stegosaur extends VegetarianDinosaur {
 	/**
 	 * Constructor.
 	 * All Stegosaurs are represented by a 'd' and have 100 hit points.
-	 *
+	 * @param displayChar dsiplay char for the stegosaur
 	 * @param name the name of this Stegosaur
 	 */
 	public Stegosaur(String name, char displayChar) {
-		super(name, displayChar, 50, 100, 20, 90, 20);
+		super(name, displayChar, 50, 100, 20, 90);
 
 	}
 
