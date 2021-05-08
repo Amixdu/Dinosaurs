@@ -16,18 +16,18 @@ public class BabyAllosaur extends Actor {
      *
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display
-     * @param hitPoints   the Actor's starting hit points
      */
-    public BabyAllosaur(String name, char displayChar, int hitPoints) {
-        super(name, displayChar, hitPoints);
+    public BabyAllosaur(String name, char displayChar) {
+        super(name, displayChar, 100);
+        // Starting out with 20
+        this.hurt(80);
         growth = 0;
         this.maxUnconsciousRounds = 20;
         this.hungerAmount = 90;
-        foodLevel = hitPoints;
         unconsciousCount = 0;
-        this.timeToGrow = 50;
+        this.timeToGrow = 5;
         wBehaviour = new WanderBehaviour();
-        hBehaviour = new SeekFruitBehaviour();
+        hBehaviour = new SeekMeatBehaviour(false);
 
 
     }
@@ -36,9 +36,9 @@ public class BabyAllosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         boolean isAdult = growth(map);
         if (!isAdult){
-            if (this.foodLevel > 0){
-                this.foodLevel = this.foodLevel - 1;
-                if (this.foodLevel < hungerAmount){
+            if (this.isConscious()){
+                this.hurt(1);
+                if (this.hitPoints < hungerAmount){
                     System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                     Action hungerMovement = hBehaviour.getAction(this, map);
                     if (hungerMovement != null)
@@ -87,9 +87,9 @@ public class BabyAllosaur extends Actor {
         growth = growth + 1;
         if (growth >= timeToGrow){
             Location location = map.locationOf(this);
-            int food = this.foodLevel;
+            int currentHitPoints = this.hitPoints;
             map.removeActor(this);
-            location.addActor(new Allosaur("Allosaur", 'A', food));
+            location.addActor(new Allosaur("Allosaur", 'A', currentHitPoints));
             return true;
         }
         return false;

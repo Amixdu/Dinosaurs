@@ -28,7 +28,7 @@ public class Egg extends PortableItem{
                 currentLocation.removeItem(this);
             }
             else if (displayChar == 'e'){
-                currentLocation.addActor(new BabyAllosaur("Allosaur", 'a', 20));
+                currentLocation.addActor(new BabyAllosaur("Allosaur", 'a'));
                 currentLocation.removeItem(this);
             }
 
