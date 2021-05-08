@@ -27,7 +27,7 @@ public class VegetarianDinosaur extends Actor {
         this.hungerAmount = hungerAmount;
         this.maxDeadRounds = maxDeadRounds;
         wBehaviour = new WanderBehaviour();
-        hBehaviour = new SeekFruitBehaviour();
+        hBehaviour = new SeekFruitBehaviour(displayChar);
 
     }
 
@@ -120,5 +120,13 @@ public class VegetarianDinosaur extends Actor {
 
     public int getMaxFoodLevel() {
         return maxFoodLevel;
+    }
+
+    public int getHitPoints(){
+        return this.hitPoints;
+    }
+
+    public int getMaxHitPoints(){
+        return this.maxHitPoints;
     }
 }

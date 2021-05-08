@@ -24,7 +24,7 @@ public class FeedVegetarianAction extends Action {
 
         boolean hasFruits = false;
         boolean hasVmKits = false;
-        int beforeFeeding = vegetarianDinosaur.getFoodLevel();
+        int beforeFeeding = vegetarianDinosaur.getHitPoints();
         int afterFeeding;
         // add fruit to inventory for testing
 //        actor.addItemToInventory(new Fruit());
@@ -32,7 +32,7 @@ public class FeedVegetarianAction extends Action {
 
 
         // Cant feed if stegosaur is already full
-        if (vegetarianDinosaur.getFoodLevel() >= 100){
+        if (vegetarianDinosaur.getHitPoints() >= 100){
             return (result + ", but " + vegetarianDinosaur.getName() + " is full!");
         }
 
@@ -55,12 +55,12 @@ public class FeedVegetarianAction extends Action {
             if (option.equals("A")){
                 afterFeeding = feedFruit(actor);
                 actor.removeItemFromInventory(inventory.get(fruitPosition));
-                return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
+                return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
             else if(option.equals("B")){
                 afterFeeding = feedMealKit(actor);
                 actor.removeItemFromInventory(inventory.get(mealKitPosition));
-                return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
+                return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
             }
             else{
                 return "Enter a valid input";
@@ -69,12 +69,12 @@ public class FeedVegetarianAction extends Action {
         else if(hasFruits && !hasVmKits){
             afterFeeding = feedFruit(actor);
             actor.removeItemFromInventory(inventory.get(fruitPosition));
-            return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
+            return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
         else if(!hasFruits && hasVmKits){
             afterFeeding = feedMealKit(actor);
             actor.removeItemFromInventory(inventory.get(fruitPosition));
-            return (result + ", successfully fed (food level increased from "+beforeFeeding+" to "+afterFeeding+ ")");
+            return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
         }
         return ("No fruit in inventory");
 
@@ -95,13 +95,13 @@ public class FeedVegetarianAction extends Action {
 
     public int feedFruit(Actor actor){
         Player player = (Player) actor;
-        vegetarianDinosaur.increaseFoodLevel(20);
+        vegetarianDinosaur.heal(20);
         player.increaseEcoPoints(1000);
-        return vegetarianDinosaur.getFoodLevel();
+        return vegetarianDinosaur.getHitPoints();
     }
 
     public int feedMealKit(Actor actor){
-        vegetarianDinosaur.increaseFoodLevel(vegetarianDinosaur.getMaxFoodLevel());
-        return vegetarianDinosaur.getFoodLevel();
+        vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
+        return vegetarianDinosaur.getHitPoints();
     }
 }
