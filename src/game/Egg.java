@@ -29,15 +29,7 @@ public class Egg extends PortableItem{
         if (rounds >= hatchPeriod + 1){
             // q : stegosaur egg, w : brachiosaur egg, e : allosaur egg
             // s : baby stegosaur, b : baby brachiosaur, a : baby allosaur
-            if (displayChar == 'q'){
-                currentLocation.addActor(new Stegosaur("Stegasour", 's'));
-                currentLocation.removeItem(this);
-            }
-            else if (displayChar == 'w'){
-                currentLocation.addActor(new Stegosaur("Brachiosaur", 'b'));
-                currentLocation.removeItem(this);
-            }
-            else if (displayChar == 'e'){
+            if (displayChar == 'e'){
                 currentLocation.addActor(new BabyAllosaur("Allosaur", 'a'));
                 currentLocation.removeItem(this);
             }
