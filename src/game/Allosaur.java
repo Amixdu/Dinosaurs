@@ -3,10 +3,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 public class Allosaur extends CarnivorousDinosaur {
-    int unconsciousCount;
-    int maxUconsciousRounds;
-    int hungerAmount;
-    int foodLevel;
+    private int unconsciousCount;
     Behaviour wBehaviour;
     Behaviour hBehaviour;
     /**
@@ -39,7 +36,7 @@ public class Allosaur extends CarnivorousDinosaur {
 
         if (this.isConscious()){
             this.hurt(1);
-            if (this.hitPoints < hungerAmount){
+            if (this.hitPoints < this.getHungerAmount()){
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
                 if (hungerMovement != null)
@@ -64,7 +61,7 @@ public class Allosaur extends CarnivorousDinosaur {
             }
         }
         else {
-            if (unconsciousCount < maxUconsciousRounds){
+            if (unconsciousCount < this.getMaxUnconsciousRounds()){
                 this.unconsciousCount += 1;
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
             }

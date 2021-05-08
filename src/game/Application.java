@@ -57,15 +57,15 @@ public class Application {
 		// player.addItemToInventory(new Fruit());
 		// player.addItemToInventory(new VegetarianMealKit());
 
-		// Add an allosaur egg to inventory, to see egg hatching and growing into an adult
-		// and looking for meat or eggs when hungry:
-		// player.addItemToInventory(new AllosaurEgg());
+//		 Add an allosaur egg to inventory, to see egg hatching and growing into an adult
+//		 and looking for meat or eggs when hungry:
+		 player.addItemToInventory(new AllosaurEgg());
 
-		// Add a carnivore meal kit in map to test feeding allosaurs:
-		// player.addItemToInventory (new CarnivoreMealKit())
+//		 Add a carnivore meal kit in map to test feeding allosaurs:
+		 player.addItemToInventory (new CarnivoreMealKit());
 
 
-		// Down casting the instance of Actor to player and increase eco points to test buying items from vending machine:
+//		 Down casting the instance of Actor to player and increase eco points to test buying items from vending machine:
 //		Player p = (Player) player;
 //		p.increaseEcoPoints(1000);
 

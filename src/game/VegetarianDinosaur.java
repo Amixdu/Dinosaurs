@@ -91,11 +91,11 @@ public class VegetarianDinosaur extends Actor {
         else {
             if (unconsciousCount < maxUconsciousRounds){
                 this.unconsciousCount += 1;
-                System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
             }
             else {
 
-                System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
                 Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
                 map.locationOf(this).addItem(corpse);
                 map.removeActor(this);
