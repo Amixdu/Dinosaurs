@@ -11,8 +11,6 @@ public class SeekFruitBehaviour implements Behaviour{
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
-
-        // uncomment below statement and line 131 to enable fruit falling
 //        fallFruit(map);
         Location minLocation = map.locationOf(actor);
         Location closestFruit = closestFood(actor, map);
@@ -28,7 +26,7 @@ public class SeekFruitBehaviour implements Behaviour{
 //        System.out.println(bush.getFruits());
 
         // to test location of closest fruit
-        System.out.println("x:"+closestFruit.x() + "y:" + closestFruit.y());
+//        System.out.println("x:"+closestFruit.x() + "y:" + closestFruit.y());
 
         int minDistance = distance(closestFruit, map.locationOf(actor));
         String name ="";
@@ -65,8 +63,52 @@ public class SeekFruitBehaviour implements Behaviour{
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         Location stegLocation = map.locationOf(actor);
-        Location bestLocation = new Location(map, width.min(), height.min());
-        int minDistance = distance(stegLocation, bestLocation);
+        Location bestLocation = firstLocationWithFood(actor, map);
+        if (bestLocation != null){
+            int minDistance = distance(stegLocation, bestLocation);
+            for (int i : width){
+                for (int j : height){
+                    Location newLocation = map.at(i, j);
+                    if (newLocation.getGround() != null){
+                        if (newLocation.getGround().getDisplayChar() == 'b') {
+                            Bush currentBush = (Bush) newLocation.getGround();
+                            if (currentBush.getFruits() > 0){
+                                foundFood = true;
+                                int distance = distance(stegLocation, newLocation);
+                                if (distance < minDistance){
+                                    minDistance = distance;
+                                    bestLocation = newLocation;
+
+                                }
+                            }
+                        }
+                        List<Item> items = newLocation.getItems();
+                        for (Item item : items){
+                            if (item.getDisplayChar() == 'f'){
+                                foundFood = true;
+                                int distance = distance(stegLocation, newLocation);
+                                if (distance < minDistance){
+                                    minDistance = distance;
+                                    bestLocation = newLocation;
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            if (foundFood){
+                return bestLocation;
+            }
+        }
+
+        return null;
+    }
+
+    private Location firstLocationWithFood(Actor actor, GameMap map){
+        NumberRange width = map.getXRange();
+        NumberRange height = map.getYRange();
         for (int i : width){
             for (int j : height){
                 Location newLocation = map.at(i, j);
@@ -74,32 +116,21 @@ public class SeekFruitBehaviour implements Behaviour{
                     if (newLocation.getGround().getDisplayChar() == 'b') {
                         Bush currentBush = (Bush) newLocation.getGround();
                         if (currentBush.getFruits() > 0){
-                            int distance = distance(stegLocation, newLocation);
-                            if (distance < minDistance){
-                                minDistance = distance;
-                                bestLocation = newLocation;
-                                foundFood = true;
-                            }
+                            return newLocation;
                         }
                     }
                     List<Item> items = newLocation.getItems();
                     for (Item item : items){
                         if (item.getDisplayChar() == 'f'){
-                            int distance = distance(stegLocation, newLocation);
-                            if (distance < minDistance){
-                                minDistance = distance;
-                                bestLocation = newLocation;
-                                foundFood = true;
-                            }
+                            return newLocation;
                         }
                     }
+
 
                 }
             }
         }
-        if (foundFood){
-            return bestLocation;
-        }
+
         return null;
     }
 
@@ -121,6 +152,7 @@ public class SeekFruitBehaviour implements Behaviour{
             for (int i = 0; i<items.size(); i++ ){
                 if (items.get(i).getDisplayChar() == 'f'){
                     fruitLocation.removeItem(items.get(i));
+                    System.out.println(steg.getName() + "eats");
                 }
             }
         }
@@ -128,7 +160,6 @@ public class SeekFruitBehaviour implements Behaviour{
 
     }
 
-    // testing method to drop fruits from trees
 //    public void fallFruit(GameMap map){
 //        NumberRange width = map.getXRange();
 //        NumberRange height = map.getYRange();
