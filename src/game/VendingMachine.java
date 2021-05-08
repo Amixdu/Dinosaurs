@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * Implementation of VendingMachine class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class VendingMachine extends Ground {
     /**
      * price of a fruit

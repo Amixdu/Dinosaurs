@@ -2,6 +2,11 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+
+/**
+ * Implement the BabyAllosaur class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class BabyAllosaur extends CarnivorousDinosaur {
     private int growth;
     private int unconsciousCount;
@@ -88,6 +93,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
 
     /**
      * Check whether a baby is grown and if so, create an adult allosaur, with starting hit points as the current hit points as the baby.
+     *
      * @param map
      * @return
      */

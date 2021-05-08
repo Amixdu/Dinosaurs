@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.Ground;
 
+/**
+ * Implement the Bush class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class Bush extends Ground {
     private int fruits;
     /**

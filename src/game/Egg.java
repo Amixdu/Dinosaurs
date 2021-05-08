@@ -2,6 +2,11 @@ package game;
 
 import edu.monash.fit2099.engine.Location;
 
+
+/**
+ * Implement the egg class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class Egg extends PortableItem{
     private int hatchPeriod;
     private int rounds;

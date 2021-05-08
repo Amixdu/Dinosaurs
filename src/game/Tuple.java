@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * Implementation of helper class Tuple
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class Tuple {
     /**
      * First item of tuple

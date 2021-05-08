@@ -8,6 +8,10 @@ import edu.monash.fit2099.engine.Item;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Implement the FeedVegetarianAction class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class FeedVegetarianAction extends Action {
     private VegetarianDinosaur vegetarianDinosaur;
 

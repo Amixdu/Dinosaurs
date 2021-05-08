@@ -3,12 +3,16 @@ package game;
 import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * Implement the corpse class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class Corpse extends Item {
     private char corpseType;
     private int rounds;
     /***
      * Constructor.
-     *  @param name the name of this Item
+     * @param name the name of this Item
      * @param portable true if and only if the Item can be picked up
      */
     public Corpse(String name,  boolean portable, char corpseType) {

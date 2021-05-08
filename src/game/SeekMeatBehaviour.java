@@ -4,6 +4,10 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
+/**
+ * Implementation of SeekMeatBehaviourClass
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class SeekMeatBehaviour implements Behaviour {
     /**
      * indicates whether allosaur is adult or baby

@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * Implementation of vegetarianDinosaur class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class VegetarianDinosaur extends Actor {
     private int unconsciousCount;
     private int maxUconsciousRounds;

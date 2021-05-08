@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * Implement the CarnivorousDinosaur class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class CarnivorousDinosaur extends Actor {
     /**
      * Number of rounds that dinosaur has been unconscious for
@@ -19,7 +23,7 @@ public class CarnivorousDinosaur extends Actor {
     private int hungerAmount;
     Behaviour wBehaviour;
     /**
-     * Constructor.
+     * Constructor
      *
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display

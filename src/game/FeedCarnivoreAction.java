@@ -7,6 +7,10 @@ import edu.monash.fit2099.engine.Item;
 
 import java.util.List;
 
+/**
+ * Implement the FeedCarnivoreAction class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class FeedCarnivoreAction extends Action {
 
     /**
@@ -16,6 +20,7 @@ public class FeedCarnivoreAction extends Action {
 
     /**
      * Constructor
+     *
      * @param dinosaur carnivorous dinosaur to feed
      */
     public FeedCarnivoreAction(CarnivorousDinosaur dinosaur) {

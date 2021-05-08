@@ -8,6 +8,11 @@ import edu.monash.fit2099.engine.Item;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Implementation of BuyItemAction class
+ * @author Amindu Kaushal Kumarasinghe
+ */
+
 public class BuyItemAction extends Action {
 
     /**
@@ -103,6 +108,7 @@ public class BuyItemAction extends Action {
 
     /**
      * Returns a descriptive string
+     *
      * @param actor The actor performing the action.
      * @return the text we put on the menu
      */
@@ -112,7 +118,7 @@ public class BuyItemAction extends Action {
     }
 
     /**
-     * Method to get uer input
+     * Method to get user input
      * @return a string representing user option for buying an item
      */
     public String userInput(){

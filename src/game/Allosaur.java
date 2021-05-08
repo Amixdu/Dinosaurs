@@ -2,6 +2,10 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * Implement the Allosaur class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class Allosaur extends CarnivorousDinosaur {
     private int unconsciousCount;
     Behaviour wBehaviour;

@@ -5,7 +5,10 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
-
+/**
+ * Implementation of SeekFruitBehaviour class
+ * @author Amindu Kaushal Kumarasinghe
+ */
 public class SeekFruitBehaviour implements Behaviour{
     private char type;
 

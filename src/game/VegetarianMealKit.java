@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * Implementation of VegetarianMealKit class
+ */
 public class VegetarianMealKit extends PortableItem{
     /**
      * Constructor
