@@ -16,9 +16,9 @@ public class BuyItemAction extends Action {
         Player player = (Player) actor;
         String result;
         VendingMachine vendingMachine = new VendingMachine();
-
+        int ecoPoints = player.getEcoPoints();
         if (option.equals("A")){
-            if (player.getEcoPoints() >= vendingMachine.getFruitPrice()){
+            if (ecoPoints >= vendingMachine.getFruitPrice()){
                 player.addItemToInventory(new Fruit());
                 player.reduceEcoPoints(vendingMachine.getFruitPrice());
                 result = "Successfully bought a fruit";
@@ -28,7 +28,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("B")){
-            if (player.getEcoPoints() >= vendingMachine.getvMealKitPrice()){
+            if (ecoPoints >= vendingMachine.getvMealKitPrice()){
                 player.addItemToInventory(new VegetarianMealKit());
                 player.reduceEcoPoints(vendingMachine.getvMealKitPrice());
                 result = "Successfully bought a Vegetarian meal kit";
@@ -38,7 +38,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("C")){
-            if (player.getEcoPoints() >= vendingMachine.getcMealKitPrice()){
+            if (ecoPoints >= vendingMachine.getcMealKitPrice()){
                 player.addItemToInventory(new CarnivoreMealKit());
                 player.reduceEcoPoints(vendingMachine.getcMealKitPrice());
                 result = "Successfully bought a Carnivore meal kit";
@@ -48,7 +48,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("D")){
-            if (player.getEcoPoints() >= vendingMachine.getStegEggPrice()){
+            if (ecoPoints >= vendingMachine.getStegEggPrice()){
                 player.addItemToInventory(new StegosaurEgg());
                 player.reduceEcoPoints(vendingMachine.getStegEggPrice());
                 result = "Successfully bought a Stegosaur egg";
@@ -58,7 +58,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("E")){
-            if (player.getEcoPoints() >= vendingMachine.getBrachEggPrice()){
+            if (ecoPoints >= vendingMachine.getBrachEggPrice()){
                 player.addItemToInventory(new BrachiosaurEgg());
                 player.reduceEcoPoints(vendingMachine.getBrachEggPrice());
                 result = "Successfully bought a Brachiosaur egg";
@@ -68,7 +68,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("F")){
-            if (player.getEcoPoints() >= vendingMachine.getAlloEggPrice()){
+            if (ecoPoints >= vendingMachine.getAlloEggPrice()){
                 player.addItemToInventory(new AllosaurEgg());
                 player.reduceEcoPoints(vendingMachine.getAlloEggPrice());
                 result = "Successfully bought a Allosaur egg";
@@ -78,7 +78,7 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("G")){
-            if (player.getEcoPoints() >= vendingMachine.getLaserGunPrice()){
+            if (ecoPoints >= vendingMachine.getLaserGunPrice()){
                 player.addItemToInventory(new LaserGun());
                 player.reduceEcoPoints(vendingMachine.getLaserGunPrice());
                 result = "Successfully bought a Laser Gun";
