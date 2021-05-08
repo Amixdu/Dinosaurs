@@ -14,6 +14,7 @@ public class Corpse extends Item {
      * Constructor.
      * @param name the name of this Item
      * @param portable true if and only if the Item can be picked up
+     * @param corpseType type of dinosaur that is dead
      */
     public Corpse(String name,  boolean portable, char corpseType) {
         super(name, 'C', portable);

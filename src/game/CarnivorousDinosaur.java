@@ -28,6 +28,9 @@ public class CarnivorousDinosaur extends Actor {
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display
      * @param startingHitPoints   the Actor's starting hit points
+     * @param maxHitPoints the maximum hit points of dinosaur
+     * @param maxUconsciousRounds number of rounds a dinosaur can stay unconscious without dying
+     * @param hungerAmount Amount of health points below which a dinosaur feels hunger
      */
     public CarnivorousDinosaur(String name, char displayChar, int startingHitPoints, int maxHitPoints, int maxUconsciousRounds, int hungerAmount) {
         super(name, displayChar, maxHitPoints);
