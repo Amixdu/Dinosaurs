@@ -92,6 +92,26 @@ public class SeekMeatBehaviour implements Behaviour {
                                         type = corpse.getCorpseType();
                                     }
                                 }
+                                else if (item.getDisplayChar() == 'q'){
+                                    foundFood = true;
+                                    int distance = distance(allosaurLocation, newLocation);
+                                    if (distance < minDistance){
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                        Corpse corpse = (Corpse) item;
+                                        type = corpse.getCorpseType();
+                                    }
+                                }
+                                else if (item.getDisplayChar() == 'w'){
+                                    foundFood = true;
+                                    int distance = distance(allosaurLocation, newLocation);
+                                    if (distance < minDistance){
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                        Corpse corpse = (Corpse) item;
+                                        type = corpse.getCorpseType();
+                                    }
+                                }
                             }
 
                         }
@@ -122,6 +142,16 @@ public class SeekMeatBehaviour implements Behaviour {
                             Tuple tuple = new Tuple(newLocation, corpse.getCorpseType());
                             return tuple;
                         }
+                        // q = Stegosaur egg
+                        else if (item.getDisplayChar() == 'q'){
+                            Tuple tuple = new Tuple(newLocation, 'q');
+                            return tuple;
+                        }
+                        // w = Brachiosaur egg
+                        else if (item.getDisplayChar() == 'w'){
+                            Tuple tuple = new Tuple(newLocation, 'w');
+                            return tuple;
+                        }
                     }
 
                 }
@@ -144,6 +174,9 @@ public class SeekMeatBehaviour implements Behaviour {
             else if (type == 'B' || type == 'b'){
                 allosaur.heal(100);
             }
+            else if (type == 'q' || type == 'w'){
+                allosaur.heal(10);
+            }
         }
         else{
             BabyAllosaur babyAllosaur = (BabyAllosaur) actor;
@@ -153,12 +186,25 @@ public class SeekMeatBehaviour implements Behaviour {
             else if (type == 'B' || type == 'b'){
                 babyAllosaur.heal(100);
             }
+            else if (type == 'q' || type == 'w'){
+                babyAllosaur.heal(10);
+            }
         }
 
 
         List<Item> items = corpseLocation.getItems();
         for (int i = 0; i<items.size(); i++ ){
             if (items.get(i).getDisplayChar() == 'C'){
+                corpseLocation.removeItem(items.get(i));
+                System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
+
+            }
+            if (items.get(i).getDisplayChar() == 'b'){
+                corpseLocation.removeItem(items.get(i));
+                System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
+
+            }
+            if (items.get(i).getDisplayChar() == 'w'){
                 corpseLocation.removeItem(items.get(i));
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 

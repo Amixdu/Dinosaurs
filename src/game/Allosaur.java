@@ -17,8 +17,8 @@ public class Allosaur extends CarnivorousDinosaur {
      * @param currentHitPoints   the Actor's starting hit points
      */
     public Allosaur(String name, char displayChar, int currentHitPoints) {
-        super(name, displayChar, 50, 100, 20, 90);
-        this.hurt(100 - currentHitPoints);
+        super(name, displayChar, 100, 100, 20, 90);
+        this.hurt(maxHitPoints - currentHitPoints);
         unconsciousCount = 0;
         wBehaviour = new WanderBehaviour();
         hBehaviour = new SeekMeatBehaviour(true);
