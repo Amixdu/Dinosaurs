@@ -2,7 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-public class Allosaur extends Actor {
+public class Allosaur extends CarnivorousDinosaur {
     int unconsciousCount;
     int maxUconsciousRounds;
     int hungerAmount;
@@ -14,15 +14,12 @@ public class Allosaur extends Actor {
      *
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display
-     * @param currentHitPoints   the current hit points of the baby allosaur
+     * @param currentHitPoints   the Actor's starting hit points
      */
     public Allosaur(String name, char displayChar, int currentHitPoints) {
-        super(name, displayChar, 100);
-        // Used to set the current hit points to that of the baby allosaurs
+        super(name, displayChar, 50, 100, 20, 90);
         this.hurt(100 - currentHitPoints);
         unconsciousCount = 0;
-        maxUconsciousRounds = 20;
-        hungerAmount = 90;
         wBehaviour = new WanderBehaviour();
         hBehaviour = new SeekMeatBehaviour(true);
     }

@@ -2,11 +2,9 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-public class BabyAllosaur extends Actor {
+public class BabyAllosaur extends CarnivorousDinosaur {
     int growth;
     int unconsciousCount;
-    int maxUnconsciousRounds;
-    int hungerAmount;
     int foodLevel;
     int timeToGrow;
     Behaviour wBehaviour;
@@ -18,12 +16,8 @@ public class BabyAllosaur extends Actor {
      * @param displayChar the character that will represent the Actor in the display
      */
     public BabyAllosaur(String name, char displayChar) {
-        super(name, displayChar, 100);
-        // Starting out with 20
-        this.hurt(80);
+        super(name, displayChar, 20, 100, 20, 90);
         growth = 0;
-        this.maxUnconsciousRounds = 20;
-        this.hungerAmount = 90;
         unconsciousCount = 0;
         this.timeToGrow = 5;
         wBehaviour = new WanderBehaviour();
