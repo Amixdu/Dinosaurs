@@ -16,7 +16,7 @@ public class Corpse extends Item {
      * @param portable true if and only if the Item can be picked up
      */
     public Corpse(String name, char displayChar, boolean portable, char corpseType) {
-        super(name, displayChar, portable);
+        super(name, 'C', portable);
         this.corpseType = corpseType;
         rounds = 0;
     }
@@ -25,15 +25,19 @@ public class Corpse extends Item {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
-        if (corpseType == 'S' || corpseType == 'B'){
+        if (corpseType == 'S' || corpseType == 'B' || corpseType == 's' || corpseType == 'b'){
             if(rounds >= 20){
                 currentLocation.removeItem(this);
             }
         }
-        else if (corpseType == 'A'){
+        else if (corpseType == 'A' || corpseType == 'a'){
             if (rounds >= 40){
                 currentLocation.removeItem(this);
             }
         }
+    }
+
+    public char getCorpseType() {
+        return corpseType;
     }
 }

@@ -14,25 +14,26 @@ public class Allosaur extends Actor {
      *
      * @param name        the name of the Actor
      * @param displayChar the character that will represent the Actor in the display
-     * @param hitPoints   the Actor's starting hit points
+     * @param currentHitPoints   the current hit points of the baby allosaur
      */
-    public Allosaur(String name, char displayChar, int hitPoints) {
-        super(name, displayChar, hitPoints);
+    public Allosaur(String name, char displayChar, int currentHitPoints) {
+        super(name, displayChar, 100);
+        // Used to set the current hit points to that of the baby allosaurs
+        this.hurt(100 - currentHitPoints);
         unconsciousCount = 0;
         maxUconsciousRounds = 20;
         hungerAmount = 90;
-        foodLevel = hitPoints;
         wBehaviour = new WanderBehaviour();
-        hBehaviour = new SeekFruitBehaviour();
+        hBehaviour = new SeekMeatBehaviour(true);
     }
 
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 
-        if (this.foodLevel > 0){
-            this.foodLevel = this.foodLevel - 1;
-            if (this.foodLevel < hungerAmount){
-                System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+        if (this.isConscious()){
+            this.hurt(1);
+            if (this.hitPoints < hungerAmount){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
                 if (hungerMovement != null)
                     return hungerMovement;
@@ -69,7 +70,6 @@ public class Allosaur extends Actor {
 
             return new DoNothingAction();
         }
-
-
     }
+
 }
