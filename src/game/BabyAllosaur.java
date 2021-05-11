@@ -6,13 +6,33 @@ import edu.monash.fit2099.engine.*;
 /**
  * Implement the BabyAllosaur class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class BabyAllosaur extends CarnivorousDinosaur {
-    private int growth;
-    private int unconsciousCount;
-    private int timeToGrow;
+    /**
+     * Keeps track of the age of the baby Allosaur
+     */
+    int growth;
+    /**
+     * Rounds that the dinosaur can stay unconscious before dying
+     */
+    int unconsciousCount;
+    /**
+     * No. of rounds for the baby to grow to an adult
+     */
+    int timeToGrow;
+    /**
+     * Wander behaviour
+     */
     Behaviour wBehaviour;
+    /**
+     * Hunger behaviour
+     */
     Behaviour hBehaviour;
+    /**
+     * Attack behaviour
+     */
+    Behaviour aBehaviour;
     /**
      * Constructor.
      *
@@ -26,6 +46,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
         this.timeToGrow = 5;
         wBehaviour = new WanderBehaviour();
         hBehaviour = new SeekMeatBehaviour(false);
+        aBehaviour = new AllosaurAttackBehavior();
 
 
     }
@@ -53,11 +74,20 @@ public class BabyAllosaur extends CarnivorousDinosaur {
                         return hungerMovement;
                     else{
                         // If null is returned, it means no food in map, so dinosaur just wanders
-                        Action wander = wBehaviour.getAction(this, map);
-                        if (wander != null)
-                            return wander;
+                        // If null is returned, it means no food in map, so dinosaur just wanders.
+                        // if stegosaur nearby, the allosaur attacks it
+                        Action attack = aBehaviour.getAction(this, map);
+                        if (attack != null){
+                            return attack;
+                        }
+//                      if no stegosaurs nearby, just wander
                         else{
-                            return new DoNothingAction();
+                            Action wander = wBehaviour.getAction(this, map);
+                            if (wander != null)
+                                return wander;
+                            else{
+                                return new DoNothingAction();
+                            }
                         }
                     }
                 }
@@ -70,19 +100,22 @@ public class BabyAllosaur extends CarnivorousDinosaur {
                     }
                 }
             }
-            else {
-                if (unconsciousCount < this.getMaxUnconsciousRounds()){
-                    this.unconsciousCount += 1;
-                    System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+            // if not hungry, check is any stegosaurs are nearby to attack
+            else{
+                Action attack = aBehaviour.getAction(this, map);
+                if (attack != null){
+                    return attack;
                 }
-                else {
-                    System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
-                    map.locationOf(this).addItem(corpse);
-                    map.removeActor(this);
+//                if no stegosaurs nearby, just wander
+                else{
+                    Action wander = wBehaviour.getAction(this, map);
+                    if (wander != null)
+                        return wander;
+                    else{
+                        return new DoNothingAction();
+                    }
                 }
 
-                return new DoNothingAction();
             }
         }
         else{
@@ -102,8 +135,8 @@ public class BabyAllosaur extends CarnivorousDinosaur {
         if (growth >= timeToGrow){
             Location location = map.locationOf(this);
             int currentHitPoints = this.hitPoints;
-            System.out.println("The baby allosaur at (" + location.x() + "," + location.y() + ") grew into an adult!");
             map.removeActor(this);
+            System.out.println(currentHitPoints);
             location.addActor(new Allosaur("Allosaur", 'A', currentHitPoints));
             return true;
         }

@@ -2,14 +2,17 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+
 /**
  * Implement the Allosaur class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shreshta
  */
 public class Allosaur extends CarnivorousDinosaur {
     private int unconsciousCount;
     Behaviour wBehaviour;
     Behaviour hBehaviour;
+    Behaviour aBehaviour;
     /**
      * Constructor.
      *
@@ -23,6 +26,7 @@ public class Allosaur extends CarnivorousDinosaur {
         unconsciousCount = 0;
         wBehaviour = new WanderBehaviour();
         hBehaviour = new SeekMeatBehaviour(true);
+        aBehaviour = new AllosaurAttackBehavior();
     }
 
     /**
@@ -37,16 +41,40 @@ public class Allosaur extends CarnivorousDinosaur {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-
         if (this.isConscious()){
             this.hurt(1);
+            // checking if hungry
             if (this.hitPoints < this.getHungerAmount()){
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
                 if (hungerMovement != null)
                     return hungerMovement;
                 else{
-                    // If null is returned, it means no food in map, so dinosaur just wanders
+                    // If null is returned, it means no food in map, so dinosaur just wanders.
+                    // if stegosaur nearby, the allosaur attacks it
+                    Action attack = aBehaviour.getAction(this, map);
+                    if (attack != null){
+                        return attack;
+                    }
+                    // if no stegosaurs nearby, just wander
+                    else{
+                        Action wander = wBehaviour.getAction(this, map);
+                        if (wander != null)
+                            return wander;
+                        else{
+                            return new DoNothingAction();
+                        }
+                    }
+                }
+            }
+            // if not hungry, check is any stegosaurs are nearby to attack
+            else{
+                Action attack = aBehaviour.getAction(this, map);
+                if (attack != null){
+                    return attack;
+                }
+                // if no stegosaurs nearby, just wander
+                else{
                     Action wander = wBehaviour.getAction(this, map);
                     if (wander != null)
                         return wander;
@@ -54,15 +82,7 @@ public class Allosaur extends CarnivorousDinosaur {
                         return new DoNothingAction();
                     }
                 }
-            }
-            // if not hungry, wander
-            else{
-                Action wander = wBehaviour.getAction(this, map);
-                if (wander != null)
-                    return wander;
-                else{
-                    return new DoNothingAction();
-                }
+
             }
         }
         // if not conscious, update counter
@@ -77,9 +97,7 @@ public class Allosaur extends CarnivorousDinosaur {
                 map.locationOf(this).addItem(corpse);
                 map.removeActor(this);
             }
-
             return new DoNothingAction();
         }
     }
-
 }

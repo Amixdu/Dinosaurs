@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Implementation of SeekMeatBehaviourClass
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class SeekMeatBehaviour implements Behaviour {
     /**
@@ -223,12 +224,12 @@ public class SeekMeatBehaviour implements Behaviour {
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 
             }
-            if (items.get(i).getDisplayChar() == 'b'){
+            else if (items.get(i).getDisplayChar() == 'b'){
                 corpseLocation.removeItem(items.get(i));
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 
             }
-            if (items.get(i).getDisplayChar() == 'w'){
+            else if (items.get(i).getDisplayChar() == 'w'){
                 corpseLocation.removeItem(items.get(i));
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 
