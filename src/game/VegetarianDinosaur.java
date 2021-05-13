@@ -46,7 +46,6 @@ public class VegetarianDinosaur extends Actor {
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions actions = new Actions();
-        actions.add(new AttackAction(this));
         actions.add(new FeedVegetarianAction(this));
         return actions;
 

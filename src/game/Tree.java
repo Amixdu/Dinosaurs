@@ -2,6 +2,7 @@ package game;
 
 import edu.monash.fit2099.engine.Actions;
 import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.Display;
 import edu.monash.fit2099.engine.Location;
 
 import java.util.Random;

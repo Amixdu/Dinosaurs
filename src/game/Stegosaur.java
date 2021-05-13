@@ -22,11 +22,10 @@ public class Stegosaur extends VegetarianDinosaur {
 	/**
 	 * Constructor.
 	 * All Stegosaurs are represented by a 'S' and have 100 hit points.
-	 * @param displayChar dsiplay char for the stegosaur
 	 * @param name the name of this Stegosaur
 	 */
-	public Stegosaur(String name, char displayChar) {
-		super(name, displayChar, 50, 100, 20, 90);
+	public Stegosaur(String name) {
+		super(name, 'S', 50, 100, 20, 90);
 		// starting with 20, so initial attack will be possible
 		attackCoolDown = 20;
 
@@ -45,6 +44,13 @@ public class Stegosaur extends VegetarianDinosaur {
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
 		attackCoolDown = attackCoolDown + 1;
 		return super.playTurn(actions, lastAction, map, display);
+	}
+
+	@Override
+	public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
+		Actions actions = super.getAllowableActions(otherActor, direction, map);
+		actions.add(new AttackAction(this));
+		return actions;
 	}
 
 	/**

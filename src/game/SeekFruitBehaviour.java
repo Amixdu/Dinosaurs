@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Implementation of SeekFruitBehaviour class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class SeekFruitBehaviour implements Behaviour{
     private char type;
@@ -34,7 +35,7 @@ public class SeekFruitBehaviour implements Behaviour{
         Location minLocation = map.locationOf(actor);
         Location closestFruit = closestFood(actor, map);
         if (closestFruit == null){
-            System.out.println("There are no fruits available in map");
+            System.out.println("There is no vegetarian food available in map");
             return null;
         }
 
@@ -43,21 +44,21 @@ public class SeekFruitBehaviour implements Behaviour{
         if (minDistance == 0){
             // On same ground as fruit, so eating it
             name = eatFood(actor, closestFruit);
-        }
-
-        for (Exit exit : map.locationOf(actor).getExits()) {
-            Location destination = exit.getDestination();
-            if (destination.canActorEnter(actor)) {
-                int newDistance = distance(closestFruit, destination);
-                if (newDistance < minDistance){
-                    minDistance = newDistance;
-                    minLocation = destination;
-                    name = exit.getName();
+            return null;
+        } else {
+            for (Exit exit : map.locationOf(actor).getExits()) {
+                Location destination = exit.getDestination();
+                if (destination.canActorEnter(actor)) {
+                    int newDistance = distance(closestFruit, destination);
+                    if (newDistance < minDistance) {
+                        minDistance = newDistance;
+                        minLocation = destination;
+                        name = exit.getName();
+                    }
                 }
             }
+            return new MoveActorAction(minLocation, name);
         }
-        return new MoveActorAction(minLocation, name);
-
     }
 
     /**
@@ -78,32 +79,53 @@ public class SeekFruitBehaviour implements Behaviour{
             for (int i : width){
                 for (int j : height){
                     Location newLocation = map.at(i, j);
-                    if (newLocation.getGround() != null){
-                        // if found a bush
-                        if (newLocation.getGround().getDisplayChar() == 'b') {
-                            Bush currentBush = (Bush) newLocation.getGround();
-                            // if bush has fruits
-                            if (currentBush.getFruits() > 0){
-                                foundFood = true;
-                                int distance = distance(dinoLocation, newLocation);
-                                // compare and update best distance and best location
-                                if (distance < minDistance){
-                                    minDistance = distance;
-                                    bestLocation = newLocation;
+                    if (newLocation.getGround() != null) {
+                        // if dino is brachiosaur, find closest tree
+                        if (type == 'R') {
+                            char groundType = newLocation.getGround().getDisplayChar();
+                            // if tree
+                            if (groundType == '+' || groundType == 't' || groundType == 'T') {
+                                Tree currentTree = (Tree) newLocation.getGround();
+
+                                // if tree has fruits
+                                if (currentTree.containsFruit()) {
+                                    foundFood = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    // compare and update best distance and best location
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
                                 }
                             }
-                        }
-                        // iterate through all items in current location
-                        List<Item> items = newLocation.getItems();
-                        for (Item item : items){
-                            // check if fruit is there
-                            if (item.getDisplayChar() == 'f'){
-                                foundFood = true;
-                                int distance = distance(dinoLocation, newLocation);
-                                if (distance < minDistance){
-                                    minDistance = distance;
-                                    bestLocation = newLocation;
+                        } else if (type == 'S') {
+                            // if dino is stegosaur
 
+                            // if found a bush
+                            if (newLocation.getGround().getDisplayChar() == 'b') {
+                                Bush currentBush = (Bush) newLocation.getGround();
+                                // if bush has fruits
+                                if (currentBush.getFruits() > 0) {
+                                    foundFood = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    // compare and update best distance and best location
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
+                                }
+                            }
+                            // iterate through all items in current location
+                            List<Item> items = newLocation.getItems();
+                            for (Item item : items) {
+                                // check if fruit is there
+                                if (item.getDisplayChar() == 'f') {
+                                    foundFood = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
                                 }
                             }
                         }
@@ -118,7 +140,8 @@ public class SeekFruitBehaviour implements Behaviour{
     }
 
     /**
-     * Used to get the first location in the map that contains either a fruit or a bush with fruits
+     * Used to get the first location in the map that contains either a fruit or a bush with fruits for stegosaur
+     * or tree with fruits for brachiosaur
      * @param map map which dinosaur is on
      * @return first location in the map that contains either a fruit or a bush with fruits
      */
@@ -129,18 +152,32 @@ public class SeekFruitBehaviour implements Behaviour{
             for (int j : height){
                 Location newLocation = map.at(i, j);
                 if (newLocation.getGround() != null){
-                    // if location with bush found, return location
-                    if (newLocation.getGround().getDisplayChar() == 'b') {
-                        Bush currentBush = (Bush) newLocation.getGround();
-                        if (currentBush.getFruits() > 0){
-                            return newLocation;
+                    // if actor is brachiosaur, find tree
+                    if (type == 'R'){
+                        char groundChar = newLocation.getDisplayChar();
+                        if (groundChar == '+' || groundChar == 't' || groundChar == 'T'){
+                            Tree currentTree = (Tree) newLocation.getGround();
+                            if (currentTree.containsFruit()){
+                                return newLocation;
+                            }
                         }
-                    }
-                    // if location with fruit found, return location
-                    List<Item> items = newLocation.getItems();
-                    for (Item item : items){
-                        if (item.getDisplayChar() == 'f'){
-                            return newLocation;
+                    } else {
+                        // if actor is stegosaur, find fruit or bush
+
+                        // if location with bush found, return location
+                        if (newLocation.getGround().getDisplayChar() == 'b') {
+                            Bush currentBush = (Bush) newLocation.getGround();
+                            if (currentBush.containsFruit()) {
+                                return newLocation;
+                            }
+                        }
+
+                        // if location with fruit found, return location
+                        List<Item> items = newLocation.getItems();
+                        for (Item item : items) {
+                            if (item.getDisplayChar() == 'f') {
+                                return newLocation;
+                            }
                         }
                     }
                 }
@@ -169,26 +206,38 @@ public class SeekFruitBehaviour implements Behaviour{
      * @return a string saying went nowhere, since dinosaur was eating
      */
     private String eatFood(Actor actor, Location fruitLocation){
-        if (type == 'S'){
+        if (type == 'S') {
             Stegosaur steg = (Stegosaur) actor;
             steg.heal(10);
-        }
 
-        if (fruitLocation.getGround().getDisplayChar() == 'b'){
-            Bush bush = (Bush) fruitLocation.getGround();
-            bush.removeFruit();
-        }
-        else {
-            List<Item> items = fruitLocation.getItems();
-            for (int i = 0; i<items.size(); i++ ){
-                if (items.get(i).getDisplayChar() == 'f'){
-                    fruitLocation.removeItem(items.get(i));
-                    System.out.println("Stegasour at location (" + fruitLocation.x() + "," + fruitLocation.y() +")eats");
+
+            if (fruitLocation.getGround().getDisplayChar() == 'b') {
+                Bush bush = (Bush) fruitLocation.getGround();
+                bush.removeFruit();
+            } else {
+                List<Item> items = fruitLocation.getItems();
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).getDisplayChar() == 'f') {
+                        fruitLocation.removeItem(items.get(i));
+                        System.out.println(actor.toString() + " at location (" + fruitLocation.x() + "," +
+                                fruitLocation.y() + ") eats");
+                    }
                 }
             }
+        } else if (type == 'R'){
+            // if brachiosaur
+            Brachiosaur brach = (Brachiosaur) actor;
+            Tree currentTree = (Tree) fruitLocation.getGround();
+            // brachiosaur eats all fruits
+            // each fruit heals brach by 5
+            brach.heal(currentTree.getFruits() * 5);
+
+            // remove all fruits from tree
+            currentTree.setFruits(0);
+            System.out.println(actor.toString() + " at location (" + fruitLocation.x() + "," + fruitLocation.y() +
+                    ") eats");
         }
         return "nowhere";
-
     }
 
 //    Below method can be used to simulate fruits falling from trees for testing :

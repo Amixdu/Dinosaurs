@@ -9,12 +9,26 @@ import java.util.Locale;
 import java.util.Random;
 
 public class SearchFruitAction extends Action {
+    /**
+     * Target ground (Fruit Producer) that actor will search
+     */
     private FruitProducer target;
 
+    /**
+     * Contructor
+     * @param target
+     */
     public SearchFruitAction(FruitProducer target){
         this.target = target;
     }
 
+    /**
+     * Search for fruit in bush or tree
+     * increase ecopoints by 10 if successful
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String result;
@@ -31,6 +45,10 @@ public class SearchFruitAction extends Action {
                 // success
                 target.removeFruit();
                 actor.addItemToInventory(new Fruit());
+
+                // increase eco points
+                Player player = (Player) actor;
+                player.increaseEcoPoints(10);
                 result = "Success! Fruit added to inventory";
             }
         }

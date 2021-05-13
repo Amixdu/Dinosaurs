@@ -42,7 +42,7 @@ public class FeedVegetarianAction extends Action {
         int afterFeeding;
 
         // Cant feed if stegosaur is already full
-        if (vegetarianDinosaur.getHitPoints() >= 100){
+        if (vegetarianDinosaur.getHitPoints() >= vegetarianDinosaur.getMaxHitPoints()){
             return (result + ", but " + vegetarianDinosaur.getName() + " is full!");
         }
 
@@ -124,7 +124,7 @@ public class FeedVegetarianAction extends Action {
         return vegetarianDinosaur.getHitPoints();
     }
 
-    /**eals dinosaur from vegetarian meal kit and increases players eco points
+    /**Heals dinosaur from vegetarian meal kit and increases players eco points
      * @return Amount of hit points after healing
      */
     private int feedMealKit(){
