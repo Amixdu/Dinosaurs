@@ -19,6 +19,7 @@ public class Dirt extends Ground {
 	}
 
 	/**
+	 * Passage of time for dirt
 	 * If current Dirt is next not next to any Tree, turns current Dirt into Bush with 1% chance
 	 * If current Dirt is next to at least 2 bushes, turns current Dirt into Bush with 10% chance
 	 * @param location The location of the Ground

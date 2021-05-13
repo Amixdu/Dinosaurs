@@ -1,35 +1,29 @@
 package game;
 
 import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Location;
 
 /**
  * Implement the Bush class
  * @author Amindu Kaushal Kumarasinghe
  */
-public class Bush extends Ground {
-    private int fruits;
+public class Bush extends FruitProducer {
     /**
      * Constructor.
-     *
-     *
      */
     public Bush() {
         super('b');
-        this.fruits = 1;
+        setFruits(1);
     }
 
     /**
-     * Getter method for the number of fruits
-     * @return number of fruits in bush
+     * Passage of time for Bush
+     * Grows a fruit with 10% chance
+     * @param location The location of the Ground
      */
-    public int getFruits() {
-        return fruits;
-    }
-
-    /**
-     * Method for removing fruits off a bush one at a time
-     */
-    public void removeFruit(){
-        this.fruits -= 1;
+    @Override
+    public void tick(Location location) {
+        // grow fruit with 10% chance
+        growFruit(10);
     }
 }
