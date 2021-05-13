@@ -16,6 +16,11 @@ public class Fruit extends PortableItem{
         super("Fruit", 'f');
     }
 
+    /**
+     * Passage of time for Fruit
+     * removes fruit once it is rotten (age > 15)
+     * @param currentLocation The location of the ground on which we lie.
+     */
     @Override
     public void tick(Location currentLocation) {
         age++;

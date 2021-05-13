@@ -1,11 +1,6 @@
 package game;
 
-import edu.monash.fit2099.engine.Action;
-import edu.monash.fit2099.engine.Actions;
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.Menu;
+import edu.monash.fit2099.engine.*;
 
 /**
  * Class representing the Player.
@@ -46,6 +41,11 @@ public class Player extends Actor {
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
+		// if player is on top of bush or tree
+		Ground currentGround = map.locationOf(this).getGround();
+		if (currentGround.hasCapability(ProduceFruit.YES)) {
+			actions.add(new SearchFruitAction((FruitProducer) currentGround));
+		}
 		return menu.showMenu(this, actions, display);
 	}
 

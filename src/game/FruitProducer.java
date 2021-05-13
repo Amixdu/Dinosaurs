@@ -16,6 +16,7 @@ public abstract class FruitProducer extends Ground {
      */
     public FruitProducer(char displayChar) {
         super(displayChar);
+        addCapability(ProduceFruit.YES);
     }
 
     /**

@@ -1,5 +1,7 @@
 package game;
 
+import edu.monash.fit2099.engine.Actions;
+import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Location;
 
 import java.util.Random;
@@ -36,7 +38,9 @@ public class Tree extends FruitProducer {
 		growFruit(50);
 
 		// drop fruit with 5% chance at location of tree
-		location.addItem(dropFruit(5));
+		Fruit newFruit = dropFruit(5);
+		if (newFruit != null)
+			location.addItem(newFruit);
 	}
 
 	public Fruit dropFruit(int chance){

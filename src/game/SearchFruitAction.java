@@ -1,0 +1,44 @@
+package game;
+
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actor;
+import edu.monash.fit2099.engine.GameMap;
+import edu.monash.fit2099.engine.Location;
+
+import java.util.Locale;
+import java.util.Random;
+
+public class SearchFruitAction extends Action {
+    private FruitProducer target;
+
+    public SearchFruitAction(FruitProducer target){
+        this.target = target;
+    }
+
+    @Override
+    public String execute(Actor actor, GameMap map) {
+        String result;
+        Random rand = new Random();
+
+        // fails if no fruits
+        if (!target.containsFruit()){
+            result = "Fail! No ripe fruits available";
+        } else {
+            // 60% chance of failing regardless
+            if (rand.nextInt(100) < 60){
+                result = "Fail! Can't find any ripe fruits";
+            } else {
+                // success
+                target.removeFruit();
+                actor.addItemToInventory(new Fruit());
+                result = "Success! Fruit added to inventory";
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String menuDescription(Actor actor) {
+        return actor.toString() + " searches for fruit";
+    }
+}
