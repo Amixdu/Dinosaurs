@@ -26,9 +26,9 @@ public class Allosaur extends CarnivorousDinosaur {
      * @param sex               Sex of the dinosaur
      * @param startingHitPoints starting hitpoints for the dinosaur
      */
-    public Allosaur(String name, Sex sex, int startingHitPoints) {
+    public Allosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
         super(name, 'A', sex, startingHitPoints, 100, 20, 90,
-                20, 50);
+                20, 50, ageGroup, 50);
 
         //behaviors
         hBehaviour = new SeekMeatBehaviour(true);

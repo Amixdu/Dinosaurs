@@ -73,13 +73,13 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male));
-		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female));
+		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male, AgeGroup.ADULT));
+		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female, AgeGroup.ADULT));
 		// place a herd of brachiosaurs in the map
-		gameMap.at(35, 14).addActor(new Brachiosaur("Brachiosaur A (M)", Sex.Male));
-		gameMap.at(33, 14).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female));
-		gameMap.at(35, 15).addActor(new Brachiosaur("Brachiosaur C (M)", Sex.Male));
-		gameMap.at(33, 15).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female));
+		gameMap.at(35, 14).addActor(new Brachiosaur("Brachiosaur A (M)", Sex.Male, AgeGroup.ADULT));
+		gameMap.at(33, 14).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female, AgeGroup.ADULT));
+		gameMap.at(35, 15).addActor(new Brachiosaur("Brachiosaur C (M)", Sex.Male, AgeGroup.ADULT));
+		gameMap.at(33, 15).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female, AgeGroup.ADULT));
 			
 		world.run();
 	}

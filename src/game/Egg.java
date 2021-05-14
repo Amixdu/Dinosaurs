@@ -51,13 +51,15 @@ public class Egg extends PortableItem{
 
             if (displayChar == 'e'){
                 // allosaur egg -> baby allosaur
-                currentLocation.addActor(new BabyAllosaur("Allosaur", sexOfBaby));
+                currentLocation.addActor(new Allosaur("Allosaur", sexOfBaby, 20, AgeGroup.BABY));
                 currentLocation.removeItem(this);
             } else if (displayChar == 'q') {
                 // stegosaur egg -> baby stegosaur
+                currentLocation.addActor(new Stegosaur("Stegosaur", sexOfBaby, 10, AgeGroup.BABY));
 
             } else if (displayChar == 'w') {
                 // brachiosaur egg -> baby brachiosaur
+                currentLocation.addActor(new Brachiosaur("Brachiosaur", sexOfBaby, 10, AgeGroup.BABY));
 
             }
 

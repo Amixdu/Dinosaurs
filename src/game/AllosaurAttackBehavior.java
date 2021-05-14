@@ -36,7 +36,12 @@ public class AllosaurAttackBehavior implements Behaviour{
                                     if (distance(current, newLocation) == 1){
                                         // Resetting attack cool down
                                         steg.resetAttackCoolDown();
-                                        return (new AllosaurAttackAction(actor, target, 20, 20));
+                                        Dinosaur dino = (Dinosaur) actor;
+                                        int damage = 20;
+                                        // if attacker is a baby allosaur, only do 10 damage and heal 10 points
+                                        if (dino.getAgeGroup() == AgeGroup.BABY)
+                                            damage = 10;
+                                        return (new AllosaurAttackAction(actor, target, damage, damage));
                                     }
                                 }
                             }

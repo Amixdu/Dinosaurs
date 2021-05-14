@@ -19,10 +19,13 @@ public class CarnivorousDinosaur extends Dinosaur {
      * @param hungerAmount Amount of health points below which a dinosaur feels hunger
      * @param turnsToLayEgg turns it takes to lay eggs
      * @param mateAmount food level above which mating is possible
+     * @param ageGroup Age group of the dino (Baby or Adult)
+     * @param timeToGrow turns needed to turn baby dinosaur to adult
      */
     public CarnivorousDinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                               int hungerAmount, int turnsToLayEgg, int mateAmount) {
-        super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount, turnsToLayEgg, mateAmount);
+                               int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow) {
+        super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount,
+                turnsToLayEgg, mateAmount, ageGroup, timeToGrow);
     }
 
     /**

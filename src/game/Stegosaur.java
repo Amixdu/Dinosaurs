@@ -24,9 +24,17 @@ public class Stegosaur extends VegetarianDinosaur {
 	 * @param name name of the Stegosaur
 	 * @param sex Sex of the Stegosaur
 	 */
-	public Stegosaur(String name, Sex sex) {
-		super(name, 'S', sex, 50, 100, 20, 90, 10, 50);
+	public Stegosaur(String name, Sex sex, AgeGroup ageGroup) {
+		super(name, 'S', sex, 50, 100, 20, 90,
+				10, 50, ageGroup, 30);
 		this.attackCoolDown = 20;
+	}
+
+	public Stegosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup){
+		super(name, 'S', sex, startingHitPoints, 100, 20, 90,
+				10, 50, ageGroup, 30);
+		this.attackCoolDown = 20;
+
 	}
 
 

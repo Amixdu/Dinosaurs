@@ -2,11 +2,23 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * Base Class Dinosaur
+ * @author Abhishek Shrestha
+ */
 public abstract class Dinosaur extends Actor {
     /**
      * AgeGroup of the dinosaur -> adult or baby
      */
     private AgeGroup ageGroup;
+    /**
+     * Turns needed to grow from baby to adult
+     */
+    private int timeToGrow;
+    /**
+     * Age of the dinosaur
+     */
+    private int age;
     /**
      * Sex of the Dinosaur (Male or Female)
      */
@@ -65,9 +77,10 @@ public abstract class Dinosaur extends Actor {
      * @param hungerAmount Amount of health points below which a dinosaur feels hunger
      * @param turnsToLayEgg turns it takes to lay eggs
      * @param mateAmount food level above which mating is possible
+     * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -79,10 +92,29 @@ public abstract class Dinosaur extends Actor {
         this.turnsSinceMate = 0;
         this.turnsToLayEgg = turnsToLayEgg;
         this.mateAmount = mateAmount;
+        this.ageGroup = ageGroup;
+        this.timeToGrow = timeToGrow;
+        this.age = 0;
 
         //behaviors
         mBehavior = new MateBehavior();
         wBehaviour = new WanderBehaviour();
+    }
+
+    /**
+     *
+     * @return ageGroup
+     */
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
+
+    /**
+     * sets Age Gruop for the dinosaur
+     * @param ageGroup
+     */
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
     }
 
     /**
@@ -99,10 +131,21 @@ public abstract class Dinosaur extends Actor {
             // reduce food level each turn
             this.hurt(1);
 
-            if (hasMated){
+            // increase age
+            age++;
+
+            // check if adult
+            if (age == timeToGrow && ageGroup == AgeGroup.BABY){
+                ageGroup = AgeGroup.ADULT;
+                System.out.printf("Baby %s at (%d,%d) grew to become an adult.\n", toString(),
+                        map.locationOf(this).x(), map.locationOf(this).y() );
+            }
+
+            // increment turnsSinceMate if has already mated (for adult female)
+            if (hasMated && ageGroup == AgeGroup.ADULT){
                 turnsSinceMate++;
             }
-            if (hitPoints > mateAmount){
+            if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
                 if (mateAction != null){
@@ -237,4 +280,5 @@ public abstract class Dinosaur extends Actor {
     public int getHungerAmount() {
         return hungerAmount;
     }
+
 }

@@ -31,10 +31,10 @@ public class BabyAllosaur extends CarnivorousDinosaur {
      * @param name the name of the BabyAllosaur
      * @param sex sex of the BabyAllosaur
      */
-    public BabyAllosaur(String name, Sex sex) {
+    public BabyAllosaur(String name, Sex sex, AgeGroup ageGroup) {
         // display character for BabyAllosaur is 'a'
         super(name, 'a', sex, 20, 100, 20, 90,
-                20, 50);
+                20, 50, ageGroup, 50);
         growth = 0;
         timeToGrow = 5;
 
@@ -123,7 +123,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
             int currentHitPoints = this.hitPoints;
             map.removeActor(this);
             System.out.println(currentHitPoints);
-            location.addActor(new Allosaur("Allosaur", sex, currentHitPoints));
+            location.addActor(new Allosaur("Allosaur", getSex(), currentHitPoints, AgeGroup.ADULT));
             return true;
         }
         return false;

@@ -22,7 +22,7 @@ public class MateBehavior implements Behaviour{
 
 
         // if female has mated successfully -> LayEggs
-        if (dino.getHasMated()){
+        if (dino.getHasMated() && dino.getAgeGroup() == AgeGroup.ADULT){
             // if enough time has passed to lay eggs
             if (dino.getTurnsSinceMate() == dino.getTurnsToLayEgg()){
                 // lay egg
@@ -39,7 +39,9 @@ public class MateBehavior implements Behaviour{
                 if (adjacentActor.getDisplayChar() == dinoChar){
                     // if dino of same species is adjacent
                     Dinosaur adjacentDino = (Dinosaur) adjacentActor;
-                    if (adjacentDino.getSex() != dinoSex){
+                    // if both dinos are of opposite sex and are adults
+                    if (adjacentDino.getSex() != dinoSex && adjacentDino.getAgeGroup() == AgeGroup.ADULT
+                            && dino.getAgeGroup() == AgeGroup.ADULT){
                         // if they have different sex
                         // if not pregnant
                         if (!adjacentDino.getHasMated() && !dino.getHasMated())
@@ -63,12 +65,15 @@ public class MateBehavior implements Behaviour{
                     if (nearbyActor.getDisplayChar() == dinoChar){
                         // if dino of the same species are nearby
                         Dinosaur nearbyDino = (Dinosaur) nearbyActor;
-                        if (nearbyDino.getSex() != dinoSex && !nearbyDino.getHasMated() && !dino.getHasMated()){
-                            // if they have different sex and female dino is not pregnant
-                            minDistance = distance(actorLocation, map.locationOf(nearbyActor));
-                            foundNearByDino = true;
-                            nextLocation = map.locationOf(nearbyActor);
-                            break;
+                        // if both dinosaurs are adults
+                        if (nearbyDino.getAgeGroup() == AgeGroup.ADULT && dino.getAgeGroup() == AgeGroup.ADULT){
+                            if (nearbyDino.getSex() != dinoSex && !nearbyDino.getHasMated() && !dino.getHasMated()){
+                                // if they have different sex and female dino is not pregnant
+                                minDistance = distance(actorLocation, map.locationOf(nearbyActor));
+                                foundNearByDino = true;
+                                nextLocation = map.locationOf(nearbyActor);
+                                break;
+                            }
                         }
                     }
                 }
