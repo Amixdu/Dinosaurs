@@ -18,18 +18,17 @@ public class Stegosaur extends VegetarianDinosaur {
 	 */
 	private int attackCoolDown;
 
-
 	/**
-	 * Constructor.
-	 * All Stegosaurs are represented by a 'S' and have 100 hit points.
-	 * @param name the name of this Stegosaur
+	 * Constructor
+	 * All Stegosaurs are represented by S and have 100 hit points
+	 * @param name name of the Stegosaur
+	 * @param sex Sex of the Stegosaur
 	 */
-	public Stegosaur(String name) {
-		super(name, 'S', 50, 100, 20, 90);
-		// starting with 20, so initial attack will be possible
-		attackCoolDown = 20;
-
+	public Stegosaur(String name, Sex sex) {
+		super(name, 'S', sex, 50, 100, 20, 90, 10, 50);
+		this.attackCoolDown = 20;
 	}
+
 
 	/**
 	 * Updates attackCoolDown counter and calls super
@@ -46,6 +45,14 @@ public class Stegosaur extends VegetarianDinosaur {
 		return super.playTurn(actions, lastAction, map, display);
 	}
 
+	/**
+	 * Returns a collection of the Actions that the otherActor can do to the current Actor.
+	 * adds AttackAction to the collection
+	 * @param otherActor the Actor that might be performing attack
+	 * @param direction  String representing the direction of the other Actor
+	 * @param map        current GameMap
+	 * @return
+	 */
 	@Override
 	public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
 		Actions actions = super.getAllowableActions(otherActor, direction, map);

@@ -6,10 +6,11 @@ public class Brachiosaur extends VegetarianDinosaur{
     /**
      * Constructor.
      *
-     * @param name the name of the Actor
+     * @param name the name of the Brachiosaur
+     * @param sex sex of the Brachiosaur
      */
-    public Brachiosaur(String name) {
-        super(name, 'R', 100, 160, 15, 140);
+    public Brachiosaur(String name, Sex sex) {
+        super(name, 'R', sex, 100, 160, 15, 140, 30, 70);
     }
 
     @Override

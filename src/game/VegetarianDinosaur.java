@@ -6,32 +6,29 @@ import edu.monash.fit2099.engine.*;
  * Implementation of vegetarianDinosaur class
  * @author Amindu Kaushal Kumarasinghe
  */
-public class VegetarianDinosaur extends Actor {
-    private int unconsciousCount;
-    private int maxUconsciousRounds;
-    private int hungerAmount;
-    private Behaviour wBehaviour;
-    private Behaviour hBehaviour;
-    /**
-     * Constructor.
-     *
-     * @param name        the name of the Actor
-     * @param displayChar the character that will represent the Actor in the display
-     * @param startingHitPoints   the Actor's starting hit points
-     * @param hungerAmount amount below which a dinosaur is hungry
-     * @param maxHitPoints maximum hit points
-     * @param maxUnconsciousRounds number of rounds the dinosaur can stay unconscjious before dying
-     *
-     */
-    public VegetarianDinosaur(String name, char displayChar, int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds, int hungerAmount) {
-        super(name, displayChar, maxHitPoints);
-        // Sets the starting level to value indicated by startingHitPoints
-        this.hurt(maxHitPoints - startingHitPoints);
-        this.maxUconsciousRounds = maxUnconsciousRounds;
-        this.hungerAmount = hungerAmount;
-        wBehaviour = new WanderBehaviour();
-        hBehaviour = new SeekFruitBehaviour(displayChar);
+public class VegetarianDinosaur extends Dinosaur {
 
+    /**
+     * Hunger Behavior for Vegetarian Dinosaur
+     */
+    private Behaviour hBehaviour;
+
+    /**
+     * Constructor
+     * @param name Name of the Dinosaur
+     * @param displayChar Display char of the dinosaur
+     * @param sex Sex of the dinosaur
+     * @param startingHitPoints starting hitpoints for the dinosaur
+     * @param maxHitPoints max hitpoints for the dinosaur
+     * @param maxUnconsciousRounds number of rounds a dinosaur can stay unconscious without dying
+     * @param hungerAmount Amount of health points below which a dinosaur feels hunger
+     * @param turnsToLayEgg turns it takes to lay eggs
+     * @param mateAmount food level above which mating is possible
+     */
+    public VegetarianDinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
+                              int hungerAmount, int turnsToLayEgg, int mateAmount) {
+        super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount, turnsToLayEgg, mateAmount);
+        hBehaviour = new SeekFruitBehaviour(displayChar);
     }
 
     /**
@@ -62,73 +59,25 @@ public class VegetarianDinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        Action superAction = super.playTurn(actions, lastAction, map, display);
+        boolean superActionSuccess = false;
+        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction){
+            superActionSuccess = true;
+        }
+        Action finalAction = superAction;
         if (this.isConscious()){
-            // reduce food level each turn
-            this.hurt(1);
-            if (this.hitPoints < hungerAmount){
-                System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+            // if hungry
+            if (this.hitPoints < getHungerAmount()){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
-                if (hungerMovement != null)
-                    return hungerMovement;
-                else{
-                    // If null is returned, it means no food in map, so dinosaur just wanders
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null)
-                        return wander;
-                    else{
-                        return new DoNothingAction();
-                    }
-                }
-            }
-            // if not hungry, wander
-            else{
-                Action wander = wBehaviour.getAction(this, map);
-                if (wander != null)
-                    return wander;
-                else{
-                    return new DoNothingAction();
+
+                // breeding takes precedences over hunger
+                // if breeding action is not returned, then hunger action
+                if (hungerMovement != null && !superActionSuccess){
+                    finalAction = hungerMovement;
                 }
             }
         }
-        // if not conscious check and update the number of turns the dinosaur has been unconscious for
-        else {
-            if (unconsciousCount < maxUconsciousRounds){
-                this.unconsciousCount += 1;
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
-            }
-            else {
-
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
-                map.locationOf(this).addItem(corpse);
-                map.removeActor(this);
-            }
-
-            return new DoNothingAction();
-        }
-    }
-
-    /**
-     *
-     * @return name of the dinosaur
-     */
-    public String getName(){
-        return this.name;
-    }
-
-    /**
-     *
-     * @return current hitpoints of the dinosaur
-     */
-    public int getHitPoints(){
-        return this.hitPoints;
-    }
-
-    /**
-     *
-     * @return maximum hit points of the dinosaur
-     */
-    public int getMaxHitPoints(){
-        return this.maxHitPoints;
+        return finalAction;
     }
 }

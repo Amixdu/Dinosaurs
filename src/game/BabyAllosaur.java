@@ -14,17 +14,9 @@ public class BabyAllosaur extends CarnivorousDinosaur {
      */
     int growth;
     /**
-     * Rounds that the dinosaur can stay unconscious before dying
-     */
-    int unconsciousCount;
-    /**
      * No. of rounds for the baby to grow to an adult
      */
     int timeToGrow;
-    /**
-     * Wander behaviour
-     */
-    Behaviour wBehaviour;
     /**
      * Hunger behaviour
      */
@@ -36,15 +28,17 @@ public class BabyAllosaur extends CarnivorousDinosaur {
     /**
      * Constructor.
      *
-     * @param name        the name of the Actor
-     * @param displayChar the character that will represent the Actor in the display
+     * @param name the name of the BabyAllosaur
+     * @param sex sex of the BabyAllosaur
      */
-    public BabyAllosaur(String name, char displayChar) {
-        super(name, displayChar, 20, 100, 20, 90);
+    public BabyAllosaur(String name, Sex sex) {
+        // display character for BabyAllosaur is 'a'
+        super(name, 'a', sex, 20, 100, 20, 90,
+                20, 50);
         growth = 0;
-        unconsciousCount = 0;
-        this.timeToGrow = 5;
-        wBehaviour = new WanderBehaviour();
+        timeToGrow = 5;
+
+        // behaviors
         hBehaviour = new SeekMeatBehaviour(false);
         aBehaviour = new AllosaurAttackBehavior();
 
@@ -64,64 +58,56 @@ public class BabyAllosaur extends CarnivorousDinosaur {
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         boolean isAdult = growth(map);
-        if (!isAdult){
-            if (this.isConscious()){
-                this.hurt(1);
-                if (this.hitPoints < this.getHungerAmount()){
-                    System.out.println(this.name + "at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+
+        Action superAction = super.playTurn(actions, lastAction, map, display);
+        boolean superActionSuccess = false;
+        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction) {
+            superActionSuccess = true;
+        }
+        Action finalAction = superAction;
+
+        if (!isAdult) {
+            // if still a baby
+
+            if (this.isConscious()) {
+                // if hungry
+                if (this.hitPoints < this.getHungerAmount()) {
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                     Action hungerMovement = hBehaviour.getAction(this, map);
-                    if (hungerMovement != null)
-                        return hungerMovement;
-                    else{
-                        // If null is returned, it means no food in map, so dinosaur just wanders
-                        // If null is returned, it means no food in map, so dinosaur just wanders.
-                        // if stegosaur nearby, the allosaur attacks it
-                        Action attack = aBehaviour.getAction(this, map);
-                        if (attack != null){
-                            return attack;
-                        }
-//                      if no stegosaurs nearby, just wander
-                        else{
-                            Action wander = wBehaviour.getAction(this, map);
-                            if (wander != null)
-                                return wander;
-                            else{
-                                return new DoNothingAction();
+
+                    // breeding takes precedence over hunger
+                    // if no breeding action, then hunger movement
+                    if (!superActionSuccess) {
+                        if (hungerMovement != null) {
+                            finalAction = hungerMovement;
+                        } else {
+                            // if hunger movement is null -> no food in map
+                            // if Stegosaur is nearby, the Allosaur attacks it
+                            Action attack = aBehaviour.getAction(this, map);
+                            if (attack != null) {
+                                finalAction = attack;
                             }
                         }
                     }
-                }
-                else{
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null)
-                        return wander;
-                    else{
-                        return new DoNothingAction();
+                } else {
+                    // if not hungry, check if stegosaur is nearby to attack
+
+                    // breeding takes precedence over attacking Stegosaur
+                    // if no breeding action, then hunger movement
+
+                    if (!superActionSuccess){
+                        Action attack = aBehaviour.getAction(this, map);
+                        if (attack != null){
+                            finalAction = attack;
+                        }
                     }
                 }
             }
-            // if not hungry, check is any stegosaurs are nearby to attack
-            else{
-                Action attack = aBehaviour.getAction(this, map);
-                if (attack != null){
-                    return attack;
-                }
-//                if no stegosaurs nearby, just wander
-                else{
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null)
-                        return wander;
-                    else{
-                        return new DoNothingAction();
-                    }
-                }
-
-            }
+        } else{
+            // if is adult, then this baby Allosaur is removed from map, so Do nothing
+            finalAction =  new DoNothingAction();
         }
-        else{
-            return new DoNothingAction();
-        }
-
+        return finalAction;
     }
 
     /**
@@ -137,7 +123,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
             int currentHitPoints = this.hitPoints;
             map.removeActor(this);
             System.out.println(currentHitPoints);
-            location.addActor(new Allosaur("Allosaur", 'A', currentHitPoints));
+            location.addActor(new Allosaur("Allosaur", sex, currentHitPoints));
             return true;
         }
         return false;

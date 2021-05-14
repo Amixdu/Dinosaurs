@@ -9,22 +9,28 @@ import edu.monash.fit2099.engine.*;
  * @author Abhishek Shreshta
  */
 public class Allosaur extends CarnivorousDinosaur {
-    private int unconsciousCount;
-    Behaviour wBehaviour;
-    Behaviour hBehaviour;
-    Behaviour aBehaviour;
+
     /**
-     * Constructor.
-     *
-     * @param name        the name of the Actor
-     * @param displayChar the character that will represent the Actor in the display
-     * @param currentHitPoints   the Actor's starting hit points
+     * hunger Behavior for Allosaur
      */
-    public Allosaur(String name, char displayChar, int currentHitPoints) {
-        super(name, displayChar, 100, 100, 20, 90);
-        this.hurt(maxHitPoints - currentHitPoints);
-        unconsciousCount = 0;
-        wBehaviour = new WanderBehaviour();
+    private Behaviour hBehaviour;
+    /**
+     * Attack Behavior for Allosaur
+     */
+    private Behaviour aBehaviour;
+
+    /**
+     * Constructor
+     *
+     * @param name              Name of the Dinosaur
+     * @param sex               Sex of the dinosaur
+     * @param startingHitPoints starting hitpoints for the dinosaur
+     */
+    public Allosaur(String name, Sex sex, int startingHitPoints) {
+        super(name, 'A', sex, startingHitPoints, 100, 20, 90,
+                20, 50);
+
+        //behaviors
         hBehaviour = new SeekMeatBehaviour(true);
         aBehaviour = new AllosaurAttackBehavior();
     }
@@ -37,67 +43,50 @@ public class Allosaur extends CarnivorousDinosaur {
      * @param map        the map containing the Actor
      * @param display    the I/O object to which messages may be written
      * @return the Action to be performed. This method returns either a wander movement,
-     *         a hunger movement(looking for food) or a DoNothingAction.
+     * a hunger movement(looking for food) or a DoNothingAction.
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        if (this.isConscious()){
-            this.hurt(1);
-            // checking if hungry
-            if (this.hitPoints < this.getHungerAmount()){
+        Action superAction = super.playTurn(actions, lastAction, map, display);
+        boolean superActionSuccess = false;
+        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction) {
+            superActionSuccess = true;
+        }
+        Action finalAction = superAction;
+        if (this.isConscious()) {
+            // if hungry
+            if (this.hitPoints < this.getHungerAmount()) {
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
                 Action hungerMovement = hBehaviour.getAction(this, map);
-                if (hungerMovement != null)
-                    return hungerMovement;
-                else{
-                    // If null is returned, it means no food in map, so dinosaur just wanders.
-                    // if stegosaur nearby, the allosaur attacks it
-                    Action attack = aBehaviour.getAction(this, map);
-                    if (attack != null){
-                        return attack;
-                    }
-                    // if no stegosaurs nearby, just wander
-                    else{
-                        Action wander = wBehaviour.getAction(this, map);
-                        if (wander != null)
-                            return wander;
-                        else{
-                            return new DoNothingAction();
+
+                // breeding takes precedence over hunger
+                // if no breeding action, then hunger movement
+                if (!superActionSuccess) {
+                    if (hungerMovement != null) {
+                        finalAction = hungerMovement;
+                    } else {
+                        // if hunger movement is null -> no food in map
+                        // if Stegosaur is nearby, the Allosaur attacks it
+                        Action attack = aBehaviour.getAction(this, map);
+                        if (attack != null) {
+                            finalAction = attack;
                         }
                     }
                 }
-            }
-            // if not hungry, check is any stegosaurs are nearby to attack
-            else{
-                Action attack = aBehaviour.getAction(this, map);
-                if (attack != null){
-                    return attack;
-                }
-                // if no stegosaurs nearby, just wander
-                else{
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null)
-                        return wander;
-                    else{
-                        return new DoNothingAction();
+            } else {
+                // if not hungry, check if stegosaur is nearby to attack
+
+                // breeding takes precedence over attacking Stegosaur
+                // if no breeding action, then hunger movement
+
+                if (!superActionSuccess){
+                    Action attack = aBehaviour.getAction(this, map);
+                    if (attack != null){
+                        finalAction = attack;
                     }
                 }
-
             }
         }
-        // if not conscious, update counter
-        else {
-            if (unconsciousCount < this.getMaxUnconsciousRounds()){
-                this.unconsciousCount += 1;
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
-            }
-            else {
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
-                map.locationOf(this).addItem(corpse);
-                map.removeActor(this);
-            }
-            return new DoNothingAction();
-        }
+        return finalAction;
     }
 }

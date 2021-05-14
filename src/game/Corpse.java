@@ -31,7 +31,7 @@ public class Corpse extends Item {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
-        if (corpseType == 'S' || corpseType == 'B' || corpseType == 's' || corpseType == 'b'){
+        if (corpseType == 'S' || corpseType == 'R' || corpseType == 's' || corpseType == 'r'){
             if(rounds >= 20){
                 currentLocation.removeItem(this);
             }

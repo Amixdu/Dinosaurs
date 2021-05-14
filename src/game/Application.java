@@ -59,7 +59,7 @@ public class Application {
 
 //		 Add an allosaur egg to inventory, to see egg hatching and growing into an adult
 //		 and looking for meat or eggs when hungry:
-//		 player.addItemToInventory(new AllosaurEgg());
+		 player.addItemToInventory(new AllosaurEgg());
 
 //		 Add a carnivore meal kit in map to test feeding allosaurs:
 //		 player.addItemToInventory (new CarnivoreMealKit());
@@ -73,13 +73,13 @@ public class Application {
 		world.addPlayer(player, gameMap.at(9, 4));
 		
 		// Place a pair of stegosaurs in the middle of the map
-		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A "));
-		gameMap.at(32, 12).addActor(new Stegosaur("Stegosaur B "));
+		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male));
+		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female));
 		// place a herd of brachiosaurs in the map
-		gameMap.at(35, 14).addActor(new Brachiosaur("Brachiosaur A "));
-		gameMap.at(33, 14).addActor(new Brachiosaur("Brachiosaur B "));
-		gameMap.at(35, 15).addActor(new Brachiosaur("Brachiosaur C "));
-		gameMap.at(33, 15).addActor(new Brachiosaur("Brachiosaur D "));
+		gameMap.at(35, 14).addActor(new Brachiosaur("Brachiosaur A (M)", Sex.Male));
+		gameMap.at(33, 14).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female));
+		gameMap.at(35, 15).addActor(new Brachiosaur("Brachiosaur C (M)", Sex.Male));
+		gameMap.at(33, 15).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female));
 			
 		world.run();
 	}

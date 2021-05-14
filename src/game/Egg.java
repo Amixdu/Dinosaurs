@@ -2,10 +2,13 @@ package game;
 
 import edu.monash.fit2099.engine.Location;
 
+import java.util.Random;
+
 
 /**
  * Implement the egg class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class Egg extends PortableItem{
     private int hatchPeriod;
@@ -33,10 +36,29 @@ public class Egg extends PortableItem{
         rounds = rounds + 1;
         if (rounds >= hatchPeriod + 1){
             // q : stegosaur egg, w : brachiosaur egg, e : allosaur egg
-            // s : baby stegosaur, b : baby brachiosaur, a : baby allosaur
+            // s : baby stegosaur, r : baby brachiosaur, a : baby allosaur
+
+            // determine sex of baby dinosaur
+            Random rand = new Random();
+            Sex sexOfBaby;
+            if (rand.nextBoolean()){
+                sexOfBaby = Sex.Male;
+            } else {
+                sexOfBaby = Sex.Female;
+            }
+            System.out.printf("Egg at (%d,%d) hatched to become a baby Dinosaur!\n", currentLocation.x(), currentLocation.y());
+
+
             if (displayChar == 'e'){
-                currentLocation.addActor(new BabyAllosaur("Allosaur", 'a'));
+                // allosaur egg -> baby allosaur
+                currentLocation.addActor(new BabyAllosaur("Allosaur", sexOfBaby));
                 currentLocation.removeItem(this);
+            } else if (displayChar == 'q') {
+                // stegosaur egg -> baby stegosaur
+
+            } else if (displayChar == 'w') {
+                // brachiosaur egg -> baby brachiosaur
+
             }
 
         }

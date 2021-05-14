@@ -197,7 +197,7 @@ public class SeekMeatBehaviour implements Behaviour {
             if (type == 'S' || type =='s' || type == 'A' || type == 'a'){
                 allosaur.heal(100);
             }
-            else if (type == 'B' || type == 'b'){
+            else if (type == 'R' || type == 'r'){
                 allosaur.heal(100);
             }
             else if (type == 'q' || type == 'w'){
@@ -209,7 +209,7 @@ public class SeekMeatBehaviour implements Behaviour {
             if (type == 'S' || type =='s' || type == 'A' || type == 'a'){
                 babyAllosaur.heal(50);
             }
-            else if (type == 'B' || type == 'b'){
+            else if (type == 'R' || type == 'r'){
                 babyAllosaur.heal(100);
             }
             else if (type == 'q' || type == 'w'){
