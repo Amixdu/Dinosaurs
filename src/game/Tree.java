@@ -7,6 +7,10 @@ import edu.monash.fit2099.engine.Location;
 
 import java.util.Random;
 
+/**
+ * Tree class to represent a Tree
+ * @author Abhishek Shrestha
+ */
 public class Tree extends FruitProducer {
 	/**
 	 * age of tree
@@ -48,6 +52,11 @@ public class Tree extends FruitProducer {
 			location.addItem(newFruit);
 	}
 
+	/**
+	 * Drops a fruit to the same ground that tree is on
+	 * @param chance probability of dropping a Fruit
+	 * @return Fruit - Fruit drop that needs to be added to the map
+	 */
 	public Fruit dropFruit(int chance){
 		Random rand = new Random();
 		if (rand.nextInt(100) < chance && containsFruit()) {

@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.*;
 /**
  * Implementation of vegetarianDinosaur class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class VegetarianDinosaur extends Dinosaur {
 

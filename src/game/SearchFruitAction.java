@@ -8,6 +8,10 @@ import edu.monash.fit2099.engine.Location;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * Action class for player to search for fruit in tree or bush
+ * @author Abhishek Shrestha
+ */
 public class SearchFruitAction extends Action {
     /**
      * Target ground (Fruit Producer) that actor will search
@@ -54,6 +58,11 @@ public class SearchFruitAction extends Action {
         return result;
     }
 
+    /**
+     * Returns a descriptive stirng
+     * @param actor The actor performing the action.
+     * @return a text to put on the screen
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString() + " searches for fruit";

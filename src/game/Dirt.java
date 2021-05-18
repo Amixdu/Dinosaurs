@@ -8,6 +8,7 @@ import java.util.Random;
 
 /**
  * A class that represents bare dirt.
+ * @author Abhishek Shreshta
  */
 public class Dirt extends Ground {
 

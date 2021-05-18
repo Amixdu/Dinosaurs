@@ -7,6 +7,9 @@ import edu.monash.fit2099.engine.Ground;
 
 import java.util.Random;
 
+/**
+ * Destroy Bush Action class
+ */
 public class DestroyBushAction extends Action {
     /**
      * target that can be destroyed (if bush)
@@ -17,6 +20,10 @@ public class DestroyBushAction extends Action {
      */
     Random rand = new Random();
 
+    /**
+     * Constructor
+     * @param currentGround the ground of the location that the brachiosaur is in
+     */
     public DestroyBushAction(Ground currentGround) {
         target = currentGround;
     }
@@ -37,6 +44,11 @@ public class DestroyBushAction extends Action {
         return null;
     }
 
+    /**
+     * Returns a descriptive string
+     * @param actor The actor performing the action.
+     * @return the text we put on the menu
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString() + " stepped on a bush and destroyed it";

@@ -5,7 +5,18 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * Lay Egg Action class
+ * Only called for pregnant Female Dinosaurs
+ * @author Abhishek Shreshta
+ */
 public class LayEggAction extends Action {
+    /**
+     * Lay the correct egg for the given dinosaur type
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         Location actorLocation = map.locationOf(actor);

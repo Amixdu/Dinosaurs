@@ -4,6 +4,9 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 
+/**
+ * Mate Action class that allows dinosaurs to mate
+ */
 public class MateAction extends Action {
     /**
      * target to mate with
@@ -53,6 +56,11 @@ public class MateAction extends Action {
         return output;
     }
 
+    /**
+     * Returns a descriptive string
+     * @param actor The actor performing the action.
+     * @return the text we put on the menu
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor.toString() + " mated with " + target.toString();

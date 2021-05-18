@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.*;
 
 /**
  * Class representing the Player.
+ * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shrestha
  */
 public class Player extends Actor {
 

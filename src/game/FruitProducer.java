@@ -6,6 +6,10 @@ import edu.monash.fit2099.engine.Location;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * Fruit producer class (Base for Tree and Bush)
+ * @author Abhishek Shrestha
+ */
 public abstract class FruitProducer extends Ground {
     /**
      * Number of fruits this fruit producer holds

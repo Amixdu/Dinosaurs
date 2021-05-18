@@ -4,6 +4,11 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
+/**
+ * Mate Behavior class
+ * Another behavior that all dinosaurs have
+ * @author Abhishek Shrestha
+ */
 public class MateBehavior implements Behaviour{
 
     /**

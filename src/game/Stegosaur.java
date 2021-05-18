@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.GameMap;
 
 /**
  * A herbivorous dinosaur.
+ * @author Amindu Kaushal Kumarasinghe
  *
  */
 public class Stegosaur extends VegetarianDinosaur {

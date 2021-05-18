@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.*;
 /**
  * Implement the CarnivorousDinosaur class
  * @author Amindu Kaushal Kumarasinghe
+ * @author Abhishek Shreshta
  */
 public class CarnivorousDinosaur extends Dinosaur {
 
@@ -30,7 +31,7 @@ public class CarnivorousDinosaur extends Dinosaur {
 
     /**
      * Returns a collection of the Actions that the otherActor can do to the current Actor.
-     * Currently adds two allowable actions, for attacking and feeding.
+     * Currently adds a feeding Action.
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
@@ -40,7 +41,6 @@ public class CarnivorousDinosaur extends Dinosaur {
     @Override
     public Actions getAllowableActions(Actor otherActor, String direction, GameMap map) {
         Actions actions = new Actions();
-        actions.add(new AttackAction(this));
         actions.add(new FeedCarnivoreAction(this));
         return actions;
     }
