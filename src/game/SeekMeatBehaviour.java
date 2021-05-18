@@ -184,7 +184,8 @@ public class SeekMeatBehaviour implements Behaviour {
     }
 
     /**
-     * Heals allosaur (baby or adult) accordingly with the type of food eatne
+     * Heals allosaur (baby or adult) accordingly with the type of food eaten
+     * RULE - Allosaurs cannot eat their own eggs
      * @param actor Dinosaur (Adult allosaur or Baby allosaur)
      * @param map Map that dinosaur is on
      * @param corpseLocation location of closest corpse
@@ -192,8 +193,9 @@ public class SeekMeatBehaviour implements Behaviour {
      * @return String saying nowhere, since dinosaur wont go anywhere while eating
      */
     private String eatFood(Actor actor, GameMap map, Location corpseLocation, char type){
+        Allosaur allosaur = (Allosaur) actor;
         if(adult){
-            Allosaur allosaur = (Allosaur) actor;
+
             if (type == 'S' || type =='s' || type == 'A' || type == 'a'){
                 allosaur.heal(100);
             }
@@ -205,15 +207,15 @@ public class SeekMeatBehaviour implements Behaviour {
             }
         }
         else{
-            BabyAllosaur babyAllosaur = (BabyAllosaur) actor;
+
             if (type == 'S' || type =='s' || type == 'A' || type == 'a'){
-                babyAllosaur.heal(50);
+                allosaur.heal(50);
             }
             else if (type == 'R' || type == 'r'){
-                babyAllosaur.heal(100);
+                allosaur.heal(100);
             }
             else if (type == 'q' || type == 'w'){
-                babyAllosaur.heal(10);
+                allosaur.heal(10);
             }
         }
 
@@ -224,7 +226,7 @@ public class SeekMeatBehaviour implements Behaviour {
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 
             }
-            else if (items.get(i).getDisplayChar() == 'b'){
+            else if (items.get(i).getDisplayChar() == 'q'){
                 corpseLocation.removeItem(items.get(i));
                 System.out.println("Allosaur at (" + corpseLocation.x() + "," + corpseLocation.y() + ") eats");
 

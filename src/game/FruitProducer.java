@@ -1,7 +1,9 @@
 package game;
 
 import edu.monash.fit2099.engine.Ground;
+import edu.monash.fit2099.engine.Location;
 
+import java.util.Locale;
 import java.util.Random;
 
 public abstract class FruitProducer extends Ground {
@@ -56,11 +58,15 @@ public abstract class FruitProducer extends Ground {
     /**
      * Method that increases fruit count by 1 (given certain chance)
      * @param chance (int) - chance to grow a fruit
+     * @return boolean true if fruit is successfully produced
      */
-    public void growFruit(int chance){
+    public boolean growFruit(int chance){
         Random rand = new Random();
+        boolean success = false;
         if (rand.nextInt(100) < chance){
             fruits++;
+            success = true;
         }
+        return success;
     }
 }

@@ -36,7 +36,11 @@ public class Tree extends FruitProducer {
 			displayChar = 'T';
 
 		// grow fruit with 50% chance
-		growFruit(50);
+		boolean grewFruit =  growFruit(50);
+		if (grewFruit){
+			System.out.printf("Tree at (%d,%d) grew a fruit\n", location.x(), location.y());
+			Player.increaseEcoPoints(1);
+		}
 
 		// drop fruit with 5% chance at location of tree
 		Fruit newFruit = dropFruit(5);

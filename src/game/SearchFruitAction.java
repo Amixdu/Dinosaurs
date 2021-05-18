@@ -47,9 +47,8 @@ public class SearchFruitAction extends Action {
                 actor.addItemToInventory(new Fruit());
 
                 // increase eco points
-                Player player = (Player) actor;
-                player.increaseEcoPoints(10);
                 result = "Success! Fruit added to inventory";
+                Player.increaseEcoPoints(10);
             }
         }
         return result;

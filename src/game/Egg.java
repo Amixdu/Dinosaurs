@@ -35,6 +35,7 @@ public class Egg extends PortableItem{
         super.tick(currentLocation);
         rounds = rounds + 1;
         if (rounds >= hatchPeriod + 1){
+            // egg hatches
             // q : stegosaur egg, w : brachiosaur egg, e : allosaur egg
             // s : baby stegosaur, r : baby brachiosaur, a : baby allosaur
 
@@ -53,14 +54,17 @@ public class Egg extends PortableItem{
                 // allosaur egg -> baby allosaur
                 currentLocation.addActor(new Allosaur("Allosaur", sexOfBaby, 20, AgeGroup.BABY));
                 currentLocation.removeItem(this);
+                Player.increaseEcoPoints(100);
             } else if (displayChar == 'q') {
                 // stegosaur egg -> baby stegosaur
                 currentLocation.addActor(new Stegosaur("Stegosaur", sexOfBaby, 10, AgeGroup.BABY));
-
+                currentLocation.removeItem(this);
+                Player.increaseEcoPoints(1000);
             } else if (displayChar == 'w') {
                 // brachiosaur egg -> baby brachiosaur
                 currentLocation.addActor(new Brachiosaur("Brachiosaur", sexOfBaby, 10, AgeGroup.BABY));
-
+                currentLocation.removeItem(this);
+                Player.increaseEcoPoints(1000);
             }
 
         }

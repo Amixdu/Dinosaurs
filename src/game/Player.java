@@ -14,7 +14,7 @@ public class Player extends Actor {
 	/**
 	 * amount of eco points
 	 */
-	private int ecoPoints;
+	private static int ecoPoints = 0;
 
 	/**
 	 * Constructor.
@@ -25,7 +25,6 @@ public class Player extends Actor {
 	 */
 	public Player(String name, char displayChar, int hitPoints) {
 		super(name, displayChar, hitPoints);
-		ecoPoints = 0;
 	}
 
 	/**
@@ -61,15 +60,19 @@ public class Player extends Actor {
 	 * Method to add eco points
 	 * @param ecoPointsToAdd number of eco points to add to current amount
 	 */
-	public void increaseEcoPoints(int ecoPointsToAdd){
-		this.ecoPoints = this.ecoPoints + ecoPointsToAdd;
+	public static void increaseEcoPoints(int ecoPointsToAdd){
+		Player.ecoPoints = Player.ecoPoints + ecoPointsToAdd;
+		System.out.printf("%d ecoPoints have been added\n", ecoPointsToAdd);
 	}
 
 	/**
 	 * Method to reduce eco points
+	 * eco points cannot be negative
 	 * @param ecoPointsToReduce ecoPointsToAdd number of eco points to add to current amount
 	 */
-	public void reduceEcoPoints(int ecoPointsToReduce){
-		this.ecoPoints = this.ecoPoints - ecoPointsToReduce;
+	public static void reduceEcoPoints(int ecoPointsToReduce){
+		int newEcoPoints = Player.ecoPoints - ecoPointsToReduce;
+		Player.ecoPoints = Math.min(newEcoPoints, 0);
+		System.out.printf("%d ecoPoints have been reduced\n", ecoPointsToReduce);
 	}
 }

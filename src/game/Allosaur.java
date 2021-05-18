@@ -31,7 +31,7 @@ public class Allosaur extends CarnivorousDinosaur {
                 20, 50, ageGroup, 50);
 
         //behaviors
-        hBehaviour = new SeekMeatBehaviour(true);
+        hBehaviour = new SeekMeatBehaviour(getAgeGroup() == AgeGroup.ADULT);
         aBehaviour = new AllosaurAttackBehavior();
     }
 

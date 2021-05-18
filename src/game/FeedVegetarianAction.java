@@ -118,9 +118,8 @@ public class FeedVegetarianAction extends Action {
      * @return Amount of hit points after healing
      */
     private int feedFruit(Actor actor){
-        Player player = (Player) actor;
         vegetarianDinosaur.heal(20);
-        player.increaseEcoPoints(1);
+        Player.increaseEcoPoints(10);
         return vegetarianDinosaur.getHitPoints();
     }
 
