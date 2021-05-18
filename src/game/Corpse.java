@@ -7,17 +7,16 @@ import edu.monash.fit2099.engine.Location;
  * Implement the corpse class
  * @author Amindu Kaushal Kumarasinghe
  */
-public class Corpse extends Item {
+public class Corpse extends PortableItem {
     private char corpseType;
     private int rounds;
     /***
      * Constructor.
      * @param name the name of this Item
-     * @param portable true if and only if the Item can be picked up
      * @param corpseType type of dinosaur that is dead
      */
-    public Corpse(String name,  boolean portable, char corpseType) {
-        super(name, 'C', portable);
+    public Corpse(String name, char corpseType) {
+        super(name, 'C');
         this.corpseType = corpseType;
         rounds = 0;
     }

@@ -177,7 +177,7 @@ public abstract class Dinosaur extends Actor {
             }
             else {
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
                 map.locationOf(this).addItem(corpse);
                 map.removeActor(this);
             }
