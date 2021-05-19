@@ -21,7 +21,7 @@ public class Lake extends Ground {
      */
     private int fishCount;
 
-    private Random rand;
+    private Random rand = new Random();
 
     /**
      * Constructor.

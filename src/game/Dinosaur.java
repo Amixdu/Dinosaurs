@@ -44,6 +44,10 @@ public abstract class Dinosaur extends Actor {
      */
     private Behaviour wBehaviour;
     /**
+     * Thirst Behavior that all dinosaurs have
+     */
+    private Behaviour tBehaviour;
+    /**
      * Mate Behavior that all dinosaurs have
      */
     private Behaviour mBehavior;
@@ -116,13 +120,14 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 60;
+        this.waterLevel = 15;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
 
         //behaviors
         mBehavior = new MateBehavior();
         wBehaviour = new WanderBehaviour();
+        tBehaviour = new SeekWaterBehaviour(displayChar);
     }
 
     /**
@@ -151,8 +156,6 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        // This function increases the water level by the required amount for each dinosaur
-        increaseWaterLevelFromLake(map);
         if (isConscious()){
             // reduce food level each turn
             this.hurt(1);
@@ -171,6 +174,9 @@ public abstract class Dinosaur extends Actor {
                     this.hurt(maxHitPoints);
                     unconsciousDueToRain = true;
                 }
+                // return thirsty behaviour
+                Action thirstyAction = tBehaviour.getAction(this, map);
+                return thirstyAction;
             }
 
             // check if adult
@@ -243,62 +249,6 @@ public abstract class Dinosaur extends Actor {
         }
     }
 
-    /**
-     * Function to check if a dinosaur is next to a lake, and if so,
-     * increase its water level by the corresponding amount
-     * @param map the current map on which teh dinosaur is on
-     */
-    public void increaseWaterLevelFromLake(GameMap map){
-        char type = this.displayChar;
-        NumberRange width = map.getXRange();
-        NumberRange height = map.getYRange();
-        for (int i : width){
-            for (int j : height){
-                Location newLocation = map.at(i, j);
-                if (newLocation.getGround() != null){
-                    char groundChar = newLocation.getDisplayChar();
-                    if (groundChar == '#'){
-                        // if actor is brachiosaur
-                        if (type == 'R'){
-                            // if next to lake, increase water level by 80
-                            if (distance(map.locationOf(this), newLocation) == 1){
-                                if (waterLevel + 80 > maxWaterLevel){
-                                    waterLevel = maxWaterLevel;
-                                }
-                                else{
-                                    this.waterLevel += 80;
-                                }
-                            }
-
-                        // if actor is stegosaur or allosaur
-                        } else {
-                            // if next to lake, increase water level by 30
-                            if (distance(map.locationOf(this), newLocation) == 1){
-                                if (waterLevel + 30 > maxWaterLevel){
-                                    waterLevel = maxWaterLevel;
-                                }
-                                else{
-                                    this.waterLevel += 30;
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-    }
-
-    /**
-     * Compute the Manhattan distance between two locations.
-     *
-     * @param a the first location
-     * @param b the first location
-     * @return the number of steps between a and b if you only move in the four cardinal directions.
-     */
-    private int distance(Location a, Location b) {
-        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
-    }
 
     /**
      * @return turns since mate (for females)
@@ -396,4 +346,15 @@ public abstract class Dinosaur extends Actor {
         return hungerAmount;
     }
 
+    public int getWaterLevel() {
+        return waterLevel;
+    }
+
+    public int getMaxWaterLevel() {
+        return maxWaterLevel;
+    }
+
+    public void setWaterLevel(int waterLevel) {
+        this.waterLevel = waterLevel;
+    }
 }
