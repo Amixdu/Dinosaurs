@@ -28,7 +28,7 @@ public class Allosaur extends CarnivorousDinosaur {
      */
     public Allosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
         super(name, 'A', sex, startingHitPoints, 100, 20, 90,
-                20, 50, ageGroup, 50, 100, true);
+                20, 50, ageGroup, 50, 100);
 
         //behaviors
         hBehaviour = new SeekMeatBehaviour(getAgeGroup() == AgeGroup.ADULT);

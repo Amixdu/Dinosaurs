@@ -86,10 +86,6 @@ public abstract class Dinosaur extends Actor {
      */
     private boolean unconsciousDueToRain;
 
-    /**
-     * To know if the dinosaur is land based or not
-     */
-    private boolean landBased;
 
     /**
      * Constructor
@@ -105,7 +101,7 @@ public abstract class Dinosaur extends Actor {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, boolean landBased) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -123,7 +119,6 @@ public abstract class Dinosaur extends Actor {
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
-        this.landBased = landBased;
 
         //behaviors
         mBehavior = new MateBehavior();
@@ -224,7 +219,7 @@ public abstract class Dinosaur extends Actor {
                 }
                 else {
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died due to lack of water!");
-                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
                     map.locationOf(this).addItem(corpse);
                     map.removeActor(this);
                 }
@@ -237,7 +232,7 @@ public abstract class Dinosaur extends Actor {
                 }
                 else {
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died!");
-                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
                     map.locationOf(this).addItem(corpse);
                     map.removeActor(this);
                 }
