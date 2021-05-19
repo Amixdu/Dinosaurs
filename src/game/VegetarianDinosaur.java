@@ -28,9 +28,9 @@ public class VegetarianDinosaur extends Dinosaur {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public VegetarianDinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                              int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
+                              int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, boolean landBased) {
         super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount, turnsToLayEgg,
-                mateAmount, ageGroup, timeToGrow, maxWaterLevel);
+                mateAmount, ageGroup, timeToGrow, maxWaterLevel, landBased);
         hBehaviour = new SeekFruitBehaviour(displayChar);
     }
 

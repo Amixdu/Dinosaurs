@@ -77,6 +77,21 @@ public abstract class Dinosaur extends Actor {
     private int maxWaterLevel;
 
     /**
+     * Counter for unconsciousness due to lack of rain
+     */
+    private int rainfallUnconsciousCounter;
+
+    /**
+     * To know whether the dinosaur is unconscious due to lack of rain
+     */
+    private boolean unconsciousDueToRain;
+
+    /**
+     * To know if the dinosaur is land based or not
+     */
+    private boolean landBased;
+
+    /**
      * Constructor
      * @param name Name of the Dinosaur
      * @param displayChar Display char of the dinosaur
@@ -90,7 +105,7 @@ public abstract class Dinosaur extends Actor {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, boolean landBased) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -107,6 +122,8 @@ public abstract class Dinosaur extends Actor {
         this.age = 0;
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
+        this.unconsciousDueToRain = false;
+        this.landBased = landBased;
 
         //behaviors
         mBehavior = new MateBehavior();
@@ -123,7 +140,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * sets Age Gruop for the dinosaur
-     * @param ageGroup
+     * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public void setAgeGroup(AgeGroup ageGroup) {
         this.ageGroup = ageGroup;
@@ -139,6 +156,8 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        // This function increases the water level by the required amount for each dinosaur
+        increaseWaterLevelFromLake(map);
         if (isConscious()){
             // reduce food level each turn
             this.hurt(1);
@@ -155,6 +174,7 @@ public abstract class Dinosaur extends Actor {
                 // if no water, make the dinosaur unconscious
                 if (waterLevel <= 0){
                     this.hurt(maxHitPoints);
+                    unconsciousDueToRain = true;
                 }
             }
 
@@ -194,19 +214,95 @@ public abstract class Dinosaur extends Actor {
                 }
             }
         } else {
-            // if unconscious, update counter
-            if (unconsciousCount < this.getMaxUnconsciousRounds()){
-                this.unconsciousCount += 1;
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+            // if unconscious because of lack of rain, update correct counter
+            if (unconsciousDueToRain){
+                if (rainfallUnconsciousCounter < 15){
+                    this.rainfallUnconsciousCounter += 1;
+                    // increase normal counter as well
+                    this.unconsciousCount += 1;
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious due to lack of water!");
+                }
+                else {
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died due to lack of water!");
+                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    map.locationOf(this).addItem(corpse);
+                    map.removeActor(this);
+                }
             }
-            else {
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
-                map.locationOf(this).addItem(corpse);
-                map.removeActor(this);
+            // if unconscious, but not because of rain, update counter
+            else{
+                if (unconsciousCount < this.getMaxUnconsciousRounds()){
+                    this.unconsciousCount += 1;
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+                }
+                else {
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died!");
+                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    map.locationOf(this).addItem(corpse);
+                    map.removeActor(this);
+                }
             }
+
+
             return new DoNothingAction();
         }
+    }
+
+    /**
+     * Function to check if a dinosaur is next to a lake, and if so,
+     * increase its water level by the corresponding amount
+     * @param map the current map on which teh dinosaur is on
+     */
+    public void increaseWaterLevelFromLake(GameMap map){
+        char type = this.displayChar;
+        NumberRange width = map.getXRange();
+        NumberRange height = map.getYRange();
+        for (int i : width){
+            for (int j : height){
+                Location newLocation = map.at(i, j);
+                if (newLocation.getGround() != null){
+                    char groundChar = newLocation.getDisplayChar();
+                    if (groundChar == '#'){
+                        // if actor is brachiosaur
+                        if (type == 'R'){
+                            // if next to lake, increase water level by 80
+                            if (distance(map.locationOf(this), newLocation) == 1){
+                                if (waterLevel + 80 > maxWaterLevel){
+                                    waterLevel = maxWaterLevel;
+                                }
+                                else{
+                                    this.waterLevel += 80;
+                                }
+                            }
+
+                        // if actor is stegosaur or allosaur
+                        } else {
+                            // if next to lake, increase water level by 30
+                            if (distance(map.locationOf(this), newLocation) == 1){
+                                if (waterLevel + 30 > maxWaterLevel){
+                                    waterLevel = maxWaterLevel;
+                                }
+                                else{
+                                    this.waterLevel += 30;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * Compute the Manhattan distance between two locations.
+     *
+     * @param a the first location
+     * @param b the first location
+     * @return the number of steps between a and b if you only move in the four cardinal directions.
+     */
+    private int distance(Location a, Location b) {
+        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
     /**
