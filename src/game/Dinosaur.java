@@ -2,8 +2,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-import java.util.List;
-
 /**
  * Base Class Dinosaur
  * @author Abhishek Shrestha
@@ -136,7 +134,7 @@ public abstract class Dinosaur extends Actor {
 
     /**
      * sets Age Gruop for the dinosaur
-     * @param ageGroup
+     * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public void setAgeGroup(AgeGroup ageGroup) {
         this.ageGroup = ageGroup;
@@ -263,14 +261,24 @@ public abstract class Dinosaur extends Actor {
                         if (type == 'R'){
                             // if next to lake, increase water level by 80
                             if (distance(map.locationOf(this), newLocation) == 1){
-                                this.waterLevel += 80;
+                                if (waterLevel + 80 > maxWaterLevel){
+                                    waterLevel = maxWaterLevel;
+                                }
+                                else{
+                                    this.waterLevel += 80;
+                                }
                             }
 
                         // if actor is stegosaur or allosaur
                         } else {
                             // if next to lake, increase water level by 30
                             if (distance(map.locationOf(this), newLocation) == 1){
-                                this.waterLevel += 30;
+                                if (waterLevel + 30 > maxWaterLevel){
+                                    waterLevel = maxWaterLevel;
+                                }
+                                else{
+                                    this.waterLevel += 30;
+                                }
                             }
                         }
                     }
