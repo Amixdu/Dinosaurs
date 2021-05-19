@@ -2,6 +2,8 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+import java.util.List;
+
 /**
  * Base Class Dinosaur
  * @author Abhishek Shrestha
@@ -150,6 +152,8 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        // This function increases the water level by the required amount for each dinosaur
+        increaseWaterLevelFromLake(map);
         if (isConscious()){
             // reduce food level each turn
             this.hurt(1);
@@ -238,6 +242,53 @@ public abstract class Dinosaur extends Actor {
 
             return new DoNothingAction();
         }
+    }
+
+    /**
+     * Function to check if a dinosaur is next to a lake, and if so,
+     * increase its water level by the corresponding amount
+     * @param map the current map on which teh dinosaur is on
+     */
+    public void increaseWaterLevelFromLake(GameMap map){
+        char type = this.displayChar;
+        NumberRange width = map.getXRange();
+        NumberRange height = map.getYRange();
+        for (int i : width){
+            for (int j : height){
+                Location newLocation = map.at(i, j);
+                if (newLocation.getGround() != null){
+                    char groundChar = newLocation.getDisplayChar();
+                    if (groundChar == '#'){
+                        // if actor is brachiosaur
+                        if (type == 'R'){
+                            // if next to lake, increase water level by 80
+                            if (distance(map.locationOf(this), newLocation) == 1){
+                                this.waterLevel += 80;
+                            }
+
+                        // if actor is stegosaur or allosaur
+                        } else {
+                            // if next to lake, increase water level by 30
+                            if (distance(map.locationOf(this), newLocation) == 1){
+                                this.waterLevel += 30;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * Compute the Manhattan distance between two locations.
+     *
+     * @param a the first location
+     * @param b the first location
+     * @return the number of steps between a and b if you only move in the four cardinal directions.
+     */
+    private int distance(Location a, Location b) {
+        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
     /**
