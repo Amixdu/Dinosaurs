@@ -154,7 +154,6 @@ public class SeekWaterBehaviour implements Behaviour{
         if (type == 'R') {
             // if brachiosaur
             Brachiosaur brachiosaur = (Brachiosaur) actor;
-            System.out.println(brachiosaur.getWaterLevel());
             if (brachiosaur.getWaterLevel() + 80 < brachiosaur.getMaxWaterLevel()){
                 brachiosaur.setWaterLevel(brachiosaur.getWaterLevel() + 80);
             }
@@ -163,7 +162,6 @@ public class SeekWaterBehaviour implements Behaviour{
             }
             System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                     waterLocation.y() + ") drinks water");
-            System.out.println(brachiosaur.getWaterLevel());
 
         } else {
             // if allosaur or stegosaur
