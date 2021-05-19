@@ -27,13 +27,13 @@ public class Stegosaur extends VegetarianDinosaur {
 	 */
 	public Stegosaur(String name, Sex sex, AgeGroup ageGroup) {
 		super(name, 'S', sex, 50, 100, 20, 90,
-				10, 50, ageGroup, 30);
+				10, 50, ageGroup, 30, 100);
 		this.attackCoolDown = 20;
 	}
 
 	public Stegosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup){
 		super(name, 'S', sex, startingHitPoints, 100, 20, 90,
-				10, 50, ageGroup, 30);
+				10, 50, ageGroup, 30, 100);
 		this.attackCoolDown = 20;
 
 	}

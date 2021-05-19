@@ -67,6 +67,16 @@ public abstract class Dinosaur extends Actor {
     private int mateAmount;
 
     /**
+     * Water level of the dinosaur
+     */
+    private int waterLevel;
+
+    /**
+     * Maximum water level a dinosaur can have
+     */
+    private int maxWaterLevel;
+
+    /**
      * Constructor
      * @param name Name of the Dinosaur
      * @param displayChar Display char of the dinosaur
@@ -80,7 +90,7 @@ public abstract class Dinosaur extends Actor {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -95,6 +105,8 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
+        this.waterLevel = 60;
+        this.maxWaterLevel = maxWaterLevel;
 
         //behaviors
         mBehavior = new MateBehavior();
@@ -133,6 +145,18 @@ public abstract class Dinosaur extends Actor {
 
             // increase age
             age++;
+
+            // reduce water level each turn
+            waterLevel -= 1;
+
+            // check if thirsty
+            if (waterLevel < 40){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
+                // if no water, make the dinosaur unconscious
+                if (waterLevel <= 0){
+                    this.hurt(maxHitPoints);
+                }
+            }
 
             // check if adult
             if (age == timeToGrow && ageGroup == AgeGroup.BABY){
