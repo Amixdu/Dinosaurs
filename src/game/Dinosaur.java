@@ -87,6 +87,11 @@ public abstract class Dinosaur extends Actor {
     private boolean unconsciousDueToRain;
 
     /**
+     * To know if the dinosaur is land based or not
+     */
+    private boolean landBased;
+
+    /**
      * Constructor
      * @param name Name of the Dinosaur
      * @param displayChar Display char of the dinosaur
@@ -100,7 +105,7 @@ public abstract class Dinosaur extends Actor {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, boolean landBased) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -118,6 +123,7 @@ public abstract class Dinosaur extends Actor {
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
+        this.landBased = landBased;
 
         //behaviors
         mBehavior = new MateBehavior();
