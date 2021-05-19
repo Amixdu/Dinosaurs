@@ -41,7 +41,7 @@ public class SeekWaterBehaviour implements Behaviour{
 
         int minDistance = distance(closestWater, map.locationOf(actor));
         String name ="";
-        if (minDistance == 0){
+        if (minDistance == 1){
             // On same ground as fruit, so eating it
             name = drinkWater(actor, closestWater);
             return null;
@@ -92,9 +92,7 @@ public class SeekWaterBehaviour implements Behaviour{
                                     bestLocation = newLocation;
                                 }
                             }
-
                         }
-
                     }
                 }
             }
@@ -124,9 +122,7 @@ public class SeekWaterBehaviour implements Behaviour{
                         if (lake.getSips() > 0){
                             return newLocation;
                         }
-
                     }
-
                 }
             }
         }
@@ -158,6 +154,7 @@ public class SeekWaterBehaviour implements Behaviour{
         if (type == 'R') {
             // if brachiosaur
             Brachiosaur brachiosaur = (Brachiosaur) actor;
+            System.out.println(brachiosaur.getWaterLevel());
             if (brachiosaur.getWaterLevel() + 80 < brachiosaur.getMaxWaterLevel()){
                 brachiosaur.setWaterLevel(brachiosaur.getWaterLevel() + 80);
             }
@@ -166,6 +163,7 @@ public class SeekWaterBehaviour implements Behaviour{
             }
             System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                     waterLocation.y() + ") drinks water");
+            System.out.println(brachiosaur.getWaterLevel());
 
         } else {
             // if allosaur or stegosaur

@@ -120,7 +120,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 15;
+        this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
 
@@ -176,7 +176,9 @@ public abstract class Dinosaur extends Actor {
                 }
                 // return thirsty behaviour
                 Action thirstyAction = tBehaviour.getAction(this, map);
-                return thirstyAction;
+                if (thirstyAction != null){
+                    return thirstyAction;
+                }
             }
 
             // check if adult
