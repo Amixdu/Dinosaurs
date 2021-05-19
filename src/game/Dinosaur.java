@@ -152,6 +152,10 @@ public abstract class Dinosaur extends Actor {
             // check if thirsty
             if (waterLevel < 40){
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
+                // if no water, make the dinosaur unconscious
+                if (waterLevel <= 0){
+                    this.hurt(maxHitPoints);
+                }
             }
 
             // check if adult
