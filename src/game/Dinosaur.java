@@ -77,6 +77,16 @@ public abstract class Dinosaur extends Actor {
     private int maxWaterLevel;
 
     /**
+     * Counter for unconsciousness due to lack of rain
+     */
+    private int rainfallUnconsciousCounter;
+
+    /**
+     * To know whether the dinosaur is unconscious due to lack of rain
+     */
+    private boolean unconsciousDueToRain;
+
+    /**
      * Constructor
      * @param name Name of the Dinosaur
      * @param displayChar Display char of the dinosaur
@@ -107,6 +117,7 @@ public abstract class Dinosaur extends Actor {
         this.age = 0;
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
+        this.unconsciousDueToRain = false;
 
         //behaviors
         mBehavior = new MateBehavior();
@@ -155,6 +166,7 @@ public abstract class Dinosaur extends Actor {
                 // if no water, make the dinosaur unconscious
                 if (waterLevel <= 0){
                     this.hurt(maxHitPoints);
+                    unconsciousDueToRain = true;
                 }
             }
 
@@ -194,17 +206,36 @@ public abstract class Dinosaur extends Actor {
                 }
             }
         } else {
-            // if unconscious, update counter
-            if (unconsciousCount < this.getMaxUnconsciousRounds()){
-                this.unconsciousCount += 1;
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+            // if unconscious because of lack of rain, update correct counter
+            if (unconsciousDueToRain){
+                if (rainfallUnconsciousCounter < 15){
+                    this.rainfallUnconsciousCounter += 1;
+                    // increase normal counter as well
+                    this.unconsciousCount += 1;
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious due to lack of water!");
+                }
+                else {
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died due to lack of water!");
+                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    map.locationOf(this).addItem(corpse);
+                    map.removeActor(this);
+                }
             }
-            else {
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died  due to lack of food!");
-                Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
-                map.locationOf(this).addItem(corpse);
-                map.removeActor(this);
+            // if unconscious, but not because of rain, update counter
+            else{
+                if (unconsciousCount < this.getMaxUnconsciousRounds()){
+                    this.unconsciousCount += 1;
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
+                }
+                else {
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died!");
+                    Corpse corpse = new Corpse("Corpse", false, this.getDisplayChar());
+                    map.locationOf(this).addItem(corpse);
+                    map.removeActor(this);
+                }
             }
+
+
             return new DoNothingAction();
         }
     }
