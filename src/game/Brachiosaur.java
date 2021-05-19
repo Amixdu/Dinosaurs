@@ -11,12 +11,12 @@ public class Brachiosaur extends VegetarianDinosaur{
      */
     public Brachiosaur(String name, Sex sex, AgeGroup ageGroup) {
         super(name, 'R', sex, 100, 160, 15, 140,
-                30, 70, ageGroup, 50);
+                30, 70, ageGroup, 50, 200);
     }
 
     public Brachiosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
         super(name, 'R', sex, startingHitPoints, 160, 15, 140,
-                30, 70, ageGroup, 50);
+                30, 70, ageGroup, 50, 200);
     }
 
     @Override

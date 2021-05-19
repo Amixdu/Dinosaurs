@@ -34,7 +34,7 @@ public class BabyAllosaur extends CarnivorousDinosaur {
     public BabyAllosaur(String name, Sex sex, AgeGroup ageGroup) {
         // display character for BabyAllosaur is 'a'
         super(name, 'a', sex, 20, 100, 20, 90,
-                20, 50, ageGroup, 50);
+                20, 50, ageGroup, 50, 100);
         growth = 0;
         timeToGrow = 5;
 

@@ -59,7 +59,7 @@ public class Application {
 
 //		 Add an allosaur egg to inventory, to see egg hatching and growing into an adult
 //		 and looking for meat or eggs when hungry:
-		 player.addItemToInventory(new AllosaurEgg());
+//		 player.addItemToInventory(new AllosaurEgg());
 
 //		 Add a carnivore meal kit in map to test feeding allosaurs:
 //		 player.addItemToInventory (new CarnivoreMealKit());
