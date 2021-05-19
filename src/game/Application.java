@@ -80,7 +80,27 @@ public class Application {
 		gameMap.at(33, 14).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female, AgeGroup.ADULT));
 		gameMap.at(35, 15).addActor(new Brachiosaur("Brachiosaur C (M)", Sex.Male, AgeGroup.ADULT));
 		gameMap.at(33, 15).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female, AgeGroup.ADULT));
-			
+
+
+
+		// Add lakes around the map
+		gameMap.at(14, 20).setGround(new Lake());
+		gameMap.at(15, 20).setGround(new Lake());
+		gameMap.at(14, 21).setGround(new Lake());
+		gameMap.at(9, 8).setGround(new Lake());
+		gameMap.at(8, 8).setGround(new Lake());
+		gameMap.at(8, 9).setGround(new Lake());
+		gameMap.at(9, 9).setGround(new Lake());
+		gameMap.at(60, 11).setGround(new Lake());
+		gameMap.at(61, 11).setGround(new Lake());
+		gameMap.at(60, 12).setGround(new Lake());
+		gameMap.at(61, 12).setGround(new Lake());
+		gameMap.at(60, 13).setGround(new Lake());
+		gameMap.at(61, 13).setGround(new Lake());
+
+
+
+
 		world.run();
 	}
 }
