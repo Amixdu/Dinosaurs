@@ -124,7 +124,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 10;
+        this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
 
@@ -190,13 +190,6 @@ public abstract class Dinosaur extends Actor {
                 if (mateAction != null){
                     return mateAction;
                 }
-                // if null is returned, no dinosaur of opposite sex is close by -> wanders
-                else {
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null){
-                        return wander;
-                    }
-                }
             } else {
                 // cannot mate - so check thirst and hunger
                 // check if thirsty
@@ -256,7 +249,14 @@ public abstract class Dinosaur extends Actor {
                 }
             }
         }
-        return new DoNothingAction();
+        // if no other action wander
+        Action wander = wBehaviour.getAction(this, map);
+        if (wander != null){
+            return wander;
+        }
+        else{
+            return new DoNothingAction();
+        }
     }
 
 
