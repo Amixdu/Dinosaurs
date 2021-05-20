@@ -41,8 +41,35 @@ public class SeekWaterBehaviour implements Behaviour{
 
         int minDistance = distance(closestWater, map.locationOf(actor));
         String name ="";
+        // pterodactyls can either drink water or use fish to increase water level
+        // so if already flying above lake, use fishing
+        if (type == 'P'){
+            if (minDistance == 0){
+                fishing(actor, closestWater);
+                return null;
+            }
+            else if(minDistance == 1){
+                name = drinkWater(actor, closestWater);
+                return null;
+            }
+            else {
+                for (Exit exit : map.locationOf(actor).getExits()) {
+                    Location destination = exit.getDestination();
+                    if (destination.canActorEnter(actor)) {
+                        int newDistance = distance(closestWater, destination);
+                        if (newDistance < minDistance) {
+                            minDistance = newDistance;
+                            minLocation = destination;
+                            name = exit.getName();
+                        }
+                    }
+                }
+                return new MoveActorToConsumeAction(minLocation, name, "water");
+            }
+        }
+
+        // if next to lake, drink water
         if (minDistance == 1){
-            // On same ground as fruit, so eating it
             name = drinkWater(actor, closestWater);
             return null;
         } else {
@@ -92,6 +119,19 @@ public class SeekWaterBehaviour implements Behaviour{
                                     bestLocation = newLocation;
                                 }
                             }
+                            // Pterodactyls can increase water level by fish as well
+                            if (type == 'P'){
+                                if (lake.getFishCount() > 0){
+                                    foundWater = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    // compare and update best distance and best location
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
@@ -122,7 +162,14 @@ public class SeekWaterBehaviour implements Behaviour{
                         if (lake.getSips() > 0){
                             return newLocation;
                         }
+                        // Pterodactyls can increase water level by fish as well
+                        if (type == 'P'){
+                            if (lake.getFishCount() > 0){
+                                return newLocation;
+                            }
+                        }
                     }
+
                 }
             }
         }
@@ -163,7 +210,9 @@ public class SeekWaterBehaviour implements Behaviour{
             System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                     waterLocation.y() + ") drinks water");
 
-        } else {
+        }
+        // if Allosaur, Stegosaur or Pterodactyl
+        else{
             // if allosaur or stegosaur
             Dinosaur dinosaur = (Dinosaur) actor;
             if (dinosaur.getWaterLevel() + 30 < dinosaur.getMaxWaterLevel()){
@@ -176,6 +225,46 @@ public class SeekWaterBehaviour implements Behaviour{
                     waterLocation.y() + ") drinks water");
         }
         return "nowhere";
+    }
+
+    private void fishing(Actor actor, Location waterLocation){
+        // this method will only be called for pterodactyls
+        Pterodactyl pterodactyl = (Pterodactyl) actor;
+        Lake lake = (Lake) waterLocation.getGround();
+        // no need to check if fishCount > 0, since will only get here if theres at least one fish
+        if (lake.getFishCount() >= 2){
+            // chance based system : 60% chance of catching only one fish,
+            // 60% chance of catching two and 20% chance of catching none.
+            double random = Math.random();
+            int fish = lake.getFishCount();
+            // chance for eating one fish
+            if (random > 0.4) {
+                lake.setFishCount(fish - 1);
+                pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
+                System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
+                        waterLocation.y() + ") eats " + "1 fish and increases water level by 30");
+            }
+            // chance for eating two fish
+            else if (random >= 0.2 && random <= 0.4){
+                lake.setFishCount(fish - 2);
+                pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 60);
+                System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
+                        waterLocation.y() + ") eats " + "2 fish and increases water level by 60");
+            }
+            // chance for eating no fish
+            else if (random < 0.2) {
+                System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
+                        waterLocation.y() + ") tries to eat but couldnt catch any fish");
+            }
+        }
+        // theres only one fish
+        else{
+            lake.setFishCount(lake.getFishCount() - 1);
+            pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
+            System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
+                    waterLocation.y() + ") eats " + "1 fish and increases water level by 30");
+        }
+
     }
 
 //    Below method can be used to simulate fruits falling from trees for testing :
