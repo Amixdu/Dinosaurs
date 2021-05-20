@@ -60,27 +60,27 @@ public class VegetarianDinosaur extends Dinosaur {
      * @param display    the I/O object to which messages may be written
      * @return the Action to be performed.
      */
-    @Override
-    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-        Action superAction = super.playTurn(actions, lastAction, map, display);
-        boolean superActionSuccess = false;
-        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction){
-            superActionSuccess = true;
-        }
-        Action finalAction = superAction;
-        if (this.isConscious()){
-            // if hungry
-            if (this.hitPoints < getHungerAmount()){
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
-                Action hungerMovement = hBehaviour.getAction(this, map);
-
-                // breeding takes precedences over hunger
-                // if breeding action is not returned, then hunger action
-                if (hungerMovement != null && !superActionSuccess){
-                    finalAction = hungerMovement;
-                }
-            }
-        }
-        return finalAction;
-    }
+//    @Override
+//    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+//        Action superAction = super.playTurn(actions, lastAction, map, display);
+//        boolean superActionSuccess = false;
+//        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction){
+//            superActionSuccess = true;
+//        }
+//        Action finalAction = superAction;
+//        if (this.isConscious()){
+//            // if hungry
+//            if (this.hitPoints < getHungerAmount()){
+//                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+//                Action hungerMovement = hBehaviour.getAction(this, map);
+//
+//                // breeding takes precedences over hunger
+//                // if breeding action is not returned, then hunger action
+//                if (hungerMovement != null && !superActionSuccess){
+//                    finalAction = hungerMovement;
+//                }
+//            }
+//        }
+//        return finalAction;
+//    }
 }

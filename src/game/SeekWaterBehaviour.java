@@ -57,7 +57,7 @@ public class SeekWaterBehaviour implements Behaviour{
                     }
                 }
             }
-            return new MoveActorAction(minLocation, name);
+            return new MoveActorToConsumeAction(minLocation, name, "water");
         }
     }
 

@@ -49,43 +49,22 @@ public class Allosaur extends CarnivorousDinosaur {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action superAction = super.playTurn(actions, lastAction, map, display);
         boolean superActionSuccess = false;
-        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction) {
+        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction || superAction instanceof MoveActorToConsumeAction) {
             superActionSuccess = true;
         }
         Action finalAction = superAction;
         if (this.isConscious()) {
-            // if hungry
-            if (this.hitPoints < this.getHungerAmount()) {
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
-                Action hungerMovement = hBehaviour.getAction(this, map);
-
-                // breeding takes precedence over hunger
-                // if no breeding action, then hunger movement
-                if (!superActionSuccess) {
-                    if (hungerMovement != null) {
-                        finalAction = hungerMovement;
-                    } else {
-                        // if hunger movement is null -> no food in map
-                        // if Stegosaur is nearby, the Allosaur attacks it
-                        Action attack = aBehaviour.getAction(this, map);
-                        if (attack != null) {
-                            finalAction = attack;
-                        }
-                    }
-                }
-            } else {
-                // if not hungry, check if stegosaur is nearby to attack
-
-                // breeding takes precedence over attacking Stegosaur
-                // if no breeding action, then hunger movement
-
-                if (!superActionSuccess){
-                    Action attack = aBehaviour.getAction(this, map);
-                    if (attack != null){
-                        finalAction = attack;
-                    }
+            // breeding takes precedence over hunger
+            // if no breeding action, then hunger movement
+            if (!superActionSuccess) {
+                // if hunger movement is null -> no food in map
+                // if Stegosaur is nearby, the Allosaur attacks it
+                Action attack = aBehaviour.getAction(this, map);
+                if (attack != null) {
+                    finalAction = attack;
                 }
             }
+
         }
         return finalAction;
     }

@@ -38,6 +38,10 @@ public abstract class Dinosaur extends Actor {
      * Amount of hit points below which dinosaur starts to feel hunger
      */
     private int hungerAmount;
+    /**
+     * Hunger Behavior that all dinosaurs have
+     */
+    private Behaviour hBehaviour;
 
     /**
      * Wander Behavior that all dinosaurs have
@@ -120,7 +124,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 60;
+        this.waterLevel = 10;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
 
@@ -128,6 +132,7 @@ public abstract class Dinosaur extends Actor {
         mBehavior = new MateBehavior();
         wBehaviour = new WanderBehaviour();
         tBehaviour = new SeekWaterBehaviour(displayChar);
+        hBehaviour = new SeekFoodBehaviour(displayChar);
     }
 
     /**
@@ -166,21 +171,6 @@ public abstract class Dinosaur extends Actor {
             // reduce water level each turn
             waterLevel -= 1;
 
-            // check if thirsty
-            if (waterLevel < 40){
-                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
-                // if no water, make the dinosaur unconscious
-                if (waterLevel <= 0){
-                    this.hurt(maxHitPoints);
-                    unconsciousDueToRain = true;
-                }
-                // return thirsty behaviour
-                Action thirstyAction = tBehaviour.getAction(this, map);
-                if (thirstyAction != null){
-                    return thirstyAction;
-                }
-            }
-
             // check if adult
             if (age == timeToGrow && ageGroup == AgeGroup.BABY){
                 ageGroup = AgeGroup.ADULT;
@@ -192,6 +182,8 @@ public abstract class Dinosaur extends Actor {
             if (hasMated && ageGroup == AgeGroup.ADULT){
                 turnsSinceMate++;
             }
+
+            // breeding
             if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
@@ -203,17 +195,35 @@ public abstract class Dinosaur extends Actor {
                     Action wander = wBehaviour.getAction(this, map);
                     if (wander != null){
                         return wander;
-                    } else {
-                        return new DoNothingAction();
                     }
                 }
             } else {
-                // cannot mate - just wanders
-                Action wander = wBehaviour.getAction(this, map);
-                if (wander != null){
-                    return wander;
-                } else {
-                    return new DoNothingAction();
+                // cannot mate - so check thirst and hunger
+                // check if thirsty
+                if (waterLevel < 40){
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
+                    if (waterLevel > 0){
+                        // return thirsty behaviour
+                        Action thirstyAction = tBehaviour.getAction(this, map);
+                        if (thirstyAction != null){
+                            return thirstyAction;
+                        }
+                    }
+                    else{
+                        // if no water, make the dinosaur unconscious
+                        if (waterLevel <= 0){
+                            this.hurt(maxHitPoints);
+                            unconsciousDueToRain = true;
+                        }
+                    }
+                }
+                // if hungry
+                if (hitPoints < hungerAmount){
+                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+                    Action hungerMovement = hBehaviour.getAction(this, map);
+                    if (hungerMovement != null){
+                        return hungerMovement;
+                    }
                 }
             }
         } else {
@@ -245,10 +255,8 @@ public abstract class Dinosaur extends Actor {
                     map.removeActor(this);
                 }
             }
-
-
-            return new DoNothingAction();
         }
+        return new DoNothingAction();
     }
 
 
