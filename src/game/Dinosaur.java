@@ -238,19 +238,26 @@ public abstract class Dinosaur extends Actor {
                 }
             }
         }
-        // return final action
-        if (resultAction != null){
-            return resultAction;
-        }
-        // if no other action, wander
-        else{
-            Action wander = wBehaviour.getAction(this, map);
-            if (wander != null){
-                return wander;
+
+        if (isConscious()){
+            // return appropriate action
+            if (resultAction != null){
+                return resultAction;
             }
+            // if no other action wander
             else{
-                return new DoNothingAction();
+                Action wander = wBehaviour.getAction(this, map);
+                if (wander != null){
+                    return wander;
+                }
+                else{
+                    return new DoNothingAction();
+                }
             }
+        }
+        // if not conscious, do nothing
+        else{
+            return new DoNothingAction();
         }
 
     }
