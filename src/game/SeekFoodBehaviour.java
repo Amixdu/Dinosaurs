@@ -316,22 +316,4 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         return "nowhere";
     }
-
-//    Below method can be used to simulate fruits falling from trees for testing :
-
-//    public void fallFruit(GameMap map){
-//        NumberRange width = map.getXRange();
-//        NumberRange height = map.getYRange();
-//        for (int i : width){
-//            for (int j : height){
-//                Location newLocation = map.at(i, j);
-//                if (newLocation.getGround().getDisplayChar() == '+') {
-//                    if (Math.random() < 0.05){
-//                        Fruit fruit = new Fruit();
-//                        newLocation.addItem(fruit);
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
