@@ -238,18 +238,24 @@ public abstract class Dinosaur extends Actor {
             }
         }
         // if no other action wander
-        if (resultAction != null){
-            return resultAction;
-        }
-        else{
-            Action wander = wBehaviour.getAction(this, map);
-            if (wander != null){
-                return wander;
+        if (isConscious()){
+            if (resultAction != null){
+                return resultAction;
             }
             else{
-                return new DoNothingAction();
+                Action wander = wBehaviour.getAction(this, map);
+                if (wander != null){
+                    return wander;
+                }
+                else{
+                    return new DoNothingAction();
+                }
             }
         }
+        else{
+            return new DoNothingAction();
+        }
+
 
     }
 
@@ -277,7 +283,6 @@ public abstract class Dinosaur extends Actor {
 
     private Action hunger(GameMap map){
         // if hungry
-        System.out.println("HitPoints : " + hitPoints + " HungerAmount : " + hungerAmount);
         if (hitPoints < hungerAmount){
             System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
             Action hungerMovement = hBehaviour.getAction(this, map);

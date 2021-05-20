@@ -35,8 +35,12 @@ public class Corpse extends PortableItem {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
+        // if pterodactyl has completely eaten
+        if (count == 0){
+            currentLocation.removeItem(this);
+        }
         if (corpseType == 'S' || corpseType == 'R' || corpseType == 's' || corpseType == 'r'){
-            if(rounds >= 20){
+            if(rounds >= 200){
                 currentLocation.removeItem(this);
             }
         }

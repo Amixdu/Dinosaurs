@@ -177,6 +177,39 @@ public class SeekFoodBehaviour implements Behaviour{
                                     }
                                 }
                             }
+                            List<Item> items = newLocation.getItems();
+                            for (Item item : items){
+                                // if a corpse is found at location
+                                if (item.getDisplayChar() == 'C'){
+                                    foundFood = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    // check distance and update
+                                    if (distance < minDistance){
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
+                                }
+                                // if a stegosaur egg is found
+//                                else if (item.getDisplayChar() == 'q'){
+//                                    foundFood = true;
+//                                    int distance = distance(dinoLocation, newLocation);
+//                                    if (distance < minDistance){
+//                                        minDistance = distance;
+//                                        bestLocation = newLocation;
+//                                    }
+//                                }
+//                                // if a brachiosaur egg is found
+//                                else if (item.getDisplayChar() == 'w'){
+//                                    foundFood = true;
+//                                    int distance = distance(dinoLocation, newLocation);
+//                                    if (distance < minDistance){
+//                                        minDistance = distance;
+//                                        bestLocation = newLocation;
+//                                    }
+//                                }
+                            }
+
+
                         }
                     }
                 }
@@ -252,6 +285,21 @@ public class SeekFoodBehaviour implements Behaviour{
                                 return newLocation;
                             }
                         }
+                        List<Item> items = newLocation.getItems();
+                        for (Item item : items) {
+                            if (item.getDisplayChar() == 'C') {
+                                return newLocation;
+                            }
+//                            // q = Stegosaur egg
+//                            else if (item.getDisplayChar() == 'q'){
+//                                return newLocation;
+//                            }
+//                            // w = Brachiosaur egg
+//                            else if (item.getDisplayChar() == 'w'){
+//                                return newLocation;
+//                            }
+                        }
+
                     }
                 }
             }
@@ -293,6 +341,7 @@ public class SeekFoodBehaviour implements Behaviour{
                         foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
                                 foodLocation.y() + ") eats");
+                        break;
                     }
                 }
             }
@@ -320,12 +369,14 @@ public class SeekFoodBehaviour implements Behaviour{
                         foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
+                        break;
                     }
                     else if (corpseType == 'R' || corpseType == 'r'){
                         allosaur.heal(100);
                         foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
+                        break;
                     }
                 }
                 // q = Stegosaur egg, w = Brachiosaur egg
@@ -334,6 +385,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     foodLocation.removeItem(items.get(i));
                     System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                             ") eats");
+                    break;
                 }
             }
         }
@@ -384,11 +436,14 @@ public class SeekFoodBehaviour implements Behaviour{
                     if (items.get(i).getDisplayChar() == 'C') {
                         Corpse corpse = (Corpse) items.get(i);
                         int count = corpse.getCount();
-                        if (count > 0){
-                            pterodactyl.heal(10);
+                        System.out.println(count);
+                        // count comparing with 1 to account for current round
+                        if (count > 1){
+                            pterodactyl.heal(1);
                             corpse.setCount(count - 1);
                             System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                     ") eats");
+                            break;
                         }
                         // removing corpse after 3 rounds of eating
                         else{
@@ -401,6 +456,7 @@ public class SeekFoodBehaviour implements Behaviour{
                         foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
+                        break;
                     }
                 }
             }
