@@ -10,11 +10,6 @@ import edu.monash.fit2099.engine.*;
 public class VegetarianDinosaur extends Dinosaur {
 
     /**
-     * Hunger Behavior for Vegetarian Dinosaur
-     */
-    private Behaviour hBehaviour;
-
-    /**
      * Constructor
      * @param name Name of the Dinosaur
      * @param displayChar Display char of the dinosaur
@@ -31,7 +26,6 @@ public class VegetarianDinosaur extends Dinosaur {
                               int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
         super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount, turnsToLayEgg,
                 mateAmount, ageGroup, timeToGrow, maxWaterLevel);
-        hBehaviour = new SeekFruitBehaviour(displayChar);
     }
 
     /**
@@ -60,27 +54,4 @@ public class VegetarianDinosaur extends Dinosaur {
      * @param display    the I/O object to which messages may be written
      * @return the Action to be performed.
      */
-//    @Override
-//    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
-//        Action superAction = super.playTurn(actions, lastAction, map, display);
-//        boolean superActionSuccess = false;
-//        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction){
-//            superActionSuccess = true;
-//        }
-//        Action finalAction = superAction;
-//        if (this.isConscious()){
-//            // if hungry
-//            if (this.hitPoints < getHungerAmount()){
-//                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
-//                Action hungerMovement = hBehaviour.getAction(this, map);
-//
-//                // breeding takes precedences over hunger
-//                // if breeding action is not returned, then hunger action
-//                if (hungerMovement != null && !superActionSuccess){
-//                    finalAction = hungerMovement;
-//                }
-//            }
-//        }
-//        return finalAction;
-//    }
 }
