@@ -340,7 +340,7 @@ public class SeekFoodBehaviour implements Behaviour{
         else if (type == 'P'){
             Pterodactyl pterodactyl = (Pterodactyl) actor;
             pterodactyl.heal(10);
-
+            // eating fish
             if (foodLocation.getGround().getDisplayChar() == '~') {
                 Lake lake = (Lake) foodLocation.getGround();
                 // no need to check if fishCount > 0, since will only get here if theres at least one fish
@@ -375,6 +375,33 @@ public class SeekFoodBehaviour implements Behaviour{
                     pterodactyl.heal(30);
                     System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
                             foodLocation.y() + ") eats " + "1 fish");
+                }
+            }
+            // eating corpse or eggs
+            else {
+                List<Item> items = foodLocation.getItems();
+                for (int i = 0; i < items.size(); i++) {
+                    if (items.get(i).getDisplayChar() == 'C') {
+                        Corpse corpse = (Corpse) items.get(i);
+                        int count = corpse.getCount();
+                        if (count > 0){
+                            pterodactyl.heal(10);
+                            corpse.setCount(count - 1);
+                            System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
+                                    ") eats");
+                        }
+                        // removing corpse after 3 rounds of eating
+                        else{
+                            foodLocation.removeItem(items.get(i));
+                        }
+                    }
+                    // q = Stegosaur egg, w = Brachiosaur egg
+                    else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
+                        pterodactyl.heal(10);
+                        foodLocation.removeItem(items.get(i));
+                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
+                                ") eats");
+                    }
                 }
             }
         }

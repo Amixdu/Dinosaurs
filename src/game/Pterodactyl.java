@@ -22,5 +22,6 @@ public class Pterodactyl extends CarnivorousDinosaur {
      */
     public Pterodactyl(String name, Sex sex, int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds, int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
         super(name, 'P', sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount, turnsToLayEgg, mateAmount, ageGroup, timeToGrow, maxWaterLevel);
+        this.addCapability(Flight.YES);
     }
 }

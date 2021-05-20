@@ -124,7 +124,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 10;
+        this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
 
@@ -161,6 +161,7 @@ public abstract class Dinosaur extends Actor {
      */
     @Override
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        Action resultAction = null;
         if (isConscious()){
             // reduce food level each turn
             this.hurt(1);
@@ -188,42 +189,22 @@ public abstract class Dinosaur extends Actor {
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
                 if (mateAction != null){
-                    return mateAction;
+                    resultAction = mateAction;
                 }
-                // if null is returned, no dinosaur of opposite sex is close by -> wanders
-                else {
-                    Action wander = wBehaviour.getAction(this, map);
-                    if (wander != null){
-                        return wander;
+                else{
+                    // if mating isn't possible, check for thirst
+                    resultAction = thirst(map);
+                    // if not thirsty, check for hunger
+                    if (resultAction == null){
+                        resultAction = hunger(map);
                     }
                 }
             } else {
                 // cannot mate - so check thirst and hunger
-                // check if thirsty
-                if (waterLevel < 40){
-                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
-                    if (waterLevel > 0){
-                        // return thirsty behaviour
-                        Action thirstyAction = tBehaviour.getAction(this, map);
-                        if (thirstyAction != null){
-                            return thirstyAction;
-                        }
-                    }
-                    else{
-                        // if no water, make the dinosaur unconscious
-                        if (waterLevel <= 0){
-                            this.hurt(maxHitPoints);
-                            unconsciousDueToRain = true;
-                        }
-                    }
-                }
-                // if hungry
-                if (hitPoints < hungerAmount){
-                    System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
-                    Action hungerMovement = hBehaviour.getAction(this, map);
-                    if (hungerMovement != null){
-                        return hungerMovement;
-                    }
+                resultAction = thirst(map);
+                // if not thirsty, check for hunger
+                if (resultAction == null){
+                    resultAction = hunger(map);
                 }
             }
         } else {
@@ -256,9 +237,56 @@ public abstract class Dinosaur extends Actor {
                 }
             }
         }
-        return new DoNothingAction();
+        // if no other action wander
+        if (resultAction != null){
+            return resultAction;
+        }
+        else{
+            Action wander = wBehaviour.getAction(this, map);
+            if (wander != null){
+                return wander;
+            }
+            else{
+                return new DoNothingAction();
+            }
+        }
+
     }
 
+    private Action thirst(GameMap map){
+        // check if thirsty
+        if (waterLevel < 40){
+            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
+            if (waterLevel > 0){
+                // return thirsty behaviour
+                Action thirstyAction = tBehaviour.getAction(this, map);
+                if (thirstyAction != null){
+                    return thirstyAction;
+                }
+            }
+            else{
+                // if no water, make the dinosaur unconscious
+                if (waterLevel <= 0){
+                    this.hurt(maxHitPoints);
+                    unconsciousDueToRain = true;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Action hunger(GameMap map){
+        // if hungry
+        System.out.println("HitPoints : " + hitPoints + " HungerAmount : " + hungerAmount);
+        if (hitPoints < hungerAmount){
+            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+            Action hungerMovement = hBehaviour.getAction(this, map);
+            if (hungerMovement != null){
+                return hungerMovement;
+            }
+        }
+        return null;
+    }
 
     /**
      * @return turns since mate (for females)

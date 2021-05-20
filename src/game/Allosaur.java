@@ -11,10 +11,6 @@ import edu.monash.fit2099.engine.*;
 public class Allosaur extends CarnivorousDinosaur {
 
     /**
-     * hunger Behavior for Allosaur
-     */
-    private Behaviour hBehaviour;
-    /**
      * Attack Behavior for Allosaur
      */
     private Behaviour aBehaviour;
@@ -31,7 +27,6 @@ public class Allosaur extends CarnivorousDinosaur {
                 20, 50, ageGroup, 50, 100);
 
         //behaviors
-        hBehaviour = new SeekMeatBehaviour(getAgeGroup() == AgeGroup.ADULT);
         aBehaviour = new AllosaurAttackBehavior();
     }
 

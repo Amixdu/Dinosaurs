@@ -10,6 +10,10 @@ import edu.monash.fit2099.engine.Location;
 public class Corpse extends PortableItem {
     private char corpseType;
     private int rounds;
+    /**
+     * Counter to make sure corspe has 3 portions when pterodactyls eat
+     */
+    private int count;
     /***
      * Constructor.
      * @param name the name of this Item
@@ -19,6 +23,7 @@ public class Corpse extends PortableItem {
         super(name, 'C');
         this.corpseType = corpseType;
         rounds = 0;
+        count = 3;
     }
 
     /**
@@ -48,5 +53,13 @@ public class Corpse extends PortableItem {
      */
     public char getCorpseType() {
         return corpseType;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
