@@ -288,24 +288,27 @@ public class SeekFoodBehaviour implements Behaviour{
         } else if (type == 'A'){
             Allosaur allosaur = (Allosaur) actor;
             List<Item> items = foodLocation.getItems();
-            for (Item item : items) {
-                if (item.getDisplayChar() == 'C') {
-                    Corpse corpse = (Corpse) item;
+            for (int i=0; i < items.size(); i++) {
+                if (items.get(i).getDisplayChar() == 'C') {
+                    Corpse corpse = (Corpse) items.get(i);
                     char corpseType = corpse.getCorpseType();
                     if (corpseType == 'S' || corpseType =='s' || corpseType == 'A' || corpseType == 'a'){
                         allosaur.heal(50);
+                        foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
                     }
                     else if (corpseType == 'R' || corpseType == 'r'){
                         allosaur.heal(100);
+                        foodLocation.removeItem(items.get(i));
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
                     }
                 }
                 // q = Stegosaur egg, w = Brachiosaur egg
-                else if (item.getDisplayChar() == 'q' || item.getDisplayChar() == 'w'){
+                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
                     allosaur.heal(10);
+                    foodLocation.removeItem(items.get(i));
                     System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                             ") eats");
                 }
