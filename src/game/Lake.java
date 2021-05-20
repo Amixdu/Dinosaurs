@@ -34,7 +34,7 @@ public class Lake extends Ground {
 
     /**
      * Checks if the given actor can enter this terrain
-     * Only Pterodactyls (since they have Flight capability) can enter
+     * Only game.Pterodactyls (since they have Flight capability) can enter
      * @param actor the Actor to check
      * @return true if it has flight capability
      */
