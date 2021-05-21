@@ -144,7 +144,7 @@ public abstract class Dinosaur extends Actor {
     }
 
     /**
-     * sets Age Gruop for the dinosaur
+     * sets Age Group for the dinosaur
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public void setAgeGroup(AgeGroup ageGroup) {
@@ -163,9 +163,7 @@ public abstract class Dinosaur extends Actor {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action resultAction = null;
         if (isConscious()){
-            // reduce food level each turn
-            this.hurt(1);
-
+            // food level reduced at the end
             // increase age each turn
             age++;
 
@@ -186,7 +184,7 @@ public abstract class Dinosaur extends Actor {
 
             // getting the dinos next action
             // check if mating is possible
-            if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
+            if (hitPoints >= mateAmount && ageGroup == AgeGroup.ADULT){
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
                 if (mateAction != null){
@@ -240,6 +238,8 @@ public abstract class Dinosaur extends Actor {
         }
 
         if (isConscious()){
+            // reduce food level
+            this.hurt(1);
             // return appropriate action
             if (resultAction != null){
                 return resultAction;

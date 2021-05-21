@@ -21,8 +21,8 @@ public class Dirt extends Ground {
 
 	/**
 	 * Passage of time for dirt
-	 * If current Dirt is next not next to any Tree, turns current Dirt into Bush with 1% chance
-	 * If current Dirt is next to at least 2 bushes, turns current Dirt into Bush with 10% chance
+	 * If current Dirt is next not next to any Tree, turns current Dirt into Bush with 0.5% chance
+	 * If current Dirt is next to at least 2 bushes, turns current Dirt into Bush with 5% chance
 	 * @param location The location of the Ground
 	 */
 	@Override
@@ -41,17 +41,16 @@ public class Dirt extends Ground {
 			}
 		}
 		// if next to a tree, no chance to grow bush
-		// if next to at least 2 bushes, 10% chance to grow bush
+		// if next to at least 2 bushes, 5% chance to grow bush
 		if (bushCount> 1 && treeCount == 0){
-			if (random.nextInt(100) < 10 ){
+			if (random.nextInt(100) < 5 ){
 				location.setGround(new Bush());
 			}
-			// if not next to at least 2 bushes, 1% chance to grow bush
+			// if not next to at least 2 bushes, 0.5% chance to grow bush
 		} else if (bushCount <= 1 && treeCount == 0) {
-			if (random.nextInt(100) < 1){
+			if (random.nextDouble() * 100 <= 0.5) {
 				location.setGround(new Bush());
 			}
 		}
-
 	}
 }

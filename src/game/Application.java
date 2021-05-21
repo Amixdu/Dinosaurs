@@ -56,12 +56,12 @@ public class Application {
 		
 		// Place a pair of stegosaurs in the middle of the map
 		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male, AgeGroup.ADULT));
-		gameMap.at(31, 12).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female, AgeGroup.ADULT));
+		gameMap.at(31, 13).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female, AgeGroup.ADULT));
 		// place a herd of brachiosaurs in the map
 		gameMap.at(24, 14).addActor(new Brachiosaur("Brachiosaur A (M)", Sex.Male, AgeGroup.ADULT));
-		gameMap.at(25, 14).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female, AgeGroup.ADULT));
+		gameMap.at(25, 16).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female, AgeGroup.ADULT));
 		gameMap.at(24, 15).addActor(new Brachiosaur("Brachiosaur C (M)", Sex.Male, AgeGroup.ADULT));
-		gameMap.at(25, 15).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female, AgeGroup.ADULT));
+		gameMap.at(26, 17).addActor(new Brachiosaur("Brachiosaur D (F)", Sex.Female, AgeGroup.ADULT));
 
 
 		// add second GameMap map2 as park2
