@@ -65,6 +65,11 @@ public class Egg extends PortableItem{
                 currentLocation.addActor(new Brachiosaur("Brachiosaur", sexOfBaby, 10, AgeGroup.BABY));
                 currentLocation.removeItem(this);
                 Player.increaseEcoPoints(1000);
+            } else if (displayChar == 'y') {
+                // pterodactyl egg -> baby pterodactyl
+                currentLocation.addActor(new Pterodactyl("Pterodactyl", sexOfBaby, 10, AgeGroup.BABY));
+                currentLocation.removeItem(this);
+                Player.increaseEcoPoints(1000);
             }
 
         }

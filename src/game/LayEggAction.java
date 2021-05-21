@@ -28,6 +28,9 @@ public class LayEggAction extends Action {
         } else if (dinoType == 'A'){
             actorLocation.addItem(new AllosaurEgg());
         }
+        else if (dinoType == 'P'){
+            actorLocation.addItem(new PterodactylEgg());
+        }
         Dinosaur dino = (Dinosaur) actor;
         dino.setHasMated(false);
         dino.setTurnsSinceMate(0);
