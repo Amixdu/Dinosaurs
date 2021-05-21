@@ -77,8 +77,7 @@ public class Lake extends Ground {
      * @param fishCount
      */
     public void setFishCount(int fishCount) {
-        int newFistCount = this.fishCount + fishCount;
-        this.fishCount = Math.min(newFistCount, 25);
+        this.fishCount = Math.min(fishCount, 25);
     }
 
     /**
