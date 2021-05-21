@@ -49,10 +49,14 @@ public class Lake extends Ground {
 
     /**
      * sips setter
+     * if sips is 0, fish count will also be 0
+     * cant can't have fish in a lake with no sips
      * @param sips
      */
     public void setSips(int sips) {
         this.sips = sips;
+        if (sips == 0)
+            setFishCount(0);
     }
 
     /**
@@ -82,12 +86,12 @@ public class Lake extends Ground {
 
     /**
      * Passage of Time for Lake
-     * Each turn, there is a 60% chance of incrementing fishCount by 1
+     * Each turn, there is a 60% chance of incrementing fishCount by 1, given that the lake has any sips
      * @param location The location of the Ground
      */
     @Override
     public void tick(Location location) {
-        if (rand.nextInt(100) < 60){
+        if (rand.nextInt(100) < 60 && sips > 0){
             // success -> increment fishCount
             setFishCount(getFishCount() + 1);
         }

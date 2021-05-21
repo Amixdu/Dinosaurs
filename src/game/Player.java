@@ -64,7 +64,7 @@ public class Player extends Actor {
 	 */
 	public static void increaseEcoPoints(int ecoPointsToAdd){
 		Player.ecoPoints = Player.ecoPoints + ecoPointsToAdd;
-		System.out.printf("%d ecoPoints have been added\n", ecoPointsToAdd);
+//		System.out.printf("%d ecoPoints have been added\n", ecoPointsToAdd);
 	}
 
 	/**

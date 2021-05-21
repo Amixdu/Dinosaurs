@@ -42,7 +42,7 @@ public class Tree extends FruitProducer {
 		// grow fruit with 50% chance
 		boolean grewFruit =  growFruit(50);
 		if (grewFruit){
-			System.out.printf("Tree at (%d,%d) grew a fruit\n", location.x(), location.y());
+//			System.out.printf("Tree at (%d,%d) grew a fruit\n", location.x(), location.y());
 			Player.increaseEcoPoints(1);
 		}
 

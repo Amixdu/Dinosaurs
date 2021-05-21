@@ -3,6 +3,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -71,6 +72,52 @@ public class ParkGameMap extends GameMap {
         NumberRange newMapHeight = newMap.getYRange();
         if (newMapWidth.contains(x) && newMapHeight.contains(y)){
             here.addExit(new Exit(name, newMap.at(x,y), hotKey));
+        }
+    }
+
+    /**
+     * map can experience the passage of time
+     * Rains every 10 turns with a probability of 20%
+     * When it rains, it hydrates unconscious dinosaurs and fills lakes
+     */
+    @Override
+    public void tick() {
+        noOfTurns++;
+        double rainfall = 0.0;
+        boolean rain = false;
+
+        // 20% probability of raining every 10 turns
+        if (noOfTurns % 10 == 0 && rand.nextInt(100) < 20){
+            rain = true;
+            System.out.println("It started to rain!");
+
+            // amount of water added to lake => rainfall
+            int rainfallInt = rand.nextInt(6) + 1;
+            rainfall = rainfallInt / 10.0;
+            rainfall = rainfall * 20; // calculation according to specifications
+        }
+
+        // Tick over all the items in inventories.
+        for (Actor actor : actorLocations) {
+            if (this.contains(actor)) {
+                for (Item item : new ArrayList<Item>(actor.getInventory())) { // Copy the list in case the item wants to leave
+                    item.tick(actorLocations.locationOf(actor), actor);
+                }
+
+                // if it's raining and actor is dino and dino is unconscious due to lack of water
+                // TODO: hydrate dino with rain (10 water points)
+            }
+        }
+
+        for (int y : heights) {
+            for (int x : widths) {
+                // if it's raining, increment sips in lake
+                if (rain && this.at(x, y).getGround().getDisplayChar() == '~'){
+                    Lake thisLake = (Lake) this.at(x, y).getGround();
+                    thisLake.setSips(thisLake.getSips() + (int) rainfall);
+                }
+                this.at(x, y).tick();
+            }
         }
     }
 }
