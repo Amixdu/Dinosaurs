@@ -3,11 +3,7 @@ package game;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.monash.fit2099.engine.Actor;
-import edu.monash.fit2099.engine.Display;
-import edu.monash.fit2099.engine.FancyGroundFactory;
-import edu.monash.fit2099.engine.GameMap;
-import edu.monash.fit2099.engine.World;
+import edu.monash.fit2099.engine.*;
 
 /**
  * The main class for the Jurassic World game.
@@ -46,31 +42,16 @@ public class Application {
 		".........................................................................++++...",
 		"..........................................................................++....",
 		"................................................................................");
-		GameMap gameMap = new GameMap(groundFactory, map );
+		ParkGameMap gameMap = new ParkGameMap(groundFactory, map );
 		world.addGameMap(gameMap);
 		
 		Actor player = new Player("Player", '@', 100);
 
-		// Tests created to manually test my portion of the project:
+		// original player position
+//		world.addPlayer(player, gameMap.at(9, 4));
 
-//		 Add a fruit to inventory to test if dropping it causes hungry stegosaurs to follow it and can try to feed it:
-//		 player.addItemToInventory(new Fruit());
-//		 player.addItemToInventory(new VegetarianMealKit());
-
-//		 Add an allosaur egg to inventory, to see egg hatching and growing into an adult
-//		 and looking for meat or eggs when hungry:
-//		 player.addItemToInventory(new AllosaurEgg());
-
-//		 Add a carnivore meal kit in map to test feeding allosaurs:
-//		 player.addItemToInventory (new CarnivoreMealKit());
-
-
-//		 Down casting the instance of Actor to player and increase eco points to test buying items from vending machine:
-//		Player p = (Player) player;
-//		p.increaseEcoPoints(1000);
-
-
-		world.addPlayer(player, gameMap.at(9, 4));
+		// new player position
+		world.addPlayer(player, gameMap.at(9,1));;
 		
 		// Place a pair of stegosaurs in the middle of the map
 		gameMap.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male, AgeGroup.ADULT));
@@ -99,8 +80,49 @@ public class Application {
 		gameMap.at(61, 13).setGround(new Lake());
 
 
+		// add second GameMap map2 as park2
+		List<String> map2 = Arrays.asList(
+				"................................................................................",
+				"................................................................................",
+				".....#######..X.................................................................",
+				".....#_____#....................................................................",
+				".....#_____#....................................................................",
+				".....###.###....................................................................",
+				"................................................................................",
+				"......................................+++.......................................",
+				".......................................++++.....................................",
+				"...................................+++++........................................",
+				".....................................++++++.....................................",
+				"......................................+++.......................................",
+				".....................................+++........................................",
+				"................................................................................",
+				"............+++.................................................................",
+				".............+++++..............................................................",
+				"...............++........................................+++++..................",
+				".............+++....................................++++++++....................",
+				"............+++.......................................+++.......................",
+				"................................................................................",
+				".........................................................................++.....",
+				"........................................................................++.++...",
+				".........................................................................++++...",
+				"..........................................................................++....",
+				"................................................................................");
 
+		ParkGameMap park2 = new ParkGameMap(groundFactory,map2);
+		world.addGameMap(park2);
 
+		// index of last row for second map
+		int bottomRow = map2.size() - 1;
+		// index of first row for first map
+		int topRow = 0;
+		for (int x : park2.getXRange()){
+			Location map1Location = gameMap.at(x, topRow);
+			Location map2Location = park2.at(x, bottomRow);
+
+			// add exit from top row of map1 to bottom row of map2
+			park2.addExitFromHereToAnotherMap(map2Location, x, topRow, "South to Park 1", "2", gameMap);
+			gameMap.addExitFromHereToAnotherMap(map1Location,x, bottomRow, "North to Park 2", "8", park2);
+		}
 		world.run();
 	}
 }
