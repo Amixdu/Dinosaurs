@@ -5,6 +5,8 @@ import game.CarnivorousDinosaur;
 import game.Sex;
 
 public class Pterodactyl extends CarnivorousDinosaur {
+
+    int fuel;
     /**
      * Constructor
      *
@@ -18,9 +20,10 @@ public class Pterodactyl extends CarnivorousDinosaur {
 //        this.addCapability(Flight.YES);
 //    }
 
-    public Pterodactyl(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup){
+    public Pterodactyl(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup, int fuel){
         super(name, 'P', sex, startingHitPoints, 100, 20, 90,
                 10, 50, ageGroup, 30, 100, 30);
         this.addCapability(Flight.YES);
+        this.fuel = 30 - (30 - fuel);
     }
 }
