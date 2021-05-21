@@ -1,6 +1,5 @@
 package game;
 
-import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
 
 /**
@@ -13,7 +12,7 @@ public class Corpse extends PortableItem {
     /**
      * health points gained by eating this corpse
      */
-    private int corspePoints;
+    private int corpsePoints;
     /***
      * Constructor.
      * @param name the name of this Item
@@ -23,7 +22,7 @@ public class Corpse extends PortableItem {
         super(name, 'C');
         this.corpseType = corpseType;
         rounds = 0;
-        this.corspePoints = healthPoints;
+        this.corpsePoints = healthPoints;
     }
 
     /**
@@ -35,8 +34,8 @@ public class Corpse extends PortableItem {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
-        // if pterodactyl has completely eaten
-        if (corspePoints == 0){
+        // if has been completely eaten
+        if (corpsePoints == 0){
             currentLocation.removeItem(this);
         }
         if (corpseType == 'S' || corpseType == 'R' || corpseType == 's' || corpseType == 'r'){
@@ -59,11 +58,11 @@ public class Corpse extends PortableItem {
         return corpseType;
     }
 
-    public void setCorspePoints(int count) {
-        this.corspePoints = count;
+    public void setCorpsePoints(int points) {
+        this.corpsePoints = points;
     }
 
-    public int getCorspePoints() {
-        return corspePoints;
+    public int getCorpsePoints() {
+        return corpsePoints;
     }
 }

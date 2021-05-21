@@ -30,26 +30,23 @@ public class SeekFoodBehaviour implements Behaviour{
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
-//        uncomment this and line 172 to simulate fruit falling for testing
-//        fallFruit(map);
         Location minLocation = map.locationOf(actor);
-        Location closestFruit = closestFood(actor, map);
-        if (closestFruit == null){
+        Location closestFoodLocation = closestFood(actor, map);
+        if (closestFoodLocation == null){
             System.out.println("There is no edible food for " + actor.toString());
             return null;
         }
 
-        int minDistance = distance(closestFruit, map.locationOf(actor));
+        int minDistance = distance(closestFoodLocation, map.locationOf(actor));
         String name ="";
         if (minDistance == 0){
-            // On same ground as fruit, so eating it
-            name = eatFood(actor, closestFruit);
-            return null;
+            // On same ground as food, so eating it
+            return new EatFoodAction(closestFoodLocation);
         } else {
             for (Exit exit : map.locationOf(actor).getExits()) {
                 Location destination = exit.getDestination();
                 if (destination.canActorEnter(actor)) {
-                    int newDistance = distance(closestFruit, destination);
+                    int newDistance = distance(closestFoodLocation, destination);
                     if (newDistance < minDistance) {
                         minDistance = newDistance;
                         minLocation = destination;
@@ -73,7 +70,7 @@ public class SeekFoodBehaviour implements Behaviour{
         NumberRange height = map.getYRange();
         Location dinoLocation = map.locationOf(actor);
         // This method is used to initialize bestLocation
-        Location bestLocation = firstLocationWithFood(map);
+        Location bestLocation = firstLocationWithFood(actor, map);
         if (bestLocation != null){
             int minDistance = distance(dinoLocation, bestLocation);
             for (int i : width){
@@ -162,8 +159,8 @@ public class SeekFoodBehaviour implements Behaviour{
                                 }
                             }
                         } else if (type == 'P'){
-                            // found a lake
-                            if (newLocation.getGround().getDisplayChar() == '~'){
+                            // found a lake and can fly
+                            if (newLocation.getGround().getDisplayChar() == '~' && actor.hasCapability(Flight.YES)){
                                 Lake lake = (Lake) newLocation.getGround();
                                 if (lake.getFishCount() > 0){
                                     foundFood = true;
@@ -225,7 +222,7 @@ public class SeekFoodBehaviour implements Behaviour{
      * @param map map which dinosaur is on
      * @return first location in the map that contains either a fruit or a bush with fruits
      */
-    private Location firstLocationWithFood(GameMap map){
+    private Location firstLocationWithFood(Actor actor, GameMap map){
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         for (int i : width){
@@ -276,8 +273,8 @@ public class SeekFoodBehaviour implements Behaviour{
                             }
                         }
                     } else if (type == 'P'){
-                        // if lake with fish found, return location
-                        if (newLocation.getGround().getDisplayChar() == '~') {
+                        // if lake with fish found and Pterodactyl can fly, return location
+                        if (newLocation.getGround().getDisplayChar() == '~' && actor.hasCapability(Flight.YES)) {
                             Lake lake = (Lake) newLocation.getGround();
                             if (lake.getFishCount() > 0) {
                                 return newLocation;
@@ -317,147 +314,5 @@ public class SeekFoodBehaviour implements Behaviour{
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
-    /**
-     * Heal dinosaur and remove fruit from ground or bush
-     * @param actor vegetarian dinosaur seeking for fruit
-
-     * @param foodLocation location of the closest fruit
-     * @return a string saying went nowhere, since dinosaur was eating
-     */
-    private String eatFood(Actor actor, Location foodLocation){
-        if (type == 'S') {
-            Stegosaur steg = (Stegosaur) actor;
-            steg.heal(10);
-
-            if (foodLocation.getGround().getDisplayChar() == 'b') {
-                Bush bush = (Bush) foodLocation.getGround();
-                bush.removeFruit();
-            } else {
-                List<Item> items = foodLocation.getItems();
-                for (int i = 0; i < items.size(); i++) {
-                    if (items.get(i).getDisplayChar() == 'f') {
-                        foodLocation.removeItem(items.get(i));
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
-                                foodLocation.y() + ") eats");
-                        break;
-                    }
-                }
-            }
-        } else if (type == 'R'){
-            // if brachiosaur
-            Brachiosaur brach = (Brachiosaur) actor;
-            Tree currentTree = (Tree) foodLocation.getGround();
-            // brachiosaur eats all fruits
-            // each fruit heals brach by 5
-            brach.heal(currentTree.getFruits() * 5);
-
-            // remove all fruits from tree
-            currentTree.setFruits(0);
-            System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                    ") eats");
-        } else if (type == 'A'){
-            Allosaur allosaur = (Allosaur) actor;
-            List<Item> items = foodLocation.getItems();
-            for (int i = 0; i < items.size(); i++ ){
-                if (items.get(i).getDisplayChar() == 'C') {
-                    Corpse corpse = (Corpse) items.get(i);
-                    char corpseType = corpse.getCorpseType();
-                    if (corpseType == 'S' || corpseType =='s' || corpseType == 'A' || corpseType == 'a'){
-                        allosaur.heal(50);
-                        foodLocation.removeItem(items.get(i));
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                                ") eats");
-                        break;
-                    }
-                    else if (corpseType == 'R' || corpseType == 'r'){
-                        allosaur.heal(100);
-                        foodLocation.removeItem(items.get(i));
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                                ") eats");
-                        break;
-                    }
-                }
-                // q = Stegosaur egg, w = Brachiosaur egg
-                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
-                    allosaur.heal(10);
-                    foodLocation.removeItem(items.get(i));
-                    System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                            ") eats");
-                    break;
-                }
-            }
-        }
-        else if (type == 'P'){
-            Pterodactyl pterodactyl = (Pterodactyl) actor;
-            pterodactyl.heal(10);
-            // eating fish
-            // (this lake location would only have been sent here,if there was at least one fish in the lake)
-            if (foodLocation.getGround().getDisplayChar() == '~'){
-                Lake lake = (Lake) foodLocation.getGround();
-                if (lake.getFishCount() >= 2){
-                    // chance based system : 60% chance of catching only one fish,
-                    // 60% chance of catching two and 20% chance of catching none.
-                    double random = Math.random();
-                    int fish = lake.getFishCount();
-                    // chance for eating one fish
-                    if (random > 0.4) {
-                        lake.setFishCount(fish - 1);
-                        pterodactyl.heal(5);
-                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
-                                foodLocation.y() + ") eats " + "1 fish and increases water level by 30");
-                    }
-                    // chance for eating two fish
-                    else if (random >= 0.2 && random <= 0.4){
-                        lake.setFishCount(fish - 2);
-                        pterodactyl.heal(5 * 2);
-                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 60);
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
-                                foodLocation.y() + ") eats " + "2 fish and increases water level by 60");
-                    }
-                    // chance for eating no fish
-                    else if (random < 0.2) {
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
-                                foodLocation.y() + ") tries to eat but couldnt catch any fish");
-                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
-                    }
-                }
-                // theres only one fish
-                else if (lake.getFishCount() == 1){
-                    lake.setFishCount(lake.getFishCount() - 1);
-                    pterodactyl.heal(5);
-                    pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
-                    System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
-                            foodLocation.y() + ") eats " + "1 fish and increases water level by 30");
-                }
-            }
-
-            // eating corpse or eggs
-            List<Item> items = foodLocation.getItems();
-            for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getDisplayChar() == 'C') {
-                    Corpse corpse = (Corpse) items.get(i);
-                    int corspePoints = corpse.getCorspePoints();
-                    // count comparing with 1 to account for current round
-                    if (corspePoints > 10){
-                        pterodactyl.heal(10);
-                        corpse.setCorspePoints(corspePoints - 10);
-                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                                ") eats");
-                        break;
-                    }
-                }
-                // q = Stegosaur egg, w = Brachiosaur egg
-                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
-                    pterodactyl.heal(10);
-                    foodLocation.removeItem(items.get(i));
-                    System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
-                            ") eats");
-                    break;
-                }
-            }
-        }
-        return "nowhere";
-    }
 
 }

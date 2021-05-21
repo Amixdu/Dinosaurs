@@ -44,7 +44,9 @@ public class Allosaur extends CarnivorousDinosaur {
     public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
         Action superAction = super.playTurn(actions, lastAction, map, display);
         boolean superActionSuccess = false;
-        if (superAction instanceof MateAction || superAction instanceof LayEggAction || superAction instanceof MoveActorToMateAction || superAction instanceof MoveActorToConsumeAction) {
+        if (superAction instanceof MateAction || superAction instanceof LayEggAction ||
+                superAction instanceof MoveActorToMateAction || superAction instanceof MoveActorToConsumeAction ||
+                superAction instanceof EatFoodAction || superAction instanceof DrinkWaterAction) {
             superActionSuccess = true;
         }
         Action finalAction = superAction;
