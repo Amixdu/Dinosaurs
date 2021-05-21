@@ -41,7 +41,7 @@ public class SeekWaterBehaviour implements Behaviour{
 
         int minDistance = distance(closestWater, map.locationOf(actor));
         String name ="";
-        // pterodactyls can either drink water or use fish to increase water level
+        // pterodactyls can either drink water by walking or flying
         // so if already flying above lake, use fishing
         if (type == 'P'){
             if (minDistance == 0){
@@ -119,9 +119,9 @@ public class SeekWaterBehaviour implements Behaviour{
                                     bestLocation = newLocation;
                                 }
                             }
-                            // Pterodactyls can increase water level by fish as well
+                            // Pterodactyls can increase water level by drinking while flying as well
                             if (type == 'P'){
-                                if (lake.getFishCount() > 0){
+                                if (lake.getSips() > 0){
                                     foundWater = true;
                                     int distance = distance(dinoLocation, newLocation);
                                     // compare and update best distance and best location
@@ -164,7 +164,7 @@ public class SeekWaterBehaviour implements Behaviour{
                         }
                         // Pterodactyls can increase water level by fish as well
                         if (type == 'P'){
-                            if (lake.getFishCount() > 0){
+                            if (lake.getSips() > 0){
                                 return newLocation;
                             }
                         }
@@ -231,7 +231,6 @@ public class SeekWaterBehaviour implements Behaviour{
         // this method will only be called for pterodactyls
         Pterodactyl pterodactyl = (Pterodactyl) actor;
         Lake lake = (Lake) waterLocation.getGround();
-        // no need to check if fishCount > 0, since will only get here if theres at least one fish
         if (lake.getFishCount() >= 2){
             // chance based system : 60% chance of catching only one fish,
             // 60% chance of catching two and 20% chance of catching none.
@@ -240,6 +239,7 @@ public class SeekWaterBehaviour implements Behaviour{
             // chance for eating one fish
             if (random > 0.4) {
                 lake.setFishCount(fish - 1);
+                pterodactyl.heal(5);
                 pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
                 System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                         waterLocation.y() + ") eats " + "1 fish and increases water level by 30");
@@ -247,6 +247,7 @@ public class SeekWaterBehaviour implements Behaviour{
             // chance for eating two fish
             else if (random >= 0.2 && random <= 0.4){
                 lake.setFishCount(fish - 2);
+                pterodactyl.heal(5 * 2);
                 pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 60);
                 System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                         waterLocation.y() + ") eats " + "2 fish and increases water level by 60");
@@ -255,14 +256,22 @@ public class SeekWaterBehaviour implements Behaviour{
             else if (random < 0.2) {
                 System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                         waterLocation.y() + ") tries to eat but couldnt catch any fish");
+                pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
             }
         }
         // theres only one fish
-        else{
+        else if (lake.getFishCount() == 1){
             lake.setFishCount(lake.getFishCount() - 1);
+            pterodactyl.heal(5);
             pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
             System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
                     waterLocation.y() + ") eats " + "1 fish and increases water level by 30");
+        }
+        // no fish
+        else{
+            System.out.println(actor.toString() + " at location (" + waterLocation.x() + "," +
+                    waterLocation.y() + ") tries to eat but couldnt catch any fish");
+            pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
         }
 
     }

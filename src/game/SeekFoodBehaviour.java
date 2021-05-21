@@ -19,7 +19,6 @@ public class SeekFoodBehaviour implements Behaviour{
      */
     public SeekFoodBehaviour(char type) {
         this.type = type;
-
     }
 
     /**
@@ -163,6 +162,20 @@ public class SeekFoodBehaviour implements Behaviour{
                                 }
                             }
                         } else if (type == 'P'){
+                            // found a lake
+                            if (newLocation.getGround().getDisplayChar() == '~'){
+                                Lake lake = (Lake) newLocation.getGround();
+                                if (lake.getFishCount() > 0){
+                                    foundFood = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    // compare and update best distance and best location
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
+                                }
+                            }
+
                             // if found water
                             List<Item> items = newLocation.getItems();
                             for (Item item : items){
@@ -263,6 +276,13 @@ public class SeekFoodBehaviour implements Behaviour{
                             }
                         }
                     } else if (type == 'P'){
+                        // if lake with fish found, return location
+                        if (newLocation.getGround().getDisplayChar() == '~') {
+                            Lake lake = (Lake) newLocation.getGround();
+                            if (lake.getFishCount() > 0) {
+                                return newLocation;
+                            }
+                        }
                         List<Item> items = newLocation.getItems();
                         for (Item item : items) {
                             if (item.getDisplayChar() == 'C') {
@@ -370,6 +390,48 @@ public class SeekFoodBehaviour implements Behaviour{
         else if (type == 'P'){
             Pterodactyl pterodactyl = (Pterodactyl) actor;
             pterodactyl.heal(10);
+            // eating fish
+            // (this lake location would only have been sent here,if there was at least one fish in the lake)
+            if (foodLocation.getGround().getDisplayChar() == '~'){
+                Lake lake = (Lake) foodLocation.getGround();
+                if (lake.getFishCount() >= 2){
+                    // chance based system : 60% chance of catching only one fish,
+                    // 60% chance of catching two and 20% chance of catching none.
+                    double random = Math.random();
+                    int fish = lake.getFishCount();
+                    // chance for eating one fish
+                    if (random > 0.4) {
+                        lake.setFishCount(fish - 1);
+                        pterodactyl.heal(5);
+                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
+                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
+                                foodLocation.y() + ") eats " + "1 fish and increases water level by 30");
+                    }
+                    // chance for eating two fish
+                    else if (random >= 0.2 && random <= 0.4){
+                        lake.setFishCount(fish - 2);
+                        pterodactyl.heal(5 * 2);
+                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 60);
+                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
+                                foodLocation.y() + ") eats " + "2 fish and increases water level by 60");
+                    }
+                    // chance for eating no fish
+                    else if (random < 0.2) {
+                        System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
+                                foodLocation.y() + ") tries to eat but couldnt catch any fish");
+                        pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
+                    }
+                }
+                // theres only one fish
+                else if (lake.getFishCount() == 1){
+                    lake.setFishCount(lake.getFishCount() - 1);
+                    pterodactyl.heal(5);
+                    pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
+                    System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," +
+                            foodLocation.y() + ") eats " + "1 fish and increases water level by 30");
+                }
+            }
+
             // eating corpse or eggs
             List<Item> items = foodLocation.getItems();
             for (int i = 0; i < items.size(); i++) {
@@ -399,7 +461,6 @@ public class SeekFoodBehaviour implements Behaviour{
                     break;
                 }
             }
-
         }
         return "nowhere";
     }
