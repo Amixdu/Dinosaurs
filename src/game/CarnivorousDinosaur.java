@@ -24,9 +24,9 @@ public class CarnivorousDinosaur extends Dinosaur {
      * @param timeToGrow turns needed to turn baby dinosaur to adult
      */
     public CarnivorousDinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                               int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
+                               int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, int corpsePoints) {
         super(name, displayChar,sex, startingHitPoints, maxHitPoints, maxUnconsciousRounds, hungerAmount,
-                turnsToLayEgg, mateAmount, ageGroup, timeToGrow, maxWaterLevel);
+                turnsToLayEgg, mateAmount, ageGroup, timeToGrow, maxWaterLevel, corpsePoints);
     }
 
     /**

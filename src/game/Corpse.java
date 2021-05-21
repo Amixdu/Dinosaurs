@@ -11,19 +11,19 @@ public class Corpse extends PortableItem {
     private char corpseType;
     private int rounds;
     /**
-     * Counter to make sure corspe has 3 portions when pterodactyls eat
+     * health points gained by eating this corpse
      */
-    private int count;
+    private int corspePoints;
     /***
      * Constructor.
      * @param name the name of this Item
      * @param corpseType type of dinosaur that is dead
      */
-    public Corpse(String name, char corpseType) {
+    public Corpse(String name, char corpseType, int healthPoints) {
         super(name, 'C');
         this.corpseType = corpseType;
         rounds = 0;
-        count = 3;
+        this.corspePoints = healthPoints;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Corpse extends PortableItem {
         super.tick(currentLocation);
         rounds = rounds + 1;
         // if pterodactyl has completely eaten
-        if (count == 0){
+        if (corspePoints == 0){
             currentLocation.removeItem(this);
         }
         if (corpseType == 'S' || corpseType == 'R' || corpseType == 's' || corpseType == 'r'){
@@ -59,11 +59,11 @@ public class Corpse extends PortableItem {
         return corpseType;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setCorspePoints(int count) {
+        this.corspePoints = count;
     }
 
-    public int getCount() {
-        return count;
+    public int getCorspePoints() {
+        return corspePoints;
     }
 }

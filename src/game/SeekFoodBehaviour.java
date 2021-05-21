@@ -437,19 +437,14 @@ public class SeekFoodBehaviour implements Behaviour{
             for (int i = 0; i < items.size(); i++) {
                 if (items.get(i).getDisplayChar() == 'C') {
                     Corpse corpse = (Corpse) items.get(i);
-                    int count = corpse.getCount();
-                    System.out.println(count);
+                    int corspePoints = corpse.getCorspePoints();
                     // count comparing with 1 to account for current round
-                    if (count > 1){
+                    if (corspePoints > 10){
                         pterodactyl.heal(10);
-                        corpse.setCount(count - 1);
+                        corpse.setCorspePoints(corspePoints - 10);
                         System.out.println(actor.toString() + " at location (" + foodLocation.x() + "," + foodLocation.y() +
                                 ") eats");
                         break;
-                    }
-                    // removing corpse after 3 rounds of eating
-                    else{
-                        foodLocation.removeItem(items.get(i));
                     }
                 }
                 // q = Stegosaur egg, w = Brachiosaur egg
