@@ -112,6 +112,9 @@ public abstract class Dinosaur extends Actor {
      * @param turnsToLayEgg turns it takes to lay eggs
      * @param mateAmount food level above which mating is possible
      * @param ageGroup Age group of the dino (Baby or Adult)
+     * @param timeToGrow Amount of rounds for the dinosaur to grow from baby to adult
+     * @param maxWaterLevel Upper bound of water level for a dinosaur
+     * @param corpsePoints Amount of points that can be gained by eating the corpse of the current dinosaur
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
                     int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, int corpsePoints) {
@@ -418,26 +421,50 @@ public abstract class Dinosaur extends Actor {
         return hungerAmount;
     }
 
+    /**
+     * Getter method to retrieve current water level
+     * @return water level of dinosaur
+     */
     public int getWaterLevel() {
         return waterLevel;
     }
 
+    /**
+     * Getter method for the upper bound of water level
+     * @return Maximum water level of dinosaur
+     */
     public int getMaxWaterLevel() {
         return maxWaterLevel;
     }
 
+    /**
+     * Setter method for water level
+     * @param waterLevel Amount to set the water level to
+     */
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
     }
 
+    /**
+     * Method to know if an unconscious dinosaur is in that state to lack of water
+     * @return whether the dinosaur is unconscious due to lack of water
+     */
     public boolean isUnconsciousDueToWater() {
         return unconsciousDueToWater;
     }
 
+    /**
+     * Setter method to update the boolean variable keeping track of the cause of unconsciousness of dinosaur
+     * @param unconsciousDueToWater true or false to set unconsciousDueToWater
+     */
     public void setUnconsciousDueToWater(boolean unconsciousDueToWater) {
         this.unconsciousDueToWater = unconsciousDueToWater;
     }
 
+    /**
+     * Setter method to set(only used for reset to 0) the unconscious count
+     * @param unconsciousCount Amount to set the unconsciousCount to
+     */
     public void setUnconsciousCount(int unconsciousCount) {
         this.unconsciousCount = unconsciousCount;
     }
