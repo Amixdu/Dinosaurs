@@ -108,7 +108,7 @@ public class Application {
 		Player player = new Player("Player", '@', 100);
 
 		// new player position
-		world.addPlayer(player, park1.at(9,1));
+		world.addPlayer(player, park1.at(9,4));
 
 		// Place a pair of stegosaurs in the middle of the map
 		park1.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male, AgeGroup.ADULT));

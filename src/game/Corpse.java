@@ -1,6 +1,5 @@
 package game;
 
-import edu.monash.fit2099.engine.Item;
 import edu.monash.fit2099.engine.Location;
 
 /**
@@ -8,17 +7,28 @@ import edu.monash.fit2099.engine.Location;
  * @author Amindu Kaushal Kumarasinghe
  */
 public class Corpse extends PortableItem {
+    /**
+     * The type of the dinosaur that this corpse belongs to
+     */
     private char corpseType;
+    /**
+     * A counter to keep track of the number of rounds this corpse stays in the map
+     */
     private int rounds;
+    /**
+     * health points gained by eating this corpse
+     */
+    private int corpsePoints;
     /***
      * Constructor.
      * @param name the name of this Item
      * @param corpseType type of dinosaur that is dead
      */
-    public Corpse(String name, char corpseType) {
+    public Corpse(String name, char corpseType, int healthPoints) {
         super(name, 'C');
         this.corpseType = corpseType;
         rounds = 0;
+        this.corpsePoints = healthPoints;
     }
 
     /**
@@ -30,8 +40,12 @@ public class Corpse extends PortableItem {
     public void tick(Location currentLocation) {
         super.tick(currentLocation);
         rounds = rounds + 1;
+        // if has been completely eaten
+        if (corpsePoints == 0){
+            currentLocation.removeItem(this);
+        }
         if (corpseType == 'S' || corpseType == 'R' || corpseType == 's' || corpseType == 'r'){
-            if(rounds >= 20){
+            if(rounds >= 200){
                 currentLocation.removeItem(this);
             }
         }
@@ -48,5 +62,21 @@ public class Corpse extends PortableItem {
      */
     public char getCorpseType() {
         return corpseType;
+    }
+
+    /**
+     * Method to set the corpse points
+     * @param points amount of HP gained by eating this corpse
+     */
+    public void setCorpsePoints(int points) {
+        this.corpsePoints = points;
+    }
+
+    /**
+     * Method to retrieve the corpse points
+     * @return the amount of HP gained by eating this corpse
+     */
+    public int getCorpsePoints() {
+        return corpsePoints;
     }
 }

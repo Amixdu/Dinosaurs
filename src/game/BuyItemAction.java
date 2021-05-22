@@ -91,6 +91,16 @@ public class BuyItemAction extends Action {
             }
         }
         else if (option.equals("G")){
+            if (ecoPoints >= vendingMachine.getPteroEggPrice()){
+                player.addItemToInventory(new PterodactylEgg());
+                player.reduceEcoPoints(vendingMachine.getPteroEggPrice());
+                result = "Successfully bought a Pterodactyl egg";
+            }
+            else{
+                result = "Not enough Eco Points";
+            }
+        }
+        else if (option.equals("H")){
             if (ecoPoints >= vendingMachine.getLaserGunPrice()){
                 player.addItemToInventory(new LaserGun());
                 player.reduceEcoPoints(vendingMachine.getLaserGunPrice());
@@ -100,6 +110,7 @@ public class BuyItemAction extends Action {
                 result = "Not enough Eco Points";
             }
         }
+
         else{
             result = "Please choose a valid option";
         }
@@ -123,7 +134,7 @@ public class BuyItemAction extends Action {
      */
     public String userInput(){
         Scanner scanner = new Scanner(System.in);
-        String print = "A: Buy Fruit(30 eco points)\nB: Buy Vegetarian Meal Kit(100 eco points)\nC: Buy Carnivore Meal Kit(500 eco points)\nD: Buy Stegosaur Egg(200 eco points)\nE: Buy Brachiosaur Egg(500 eco points)\nF: Buy Allosaur Egg(1000 eco points)\nG: Buy Lazer Gun(500 eco points)";
+        String print = "A: Buy Fruit(30 eco points)\nB: Buy Vegetarian Meal Kit(100 eco points)\nC: Buy Carnivore Meal Kit(500 eco points)\nD: Buy Stegosaur Egg(200 eco points)\nE: Buy Brachiosaur Egg(500 eco points)\nF: Buy Allosaur Egg(1000 eco points)\nG: Buy Pterodactyl Egg(200 eco points)\nH: Buy Lazer Gun(500 eco points)";
         System.out.println(print);
         return scanner.next();
     }

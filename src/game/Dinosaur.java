@@ -94,6 +94,11 @@ public abstract class Dinosaur extends Actor {
      */
     private boolean unconsciousDueToRain;
 
+    /**
+     * The amount of health points that can be gained by eating this dinosaur
+     */
+    private int corpsePoints;
+
 
     /**
      * Constructor
@@ -109,7 +114,7 @@ public abstract class Dinosaur extends Actor {
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public Dinosaur(String name, char displayChar, Sex sex,  int startingHitPoints, int maxHitPoints, int maxUnconsciousRounds,
-                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel) {
+                    int hungerAmount, int turnsToLayEgg, int mateAmount, AgeGroup ageGroup, int timeToGrow, int maxWaterLevel, int corpsePoints) {
         super(name, displayChar, maxHitPoints);
         // Sets the starting level to value indicated by startingHitPoints
         this.hurt(maxHitPoints - startingHitPoints);
@@ -127,6 +132,7 @@ public abstract class Dinosaur extends Actor {
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToRain = false;
+        this.corpsePoints = corpsePoints;
 
         //behaviors
         mBehavior = new MateBehavior();
@@ -144,7 +150,7 @@ public abstract class Dinosaur extends Actor {
     }
 
     /**
-     * sets Age Group for the dinosaur
+     * sets Age Gruop for the dinosaur
      * @param ageGroup Age group of the dino (Baby or Adult)
      */
     public void setAgeGroup(AgeGroup ageGroup) {
@@ -164,7 +170,7 @@ public abstract class Dinosaur extends Actor {
         Action resultAction = null;
         if (isConscious()){
             // food level reduced at the end
-            // increase age each turn
+            // increase age
             age++;
 
             // reduce water level each turn
@@ -184,7 +190,7 @@ public abstract class Dinosaur extends Actor {
 
             // getting the dinos next action
             // check if mating is possible
-            if (hitPoints >= mateAmount && ageGroup == AgeGroup.ADULT){
+            if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
                 if (mateAction != null){
@@ -199,7 +205,7 @@ public abstract class Dinosaur extends Actor {
                     }
                 }
             } else {
-                // cannot mate - so check thirst
+                // cannot mate - so check thirst and hunger
                 resultAction = thirst(map);
                 // if not thirsty, check for hunger
                 if (resultAction == null){
@@ -217,7 +223,7 @@ public abstract class Dinosaur extends Actor {
                 }
                 else {
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died due to lack of water!");
-                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
+                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar(), corpsePoints);
                     map.locationOf(this).addItem(corpse);
                     map.removeActor(this);
                 }
@@ -230,7 +236,7 @@ public abstract class Dinosaur extends Actor {
                 }
                 else {
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") died!");
-                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar());
+                    Corpse corpse = new Corpse("Corpse", this.getDisplayChar(), corpsePoints);
                     map.locationOf(this).addItem(corpse);
                     map.removeActor(this);
                 }
@@ -238,7 +244,7 @@ public abstract class Dinosaur extends Actor {
         }
 
         if (isConscious()){
-            // reduce food level
+            // reduce food level each turn
             this.hurt(1);
             // return appropriate action
             if (resultAction != null){
@@ -305,7 +311,6 @@ public abstract class Dinosaur extends Actor {
         }
         return null;
     }
-
 
     /**
      * @return turns since mate (for females)

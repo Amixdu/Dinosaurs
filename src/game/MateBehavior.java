@@ -29,9 +29,26 @@ public class MateBehavior implements Behaviour{
         // if female has mated successfully -> LayEggs
         if (dino.getHasMated() && dino.getAgeGroup() == AgeGroup.ADULT){
             // if enough time has passed to lay eggs
-            if (dino.getTurnsSinceMate() == dino.getTurnsToLayEgg()){
+            if (dino.getTurnsSinceMate() >= dino.getTurnsToLayEgg()){
                 // lay egg
-                return new LayEggAction();
+                // if any other dinosaur except pterodactyl
+                if (dinoChar != 'P'){
+                    return new LayEggAction();
+                }
+                // if pterodactyl, needs to be on top of a tree
+                else{
+                    char actorLocationChar = actorLocation.getGround().getDisplayChar();
+                    // if already on tree, lay egg
+                    if (actorLocationChar == '+' || actorLocationChar == 't' || actorLocationChar == 'T'){
+                        return new LayEggAction();
+                    }
+                    // else go towards tree
+                    else{
+                        PterodactylSeekTreeBehaviour sBehaviour = new PterodactylSeekTreeBehaviour("egg laying");
+                        return sBehaviour.getAction(actor, map);
+                    }
+                }
+
             } else{
                 return null;
             }
@@ -49,8 +66,24 @@ public class MateBehavior implements Behaviour{
                             && dino.getAgeGroup() == AgeGroup.ADULT){
                         // if they have different sex
                         // if not pregnant
-                        if (!adjacentDino.getHasMated() && !dino.getHasMated())
-                        return new MateAction(adjacentDino);
+                        if (!adjacentDino.getHasMated() && !dino.getHasMated()){
+                            // if the dino is a pterodactyl, then they need to be on trees for mating
+                            if (dinoChar == 'P'){
+                                char dinoLocationChar = map.locationOf(dino).getGround().getDisplayChar();
+                                char adjDinoLocationChar = e.getDestination().getGround().getDisplayChar();
+                                if ((dinoLocationChar == 'T' || dinoLocationChar == 't' || dinoLocationChar == '+') &&
+                                        (adjDinoLocationChar == 'T' || adjDinoLocationChar == 't' || adjDinoLocationChar == '+')){
+                                    return new MateAction(adjacentDino);
+                                }
+                                else{
+                                    return null;
+                                }
+                            }
+                            else{
+                                return new MateAction(adjacentDino);
+                            }
+                        }
+
                     }
                 }
 
