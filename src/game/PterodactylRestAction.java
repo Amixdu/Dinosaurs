@@ -8,7 +8,7 @@ public class PterodactylRestAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         Pterodactyl pterodactyl = (Pterodactyl) actor;
-        pterodactyl.setFuel(5);
+        pterodactyl.setFuel(25);
         pterodactyl.addCapability(Flight.YES);
         return (actor.toString() + " has rested and is able to fly now!");
     }

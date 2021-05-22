@@ -53,12 +53,6 @@ public class Pterodactyl extends CarnivorousDinosaur {
             }
         }
         fuel = fuel - 1;
-        if (this.hasCapability(Flight.YES)){
-            System.out.println("Flying");
-        }
-        else{
-            System.out.println("Walking");
-        }
         return finalAction;
     }
 
