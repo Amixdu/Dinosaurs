@@ -2,11 +2,6 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Implementation of SeekFruitBehaviour class
  * @author Amindu Kaushal Kumarasinghe
@@ -33,7 +28,6 @@ public class SeekFoodBehaviour implements Behaviour{
     public Action getAction(Actor actor, GameMap map) {
 
         Location minLocation = map.locationOf(actor);
-//        Location closestFoodLocation = closestFood(actor, map);
         Location closestFoodLocation = closestLocation(actor, map);
         if (closestFoodLocation == null){
             System.out.println("There is no edible food for " + actor.toString());
@@ -41,7 +35,6 @@ public class SeekFoodBehaviour implements Behaviour{
         }
 
         int minDistance = distance(closestFoodLocation, map.locationOf(actor));
-//        int minDistance = closestDistance(actor, map);
         String name ="";
         if (minDistance == 0){
             // On same ground as food, so eating it
@@ -69,7 +62,6 @@ public class SeekFoodBehaviour implements Behaviour{
         double minDistance = Double.POSITIVE_INFINITY;
         // For Brachiosaur
         if (type == 'R'){
-            ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('+', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
@@ -103,7 +95,6 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Stegosaur
         else if (type == 'S'){
-            ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('b', "Ground");
             if (location != null){
                 Bush bush = (Bush) location.getGround();
@@ -124,7 +115,6 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Allosaur
         else if (type == 'A'){
-            ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('C', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
@@ -149,12 +139,14 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Pterodactyls
         else if (type == 'P'){
-            ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('C', "Item");
             if (location != null){
-                if (distance(location, map.locationOf(actor)) < minDistance){
-                    minDistance = distance(location, map.locationOf(actor));
-                    returnLocation = location;
+                // will only go towards this corpse if there are no dinos in the adjacent square
+                if (!dinoNearBy(location)){
+                    if (distance(location, map.locationOf(actor)) < minDistance){
+                        minDistance = distance(location, map.locationOf(actor));
+                        returnLocation = location;
+                    }
                 }
             }
             // if flying, check for lakes as well
@@ -186,5 +178,23 @@ public class SeekFoodBehaviour implements Behaviour{
         return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
-
+    /**
+     * A method to look at all adjacent squares of a given location and return whether a dinosaur is present in
+     * any adjacent square
+     * @param location the location we want to check
+     * @return a boolean value indicating whether a dinosaur is present next to given location
+     */
+    private boolean dinoNearBy(Location location){
+        boolean result = false;
+        for (Exit e : location.getExits()){
+            if (e.getDestination().containsAnActor()){
+                Actor adjacentActor =  e.getDestination().getActor();
+                char dChar = adjacentActor.getDisplayChar();
+                if (dChar == 'S' || dChar == 'A' || dChar == 'R'){
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
 }

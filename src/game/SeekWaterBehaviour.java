@@ -60,7 +60,7 @@ public class SeekWaterBehaviour implements Behaviour{
                 Location destination = exit.getDestination();
                 if (destination.canActorEnter(actor)) {
                     int newDistance = distance(closestWater, destination);
-                    if (newDistance < minDistance) {
+                    if (newDistance <= minDistance) {
                         minDistance = newDistance;
                         minLocation = destination;
                         name = exit.getName();

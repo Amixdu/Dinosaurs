@@ -46,10 +46,13 @@ public class Pterodactyl extends CarnivorousDinosaur {
             // does not land on water
             if (map.locationOf(this).getGround().getDisplayChar() != '~'){
                 this.removeCapability(Flight.YES);
-                if (!superActionSuccess){
-                    // start looking for a tree
-                    finalAction = seekTreeBehaviour.getAction(this, map);
+                if (this.isConscious()){
+                    if (!superActionSuccess){
+                        // start looking for a tree
+                        finalAction = seekTreeBehaviour.getAction(this, map);
+                    }
                 }
+
             }
         }
         fuel = fuel - 1;
