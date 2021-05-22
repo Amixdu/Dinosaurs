@@ -7,7 +7,13 @@ import edu.monash.fit2099.engine.Location;
  * @author Amindu Kaushal Kumarasinghe
  */
 public class Corpse extends PortableItem {
+    /**
+     * The type of the dinosaur that this corpse belongs to
+     */
     private char corpseType;
+    /**
+     * A counter to keep track of the number of rounds this corpse stays in the map
+     */
     private int rounds;
     /**
      * health points gained by eating this corpse
@@ -58,10 +64,18 @@ public class Corpse extends PortableItem {
         return corpseType;
     }
 
+    /**
+     * Method to set the corpse points
+     * @param points amount of HP gained by eating this corpse
+     */
     public void setCorpsePoints(int points) {
         this.corpsePoints = points;
     }
 
+    /**
+     * Method to retrieve the corpse points
+     * @return the amount of HP gained by eating this corpse
+     */
     public int getCorpsePoints() {
         return corpsePoints;
     }

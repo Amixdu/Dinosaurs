@@ -30,10 +30,7 @@ public class SeekWaterBehaviour implements Behaviour{
     @Override
     public Action getAction(Actor actor, GameMap map) {
 
-//        uncomment this and line 172 to simulate fruit falling for testing
-//        fallFruit(map);
         Location minLocation = map.locationOf(actor);
-//        Location closestWater = closestWater(actor, map);
         Location closestWater = closestWaterLoc(actor, map);
         if (closestWater == null){
             System.out.println("There is no water available in map");
@@ -53,8 +50,6 @@ public class SeekWaterBehaviour implements Behaviour{
         // if next to lake, drink water
         if (minDistance == 1){
             return new DrinkWaterAction(closestWater);
-//            name = drinkWater(actor, closestWater);
-//            return null;
         } else {
             for (Exit exit : map.locationOf(actor).getExits()) {
                 Location destination = exit.getDestination();
@@ -71,6 +66,12 @@ public class SeekWaterBehaviour implements Behaviour{
         }
     }
 
+    /**
+     * Uses the SearchMap class and checks if lake at returned location has sips
+     * @param actor The dinosaur drinking water
+     * @param map The map that the dinosuar is on
+     * @return the closest location to water
+     */
     private Location closestWaterLoc (Actor actor, GameMap map){
         SearchMap searchMap = new SearchMap(actor, map);
         Location location;

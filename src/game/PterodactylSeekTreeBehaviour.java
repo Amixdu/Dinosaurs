@@ -2,13 +2,29 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 
+/**
+ * @author Amindu Kumarasinghe
+ */
 public class PterodactylSeekTreeBehaviour implements Behaviour {
+    /**
+     * The reason for seeking the tree (resting/laying egg)
+     */
     String purpose;
 
+    /**
+     * Constructor
+     * @param purpose The reason for seeking the tree (resting/laying egg)
+     */
     public PterodactylSeekTreeBehaviour(String purpose) {
         this.purpose = purpose;
     }
 
+    /**
+     * Method to get the required Movement action by looking through the map for trees
+     * @param actor the Actor acting
+     * @param map the GameMap containing the Actor
+     * @return A MovePterodactylToTreeAction if conditions are met, or else returns null
+     */
     @Override
     public Action getAction(Actor actor, GameMap map) {
         Location actorLocation = map.locationOf(actor);

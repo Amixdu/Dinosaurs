@@ -4,20 +4,35 @@ import edu.monash.fit2099.engine.*;
 
 import java.util.List;
 
+/**
+ * @author Amindu Kumarasinghe
+ */
 public class SearchMap {
+    /**
+     * The current map
+     */
     GameMap map;
-    Actor actor;
-    Ground targetGround;
 
+    /**
+     * The relevant actor
+     */
+    Actor actor;
+
+    /**
+     * Constructor
+     * @param actor  The relevant actor
+     * @param map The current map
+     */
     public SearchMap(Actor actor, GameMap map) {
         this.map = map;
         this.actor = actor;
-//        this.targetGround = targetGround;
     }
 
     /**
-     * Gets the location of the closes food from the whole map
-     * @return location of closest food when calculated from current position of dinosaur
+     * Goes through the given map, and looks for a target object (actor/item/ground)
+     * @param target The object that we are looking for
+     * @param type The type of object (whether its an Actor, Item or Ground)
+     * @return closest location to target from the actor
      */
     public Location closest(char target, String type){
         boolean found = false;

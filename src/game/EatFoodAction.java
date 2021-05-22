@@ -3,14 +3,29 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 import java.util.List;
-
+/**
+ * @author Amindu Kumarasinghe
+ */
 public class EatFoodAction extends Action {
+    /**
+     * Location of the target food
+     */
     Location foodLocation;
 
+    /**
+     * constructor
+     * @param foodLocation Location of the target food
+     */
     public EatFoodAction(Location foodLocation) {
         this.foodLocation = foodLocation;
     }
 
+    /**
+     * This checks the appropriate foods for the matching dinosaurs and increases health points accordingly
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return an output message describing the result
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String outputMessage = "";
@@ -151,6 +166,11 @@ public class EatFoodAction extends Action {
     }
 
 
+    /**
+     *
+     * @param actor The actor performing the action.
+     * @return A message that will be displayed after eating
+     */
     @Override
     public String menuDescription(Actor actor) {
         return (actor.toString() + " at location(" + foodLocation.x() + ","  + foodLocation.y() + ") has eaten");

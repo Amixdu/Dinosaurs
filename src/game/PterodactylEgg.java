@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * @author Amindu Kumarasinghe
+ */
 public class PterodactylEgg extends Egg{
     /**
      * Constructor
