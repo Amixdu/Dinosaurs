@@ -85,7 +85,7 @@ public class MateBehavior implements Behaviour{
                                     }
                                 }
                             }
-                            return new MoveActorToMateAction(minLocation, name);
+                            return new MovePterodactylToTreeAction(minLocation, name, "egg laying");
                         }
                     }
                 }

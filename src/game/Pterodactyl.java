@@ -1,5 +1,9 @@
 package game;
 
+import edu.monash.fit2099.engine.Action;
+import edu.monash.fit2099.engine.Actions;
+import edu.monash.fit2099.engine.Display;
+import edu.monash.fit2099.engine.GameMap;
 import game.AgeGroup;
 import game.CarnivorousDinosaur;
 import game.Sex;
@@ -7,6 +11,7 @@ import game.Sex;
 public class Pterodactyl extends CarnivorousDinosaur {
 
     int fuel;
+    Behaviour seekTreeBehaviour;
     /**
      * Constructor
      *
@@ -25,5 +30,36 @@ public class Pterodactyl extends CarnivorousDinosaur {
                 10, 50, ageGroup, 30, 100, 30);
         this.addCapability(Flight.YES);
         this.fuel = 30 - (30 - fuel);
+        seekTreeBehaviour = new PterodactylSeekTreeBehaviour("resting");
     }
+
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
+    @Override
+    public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+        Action superAction = super.playTurn(actions, lastAction, map, display);
+        Action finalAction = superAction;
+        boolean superActionSuccess = (superAction instanceof MateAction || superAction instanceof MoveActorToMateAction || superAction instanceof LayEggAction);
+        if (fuel <= 0){
+            // does not land on water
+            if (map.locationOf(this).getGround().getDisplayChar() != '~'){
+                this.removeCapability(Flight.YES);
+                if (!superActionSuccess){
+                    // start looking for a tree
+                    finalAction = seekTreeBehaviour.getAction(this, map);
+                }
+            }
+        }
+        fuel = fuel - 1;
+        if (this.hasCapability(Flight.YES)){
+            System.out.println("Flying");
+        }
+        else{
+            System.out.println("Walking");
+        }
+        return finalAction;
+    }
+
 }

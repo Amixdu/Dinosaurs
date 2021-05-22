@@ -51,7 +51,7 @@ public class SeekFoodBehaviour implements Behaviour{
                 Location destination = exit.getDestination();
                 if (destination.canActorEnter(actor)) {
                     int newDistance = distance(closestFoodLocation, destination);
-                    if (newDistance < minDistance) {
+                    if (newDistance <= minDistance) {
                         minDistance = newDistance;
                         minLocation = destination;
                         name = exit.getName();
@@ -101,6 +101,7 @@ public class SeekFoodBehaviour implements Behaviour{
                 }
             }
         }
+        // For Stegosaur
         else if (type == 'S'){
             ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('b', "Ground");
@@ -121,6 +122,7 @@ public class SeekFoodBehaviour implements Behaviour{
                 }
             }
         }
+        // For Allosaur
         else if (type == 'A'){
             ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('C', "Item");
@@ -145,6 +147,7 @@ public class SeekFoodBehaviour implements Behaviour{
                 }
             }
         }
+        // For Pterodactyls
         else if (type == 'P'){
             ArrayList<Integer> distances= new ArrayList<>();
             location = searchMap.closest('C', "Item");
@@ -156,7 +159,7 @@ public class SeekFoodBehaviour implements Behaviour{
             }
             // if flying, check for lakes as well
             if (actor.hasCapability(Flight.YES)){
-                location = searchMap.closest('~', "Item");
+                location = searchMap.closest('~', "Ground");
                 if (location != null){
                     Lake lake = (Lake) location.getGround();
                     if (lake.getFishCount() > 0){
