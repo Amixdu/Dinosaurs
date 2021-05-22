@@ -92,7 +92,7 @@ public abstract class Dinosaur extends Actor {
     /**
      * To know whether the dinosaur is unconscious due to lack of rain
      */
-    private boolean unconsciousDueToRain;
+    private boolean unconsciousDueToWater;
 
     /**
      * The amount of health points that can be gained by eating this dinosaur
@@ -131,7 +131,7 @@ public abstract class Dinosaur extends Actor {
         this.age = 0;
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
-        this.unconsciousDueToRain = false;
+        this.unconsciousDueToWater = false;
         this.corpsePoints = corpsePoints;
 
         //behaviors
@@ -155,6 +155,16 @@ public abstract class Dinosaur extends Actor {
      */
     public void setAgeGroup(AgeGroup ageGroup) {
         this.ageGroup = ageGroup;
+    }
+
+    @Override
+    public boolean isConscious() {
+        if (this.hitPoints > 0 && this.waterLevel > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -214,11 +224,13 @@ public abstract class Dinosaur extends Actor {
             }
         } else {
             // if unconscious because of lack of rain, update correct counter
-            if (unconsciousDueToRain){
+            if (unconsciousDueToWater){
                 if (rainfallUnconsciousCounter < 15){
                     this.rainfallUnconsciousCounter += 1;
                     // increase normal counter as well
                     this.unconsciousCount += 1;
+                    // Health points keep reducing
+                    this.hurt(1);
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious due to lack of water!");
                 }
                 else {
@@ -232,6 +244,8 @@ public abstract class Dinosaur extends Actor {
             else{
                 if (unconsciousCount < this.getMaxUnconsciousRounds()){
                     this.unconsciousCount += 1;
+                    // water level keeps reducing
+                    waterLevel -= 1;
                     System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is unconscious!");
                 }
                 else {
@@ -285,11 +299,7 @@ public abstract class Dinosaur extends Actor {
                 }
             }
             else{
-                // if no water, make the dinosaur unconscious
-                if (waterLevel <= 0){
-                    this.hurt(maxHitPoints);
-                    unconsciousDueToRain = true;
-                }
+                unconsciousDueToWater = true;
             }
         }
         return null;
@@ -418,5 +428,17 @@ public abstract class Dinosaur extends Actor {
 
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
+    }
+
+    public boolean isUnconsciousDueToWater() {
+        return unconsciousDueToWater;
+    }
+
+    public void setUnconsciousDueToWater(boolean unconsciousDueToWater) {
+        this.unconsciousDueToWater = unconsciousDueToWater;
+    }
+
+    public void setUnconsciousCount(int unconsciousCount) {
+        this.unconsciousCount = unconsciousCount;
     }
 }

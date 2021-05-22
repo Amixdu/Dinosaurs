@@ -105,7 +105,18 @@ public class ParkGameMap extends GameMap {
                 }
 
                 // if it's raining and actor is dino and dino is unconscious due to lack of water
-                // TODO: hydrate dino with rain (10 water points)
+                // set water points to 10 and reset boolean tracker
+                if (rain){
+                    if (actor instanceof Dinosaur){
+                        Dinosaur dino = (Dinosaur) actor;
+                        if (dino.isUnconsciousDueToWater()){
+                            dino.setWaterLevel(10);
+                            dino.setUnconsciousDueToWater(false);
+                            dino.setUnconsciousCount(0);
+                        }
+                    }
+                }
+
             }
         }
 
