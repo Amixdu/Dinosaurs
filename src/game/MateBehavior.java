@@ -44,49 +44,8 @@ public class MateBehavior implements Behaviour{
                     }
                     // else go towards tree
                     else{
-                        SearchMap searchMap = new SearchMap(actor, map);
-                        Location finalLoc = null;
-                        Location location;
-                        double minDist = Double.POSITIVE_INFINITY;
-                        location = searchMap.closest('T', "Ground");
-                        if (location != null){
-                            if (distance(location, actorLocation) < minDist){
-                                minDist = distance(location, actorLocation);
-                                finalLoc = location;
-                            }
-                        }
-
-                        location = searchMap.closest('t', "Ground");
-                        if (location != null){
-                            if (distance(location, actorLocation) < minDist){
-                                minDist = distance(location, actorLocation);
-                                finalLoc = location;
-                            }
-                        }
-                        location = searchMap.closest('+', "Ground");
-                        if (location != null){
-                            if (distance(location, actorLocation) < minDist){
-                                minDist = distance(location, actorLocation);
-                                finalLoc = location;
-                            }
-                        }
-                        String name = "";
-                        Location minLocation = actorLocation;
-                        if (finalLoc != null){
-                            int minDistance = distance(finalLoc, actorLocation);
-                            for (Exit exit : map.locationOf(actor).getExits()) {
-                                Location destination = exit.getDestination();
-                                if (destination.canActorEnter(actor)) {
-                                    int newDistance = distance(finalLoc, destination);
-                                    if (newDistance < minDistance){
-                                        minDistance = newDistance;
-                                        minLocation = destination;
-                                        name = exit.getName();
-                                    }
-                                }
-                            }
-                            return new MovePterodactylToTreeAction(minLocation, name, "egg laying");
-                        }
+                        PterodactylSeekTreeBehaviour sBehaviour = new PterodactylSeekTreeBehaviour("egg laying");
+                        return sBehaviour.getAction(actor, map);
                     }
                 }
 
@@ -115,6 +74,9 @@ public class MateBehavior implements Behaviour{
                                 if ((dinoLocationChar == 'T' || dinoLocationChar == 't' || dinoLocationChar == '+') &&
                                         (adjDinoLocationChar == 'T' || adjDinoLocationChar == 't' || adjDinoLocationChar == '+')){
                                     return new MateAction(adjacentDino);
+                                }
+                                else{
+                                    return null;
                                 }
                             }
                             else{
