@@ -70,7 +70,7 @@ public class SeekFoodBehaviour implements Behaviour{
         // For Brachiosaur
         if (type == 'R'){
             ArrayList<Integer> distances= new ArrayList<>();
-            location = searchMap.closest('+', true);
+            location = searchMap.closest('+', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
                 if (tree.containsFruit()){
@@ -80,7 +80,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     }
                 }
             }
-            location = searchMap.closest('t', true);
+            location = searchMap.closest('t', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
                 if (tree.containsFruit()){
@@ -90,7 +90,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     }
                 }
             }
-            location = searchMap.closest('T', true);
+            location = searchMap.closest('T', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
                 if (tree.containsFruit()){
@@ -103,7 +103,7 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         else if (type == 'S'){
             ArrayList<Integer> distances= new ArrayList<>();
-            location = searchMap.closest('b', true);
+            location = searchMap.closest('b', "Ground");
             if (location != null){
                 Bush bush = (Bush) location.getGround();
                 if (bush.containsFruit()){
@@ -113,7 +113,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     }
                 }
             }
-            location = searchMap.closest('f', false);
+            location = searchMap.closest('f', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
@@ -123,21 +123,21 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         else if (type == 'A'){
             ArrayList<Integer> distances= new ArrayList<>();
-            location = searchMap.closest('C', false);
+            location = searchMap.closest('C', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
                     returnLocation = location;
                 }
             }
-            location = searchMap.closest('q', false);
+            location = searchMap.closest('q', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
                     returnLocation = location;
                 }
             }
-            location = searchMap.closest('w', false);
+            location = searchMap.closest('w', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
@@ -147,7 +147,7 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         else if (type == 'P'){
             ArrayList<Integer> distances= new ArrayList<>();
-            location = searchMap.closest('C', false);
+            location = searchMap.closest('C', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
@@ -156,7 +156,7 @@ public class SeekFoodBehaviour implements Behaviour{
             }
             // if flying, check for lakes as well
             if (actor.hasCapability(Flight.YES)){
-                location = searchMap.closest('~', true);
+                location = searchMap.closest('~', "Item");
                 if (location != null){
                     Lake lake = (Lake) location.getGround();
                     if (lake.getFishCount() > 0){

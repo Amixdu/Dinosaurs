@@ -19,7 +19,7 @@ public class SearchMap {
      * Gets the location of the closes food from the whole map
      * @return location of closest food when calculated from current position of dinosaur
      */
-    public Location closest(char target, boolean isGround){
+    public Location closest(char target, String type){
         boolean found = false;
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
@@ -34,7 +34,7 @@ public class SearchMap {
                     if (newLocation.getGround() != null) {
                         char groundType = newLocation.getGround().getDisplayChar();
                         // if searching for ground
-                        if (isGround){
+                        if (type.equals("Ground")){
                             if (groundType == target) {
                                 found = true;
                                 int distance = distance(dinoLocation, newLocation);
@@ -46,7 +46,7 @@ public class SearchMap {
                             }
                         }
                         // if searching for item
-                        else{
+                        else if (type.equals("Item")){
                             List<Item> items = newLocation.getItems();
                             for (Item item : items) {
                                 // check if fruit is there
@@ -59,6 +59,19 @@ public class SearchMap {
                                     }
                                 }
                             }
+                        }
+                        else if (type.equals("Actor")){
+                            if (newLocation.getActor() != null){
+                                if (newLocation.getActor().getDisplayChar() == target){
+                                    found = true;
+                                    int distance = distance(dinoLocation, newLocation);
+                                    if (distance < minDistance) {
+                                        minDistance = distance;
+                                        bestLocation = newLocation;
+                                    }
+                                }
+                            }
+
                         }
 
                     }

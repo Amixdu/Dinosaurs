@@ -76,7 +76,7 @@ public class SeekWaterBehaviour implements Behaviour{
         Location location;
         Location returnLocation = null;
         double minDistance = Double.POSITIVE_INFINITY;
-        location = searchMap.closest('~', true);
+        location = searchMap.closest('~', "Ground");
         if (location != null){
             Lake lake = (Lake) location.getGround();
             if (lake.getSips() > 0){

@@ -48,7 +48,7 @@ public class MateBehavior implements Behaviour{
                         Location finalLoc = null;
                         Location location;
                         double minDist = Double.POSITIVE_INFINITY;
-                        location = searchMap.closest('T', true);
+                        location = searchMap.closest('T', "Ground");
                         if (location != null){
                             if (distance(location, actorLocation) < minDist){
                                 minDist = distance(location, actorLocation);
@@ -56,14 +56,14 @@ public class MateBehavior implements Behaviour{
                             }
                         }
 
-                        location = searchMap.closest('t', true);
+                        location = searchMap.closest('t', "Ground");
                         if (location != null){
                             if (distance(location, actorLocation) < minDist){
                                 minDist = distance(location, actorLocation);
                                 finalLoc = location;
                             }
                         }
-                        location = searchMap.closest('+', true);
+                        location = searchMap.closest('+', "Ground");
                         if (location != null){
                             if (distance(location, actorLocation) < minDist){
                                 minDist = distance(location, actorLocation);
@@ -87,17 +87,6 @@ public class MateBehavior implements Behaviour{
                             }
                             return new MoveActorToMateAction(minLocation, name);
                         }
-
-//                        if (finalLoc != null){
-//                            for (Exit e : actorLocation.getExits()){
-//                                Location destination = e.getDestination();
-//                                if (destination.canActorEnter(actor)) {
-//                                    String name = e.getName();
-//                                    return new MovePterodactylToLayEggAction(finalLoc, name);
-//                                }
-//                            }
-//
-//                        }
                     }
                 }
 
