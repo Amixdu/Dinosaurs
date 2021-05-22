@@ -35,6 +35,10 @@ public class VendingMachine extends Ground {
      * price of a laser gun
      */
     final private int laserGunPrice;
+    /**
+     * Price of a pterodactyl egg
+     */
+    final private int pteroEggPrice;
 
     /**
      * Constructor
@@ -48,6 +52,7 @@ public class VendingMachine extends Ground {
         brachEggPrice = 500;
         alloEggPrice = 1000;
         laserGunPrice = 500;
+        pteroEggPrice = 200;
     }
 
     /**
@@ -107,6 +112,14 @@ public class VendingMachine extends Ground {
     }
 
     /**
+     *
+     * @return price of pterodactyl egg
+     */
+    public int getPteroEggPrice() {
+        return pteroEggPrice;
+    }
+
+    /**
      * Returns an action list containing actions that be done to the VendingMachine
      *
      * @param actor the Actor acting
@@ -114,6 +127,7 @@ public class VendingMachine extends Ground {
      * @param direction the direction of the Ground from the Actor
      * @return BuyItemAction
      */
+
     @Override
     public Actions allowableActions(Actor actor, Location location, String direction) {
         Actions actions = new Actions();
@@ -139,5 +153,6 @@ public class VendingMachine extends Ground {
     public boolean blocksThrownObjects() {
         return true;
     }
+
 
 }
