@@ -19,6 +19,21 @@ public class Player extends Actor {
 	private static int ecoPoints = 0;
 
 	/**
+	 * Target Ecopoints - Only for Challenge Mode
+	 */
+	private int targetEcoPoints;
+
+	/**
+	 * Target number of moves - Only For Challenge Mode
+	 */
+	private int targetMoves;
+
+	/**
+	 * Number of turns
+	 */
+	private int noOfMoves;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param name        Name to call the player in the UI
@@ -39,6 +54,22 @@ public class Player extends Actor {
 	 */
 	@Override
 	public Action playTurn(Actions actions, Action lastAction, GameMap map, Display display) {
+		noOfMoves++;
+		// check if number of turns reached in challenge mode
+		if (hasCapability(GameMode.CHALLENGE) && noOfMoves == targetMoves + 1){
+			System.out.printf("Target ecoPoints: %d\nAcquired ecoPoints: %d\nSet number of moves: %d\n",
+					targetEcoPoints, ecoPoints, noOfMoves-1);
+			if (targetEcoPoints <= ecoPoints){
+				System.out.println("You won the Challenge!");
+			} else {
+				System.out.println("You lost the Challenge");
+			}
+			return new QuitGameAction();
+		}
+
+		// Let player quit game
+		actions.add(new QuitGameAction());
+
 		// Handle multi-turn Actions
 		if (lastAction.getNextAction() != null)
 			return lastAction.getNextAction();
@@ -76,5 +107,14 @@ public class Player extends Actor {
 		int newEcoPoints = Player.ecoPoints - ecoPointsToReduce;
 		Player.ecoPoints = Math.min(newEcoPoints, 0);
 		System.out.printf("%d ecoPoints have been reduced\n", ecoPointsToReduce);
+	}
+
+	public void setTargetEcoPoints(int targetEcoPoints) {
+		if (targetEcoPoints > 0)
+			this.targetEcoPoints = targetEcoPoints;
+	}
+
+	public void setTargetMoves(int targetMoves) {
+		this.targetMoves = targetMoves;
 	}
 }
