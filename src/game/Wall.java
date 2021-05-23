@@ -18,11 +18,15 @@ public class Wall extends Ground {
 	/**
 	 * To define if the actor can enter a wall
 	 * @param actor the Actor to check
-	 * @return false
+	 * @return whether an actor can go over walls
 	 */
 	@Override
 	public boolean canActorEnter(Actor actor) {
-		return false;
+		boolean retVal = false;
+		if (actor.hasCapability(Flight.YES)){
+			retVal = true;
+		}
+		return retVal;
 	}
 
 	/**
