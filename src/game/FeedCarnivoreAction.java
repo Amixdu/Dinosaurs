@@ -43,7 +43,7 @@ public class FeedCarnivoreAction extends Action {
         int afterFeeding;
 
 
-        // Cant feed if stegosaur is already full
+        // Cant feed if already full
         if (carnivorousDinosaur.getHitPoints() >= carnivorousDinosaur.getMaxHitPoints()){
             return (result + ", but " + carnivorousDinosaur.getName() + " is full!");
         }
