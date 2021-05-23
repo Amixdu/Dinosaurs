@@ -194,6 +194,19 @@ public abstract class Dinosaur extends Actor {
                 ageGroup = AgeGroup.ADULT;
                 System.out.printf("Baby %s at (%d,%d) grew to become an adult.\n", toString(),
                         map.locationOf(this).x(), map.locationOf(this).y() );
+                char currentChar = this.getDisplayChar();
+                if (currentChar == 'a'){
+                    this.setDisplayChar('A');
+                }
+                else if (currentChar == 'b'){
+                    this.setDisplayChar('B');
+                }
+                else if (currentChar == 'p'){
+                    this.setDisplayChar('P');
+                }
+                else if (currentChar == 's'){
+                    this.setDisplayChar('S');
+                }
             }
 
             // increment turnsSinceMate if has already mated (for adult female)
@@ -467,5 +480,9 @@ public abstract class Dinosaur extends Actor {
      */
     public void setUnconsciousCount(int unconsciousCount) {
         this.unconsciousCount = unconsciousCount;
+    }
+
+    public void setDisplayChar(char newChar){
+        this.displayChar = newChar;
     }
 }

@@ -52,22 +52,22 @@ public class Egg extends PortableItem{
 
             if (displayChar == 'e'){
                 // allosaur egg -> baby allosaur
-                currentLocation.addActor(new Allosaur("Allosaur", sexOfBaby, 20, AgeGroup.BABY));
+                currentLocation.addActor(new Allosaur("Allosaur", 'a', sexOfBaby, 20, AgeGroup.BABY));
                 currentLocation.removeItem(this);
                 Player.increaseEcoPoints(100);
             } else if (displayChar == 'q') {
                 // stegosaur egg -> baby stegosaur
-                currentLocation.addActor(new Stegosaur("Stegosaur", sexOfBaby, 10, AgeGroup.BABY));
+                currentLocation.addActor(new Stegosaur("Stegosaur",'s', sexOfBaby, 10, AgeGroup.BABY));
                 currentLocation.removeItem(this);
                 Player.increaseEcoPoints(1000);
             } else if (displayChar == 'w') {
                 // brachiosaur egg -> baby brachiosaur
-                currentLocation.addActor(new Brachiosaur("Brachiosaur", sexOfBaby, 10, AgeGroup.BABY));
+                currentLocation.addActor(new Brachiosaur("Brachiosaur",'b', sexOfBaby, 10, AgeGroup.BABY));
                 currentLocation.removeItem(this);
                 Player.increaseEcoPoints(1000);
             } else if (displayChar == 'y') {
                 // pterodactyl egg -> baby pterodactyl
-                currentLocation.addActor(new Pterodactyl("Pterodactyl", sexOfBaby, 10, AgeGroup.BABY, 30));
+                currentLocation.addActor(new Pterodactyl("Pterodactyl", 'p', sexOfBaby, 10, AgeGroup.BABY, 30));
                 currentLocation.removeItem(this);
                 Player.increaseEcoPoints(1000);
             }

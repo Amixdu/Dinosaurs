@@ -41,7 +41,7 @@ public class SeekWaterBehaviour implements Behaviour{
         String name ="";
         // pterodactyls can either drink water by walking or flying
         // so if already flying above lake, dip beak in and drink
-        if (type == 'P' && actor.hasCapability(Flight.YES)){
+        if ((type == 'P' || type == 'p') && actor.hasCapability(Flight.YES)){
             if (minDistance == 0){
                 return new DrinkWaterAction(closestWater);
             }

@@ -61,7 +61,7 @@ public class SeekFoodBehaviour implements Behaviour{
         Location returnLocation = null;
         double minDistance = Double.POSITIVE_INFINITY;
         // For Brachiosaur
-        if (type == 'R'){
+        if (type == 'R' || type == 'r'){
             location = searchMap.closest('+', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
@@ -94,7 +94,7 @@ public class SeekFoodBehaviour implements Behaviour{
             }
         }
         // For Stegosaur
-        else if (type == 'S'){
+        else if (type == 'S' || type == 's'){
             location = searchMap.closest('b', "Ground");
             if (location != null){
                 Bush bush = (Bush) location.getGround();
@@ -114,7 +114,7 @@ public class SeekFoodBehaviour implements Behaviour{
             }
         }
         // For Allosaur
-        else if (type == 'A'){
+        else if (type == 'A' || type == 'a'){
             location = searchMap.closest('C', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
@@ -138,7 +138,7 @@ public class SeekFoodBehaviour implements Behaviour{
             }
         }
         // For Pterodactyls
-        else if (type == 'P'){
+        else if (type == 'P' || type == 'p'){
             location = searchMap.closest('C', "Item");
             if (location != null){
                 // will only go towards this corpse if there are no dinos in the adjacent square
@@ -190,6 +190,7 @@ public class SeekFoodBehaviour implements Behaviour{
             if (e.getDestination().containsAnActor()){
                 Actor adjacentActor =  e.getDestination().getActor();
                 char dChar = adjacentActor.getDisplayChar();
+                // will not go near if any other adult dinosaurs around
                 if (dChar == 'S' || dChar == 'A' || dChar == 'R'){
                     result = true;
                 }

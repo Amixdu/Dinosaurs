@@ -31,8 +31,8 @@ public class Stegosaur extends VegetarianDinosaur {
 		this.attackCoolDown = 20;
 	}
 
-	public Stegosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup){
-		super(name, 'S', sex, startingHitPoints, 100, 20, 90,
+	public Stegosaur(String name, char displayChar, Sex sex, int startingHitPoints, AgeGroup ageGroup){
+		super(name, displayChar, sex, startingHitPoints, 100, 20, 90,
 				10, 50, ageGroup, 30, 100, 50);
 		this.attackCoolDown = 20;
 
