@@ -15,7 +15,7 @@ public class Application {
 
 	/**
 	 * more sophisticated game driver
-	 * menu to choose challenge mode or sandbox mode
+	 * menu to choose challenge mode or sandbox mode or quit
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -65,7 +65,7 @@ public class Application {
 
 	/**
 	 * Initializes the maps, adds actors to maps and runs the game
-	 * connects the 2 maps and allows actors to traverse both maps (park2 is north of park1)
+	 * connects the 2 maps and allows Player to traverse both maps (park2 is north of park1)
 	 * @param challengeMode
 	 * @param targetMoves
 	 * @param targetEcoPoints
