@@ -26,8 +26,8 @@ public class Brachiosaur extends VegetarianDinosaur{
      * @param startingHitPoints starting hit points of the brachiosaur
      * @param ageGroup age group of the brachiosaur
      */
-    public Brachiosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
-        super(name, 'R', sex, startingHitPoints, 160, 15, 140,
+    public Brachiosaur(String name, char displayChar, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
+        super(name, displayChar, sex, startingHitPoints, 160, 15, 140,
                 30, 70, ageGroup, 50, 200, 50);
     }
 

@@ -23,8 +23,8 @@ public class Allosaur extends CarnivorousDinosaur {
      * @param startingHitPoints starting hitpoints for the dinosaur
      * @param ageGroup          indicates whether the dinosaur is a baby or an adult
      */
-    public Allosaur(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
-        super(name, 'A', sex, startingHitPoints, 100, 20, 90,
+    public Allosaur(String name, char displayChar, Sex sex, int startingHitPoints, AgeGroup ageGroup) {
+        super(name, displayChar, sex, startingHitPoints, 100, 20, 90,
                 20, 50, ageGroup, 50, 100, 50);
 
         //behaviors

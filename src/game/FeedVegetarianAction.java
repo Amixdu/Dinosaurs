@@ -36,62 +36,39 @@ public class FeedVegetarianAction extends Action {
         String result = actor.toString() + " tries to feed " + vegetarianDinosaur.getName();
         List<Item> inventory = actor.getInventory();
 
-        boolean hasFruits = false;
-        boolean hasVmKits = false;
         int beforeFeeding = vegetarianDinosaur.getHitPoints();
         int afterFeeding;
 
-        // Cant feed if stegosaur is already full
+        // Cant feed if already full
         if (vegetarianDinosaur.getHitPoints() >= vegetarianDinosaur.getMaxHitPoints()){
             return (result + ", but " + vegetarianDinosaur.getName() + " is full!");
         }
 
-        int fruitPosition = 0;
-        int mealKitPosition = 0;
+        String userInput = userInput();
         // Going through inventory searching for fruit or vegetarian meal kits
         for (int i = 0; i < inventory.size(); i++){
-            if (inventory.get(i).getDisplayChar() == 'f'){
-                hasFruits = true;
-                fruitPosition = i;
+            if (userInput.equals("A")){
+                // feeding fruit
+                if (inventory.get(i).getDisplayChar() == 'f'){
+                    actor.removeItemFromInventory(inventory.get(i));
+                    vegetarianDinosaur.heal(20);
+                    Player.increaseEcoPoints(10);
+                    afterFeeding = vegetarianDinosaur.getHitPoints();
+                    return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
+                }
             }
-            else if (inventory.get(i).getDisplayChar() == 'v'){
-                hasVmKits = true;
-                mealKitPosition = i;
-            }
-        }
-
-        // if has both fruits and vegetarian meal kits, let user choose what to feed
-        if (hasFruits && hasVmKits){
-            String option = userInput();
-            if (option.equals("A")){
-                afterFeeding = feedFruit(actor);
-                actor.removeItemFromInventory(inventory.get(fruitPosition));
-                return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
-            }
-            else if(option.equals("B")){
-                afterFeeding = feedMealKit();
-                actor.removeItemFromInventory(inventory.get(mealKitPosition));
-                return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
-            }
-            else{
-                return "Enter a valid input";
+            else if (userInput.equals("B")){
+                // feeding vegetarian meal kit
+                if (inventory.get(i).getDisplayChar() == 'v'){
+                    actor.removeItemFromInventory(inventory.get(i));
+                    vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
+                    afterFeeding = vegetarianDinosaur.getHitPoints();
+                    return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
+                }
             }
         }
 
-        // if inventory has only fruit, feed fruit
-        else if(hasFruits && !hasVmKits){
-            afterFeeding = feedFruit(actor);
-            actor.removeItemFromInventory(inventory.get(fruitPosition));
-            return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
-        }
-
-        // if inventory has only vegetarian meal kit, feed vegetarian meal kit
-        else if(!hasFruits && hasVmKits){
-            afterFeeding = feedMealKit();
-            actor.removeItemFromInventory(inventory.get(fruitPosition));
-            return (result + ", successfully fed (Hit points increased from "+beforeFeeding+" to "+afterFeeding+ ")");
-        }
-        return ("No feedable items in inventory");
+        return ("Item not in inventory");
 
     }
 
@@ -112,22 +89,4 @@ public class FeedVegetarianAction extends Action {
 
     }
 
-    /**
-     * Heals dinosaur from fruit and increases players eco points
-     * @param actor Player that is feeding
-     * @return Amount of hit points after healing
-     */
-    private int feedFruit(Actor actor){
-        vegetarianDinosaur.heal(20);
-        Player.increaseEcoPoints(10);
-        return vegetarianDinosaur.getHitPoints();
-    }
-
-    /**Heals dinosaur from vegetarian meal kit and increases players eco points
-     * @return Amount of hit points after healing
-     */
-    private int feedMealKit(){
-        vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
-        return vegetarianDinosaur.getHitPoints();
-    }
 }

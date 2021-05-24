@@ -40,7 +40,7 @@ public class SearchMap {
         NumberRange height = map.getYRange();
         Location dinoLocation = map.locationOf(actor);
         // This method is used to initialize bestLocation
-        Location bestLocation = firstLocation(actor, map, target);
+        Location bestLocation = firstLocation(map, target);
         if (bestLocation != null){
             int minDistance = distance(dinoLocation, bestLocation);
             for (int i : width){
@@ -105,7 +105,7 @@ public class SearchMap {
      * @param map map which dinosaur is on
      * @return first location in the map that contains either a fruit or a bush with fruits
      */
-    private Location firstLocation(Actor actor, GameMap map, char targetGround){
+    private Location firstLocation(GameMap map, char targetGround){
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         for (int i : width){

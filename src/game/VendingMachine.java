@@ -136,13 +136,17 @@ public class VendingMachine extends Ground {
     }
 
     /**
-     * To define if the actor can enter a vending machin square
+     * To define if the actor can enter a vending machine square
      * @param actor the Actor to check
-     * @return false
+     * @return whether an actor can go over a vending machine
      */
     @Override
     public boolean canActorEnter(Actor actor) {
-        return false;
+        boolean retVal = false;
+        if (actor.hasCapability(Flight.YES)){
+            retVal = true;
+        }
+        return retVal;
     }
 
     /**

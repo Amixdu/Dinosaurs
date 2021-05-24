@@ -31,8 +31,8 @@ public class Pterodactyl extends CarnivorousDinosaur {
      * @param startingHitPoints    starting hitpoints for the dinosaur
      * @param ageGroup             Age group of the dino (Baby or Adult)
      */
-    public Pterodactyl(String name, Sex sex, int startingHitPoints, AgeGroup ageGroup, int fuel){
-        super(name, 'P', sex, startingHitPoints, 100, 20, 90,
+    public Pterodactyl(String name, char displayChar, Sex sex, int startingHitPoints, AgeGroup ageGroup, int fuel){
+        super(name, displayChar, sex, startingHitPoints, 100, 20, 90,
                 10, 50, ageGroup, 30, 100, 30);
         this.addCapability(Flight.YES);
         this.fuel = 30 - (30 - fuel);
@@ -60,10 +60,13 @@ public class Pterodactyl extends CarnivorousDinosaur {
         Action superAction = super.playTurn(actions, lastAction, map, display);
         Action finalAction = superAction;
         boolean superActionSuccess = false;
+        // if breeding, moving to breed(shot radius) or laying an egg is possible,
+        // it doesn't look for tree to replenish fuel in next action
         if (superAction instanceof MateAction || superAction instanceof MoveActorToMateAction || superAction instanceof LayEggAction){
             superActionSuccess = true;
         }
         if (fuel <= 0){
+            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is out of fuel!");
             // does not land on water
             if (map.locationOf(this).getGround().getDisplayChar() != '~'){
                 this.removeCapability(Flight.YES);

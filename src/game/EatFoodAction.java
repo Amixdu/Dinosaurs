@@ -95,19 +95,18 @@ public class EatFoodAction extends Action {
         // for pterodactyl
         else if (actor.getDisplayChar() == 'P'){
             Pterodactyl pterodactyl = (Pterodactyl) actor;
-            pterodactyl.heal(10);
             // eating fish
             // (this lake location would only have been sent here,if there was at least one fish in the lake)
             if (foodLocation.getGround().getDisplayChar() == '~'){
                 Lake lake = (Lake) foodLocation.getGround();
-                if (lake.getFishCount() >= 2){
+                int fishCount = lake.getFishCount();
+                if (fishCount >= 2){
                     // chance based system : 60% chance of catching only one fish,
                     // 60% chance of catching two and 20% chance of catching none.
                     double random = Math.random();
-                    int fish = lake.getFishCount();
                     // chance for eating one fish
                     if (random > 0.4) {
-                        lake.setFishCount(fish - 1);
+                        lake.setFishCount(fishCount - 1);
                         pterodactyl.heal(5);
                         pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
                         outputMessage = actor.toString() + " at location (" + foodLocation.x() + "," +
@@ -115,7 +114,7 @@ public class EatFoodAction extends Action {
                     }
                     // chance for eating two fish
                     else if (random >= 0.2 && random <= 0.4){
-                        lake.setFishCount(fish - 2);
+                        lake.setFishCount(fishCount - 2);
                         pterodactyl.heal(5 * 2);
                         pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 60);
                         outputMessage = actor.toString() + " at location (" + foodLocation.x() + "," +
@@ -129,12 +128,12 @@ public class EatFoodAction extends Action {
                     }
                 }
                 // theres only one fish
-                else if (lake.getFishCount() == 1){
-                    lake.setFishCount(lake.getFishCount() - 1);
+                else if (fishCount == 1){
+                    lake.setFishCount(fishCount - 1);
                     pterodactyl.heal(5);
                     pterodactyl.setWaterLevel(pterodactyl.getWaterLevel() + 30);
                     outputMessage = actor.toString() + " at location (" + foodLocation.x() + "," +
-                            foodLocation.y() + ") catches " + "2 fish";
+                            foodLocation.y() + ") catches " + "1 fish";
                 }
             }
 
