@@ -178,8 +178,8 @@ public class Application {
 
 
 		// testing Pterodactyl - uncomment
-//		park1.at(34, 3).addActor(new Pterodactyl("Pterodactyl A (M)", 'P',Sex.Male, 60,AgeGroup.ADULT, 30));
-//		park1.at(35, 3).addActor(new Pterodactyl("Pterodactyl B (F)", 'P', Sex.Female,  60, AgeGroup.ADULT, 30));
+		park1.at(34, 3).addActor(new Pterodactyl("Pterodactyl A (M)", 'P',Sex.Male, 60,AgeGroup.ADULT, 30));
+		park1.at(35, 3).addActor(new Pterodactyl("Pterodactyl B (F)", 'P', Sex.Female,  60, AgeGroup.ADULT, 30));
 
 		world.run();
 	}
