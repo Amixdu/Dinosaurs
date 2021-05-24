@@ -47,7 +47,7 @@ public class Player extends Actor {
 	/**
 	 * Select and return an action to perform on the current turn.
 	 * allows player to quit game
-	 * if challenge mode and target moves
+	 * if challenge mode and target moves has been reached, the game ends (with win/lose msg)
 	 * @param actions    collection of possible Actions for this Actor
 	 * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
 	 * @param map        the map containing the Actor

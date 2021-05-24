@@ -7,9 +7,7 @@ package game;
  */
 public class AllosaurEgg extends Egg{
     /**
-     * Select and return an action to perform on the current turn.
-     *
-     *
+     * Constructor
      */
     public AllosaurEgg() {
         super("Allosaur Egg", 'e', 50);

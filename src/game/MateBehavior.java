@@ -12,7 +12,7 @@ import java.util.List;
 public class MateBehavior implements Behaviour{
 
     /**
-     * can return LayEggAction, MateAction (if adjacent), MoveActorAction (if nearby) or null
+     * can return LayEggAction, MateAction (if adjacent), MoveActorToMateAction (if nearby) or null
      * if a female has mated, she cannot mate until she lays the egg
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
@@ -120,7 +120,7 @@ public class MateBehavior implements Behaviour{
                 break;
         }
 
-        // if dino of opposite sex is nearby, move closer -> MoveActorAction
+        // if dino of opposite sex is nearby, move closer -> MoveActorToMateAction
         String name = "";
         Location minLocation = actorLocation;
         if (foundNearByDino){
@@ -128,7 +128,7 @@ public class MateBehavior implements Behaviour{
                 Location destination = exit.getDestination();
                 if (destination.canActorEnter(actor)) {
                     int newDistance = distance(nextLocation, destination);
-                    if (newDistance < minDistance){
+                    if (newDistance <= minDistance){
                         minDistance = newDistance;
                         minLocation = destination;
                         name = exit.getName();

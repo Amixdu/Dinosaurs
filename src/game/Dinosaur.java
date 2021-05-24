@@ -224,7 +224,7 @@ public abstract class Dinosaur extends Actor {
 
             // getting the dino's next action
             // check if mating is possible
-            if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
+            if (hitPoints >= mateAmount && ageGroup == AgeGroup.ADULT && !hasMated){
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is ready to mate!");
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
