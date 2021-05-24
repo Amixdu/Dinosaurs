@@ -107,8 +107,6 @@ public class Application {
 
 		Player player = new Player("Player", '@', 100);
 
-		player.addItemToInventory(new Fruit());
-
 		// new player position
 		world.addPlayer(player, park1.at(9,4));
 
@@ -116,8 +114,6 @@ public class Application {
 		park1.at(30, 12).addActor(new Stegosaur("Stegosaur A (M)", Sex.Male, AgeGroup.ADULT));
 		park1.at(31, 12).addActor(new Stegosaur("Stegosaur B (F)", Sex.Female, AgeGroup.ADULT));
 
-		park1.at(34, 3).addActor(new Pterodactyl("Pterodactyl A (M)", 'P',Sex.Male, 60,AgeGroup.ADULT, 30));
-		park1.at(35, 3).addActor(new Pterodactyl("Pterodactyl B (F)", 'P', Sex.Female,  60, AgeGroup.ADULT, 30));
 		// place a herd of brachiosaurs in the map
 		park1.at(24, 14).addActor(new Brachiosaur("Brachiosaur A (M)", Sex.Male, AgeGroup.ADULT));
 		park1.at(25, 16).addActor(new Brachiosaur("Brachiosaur B (F)", Sex.Female, AgeGroup.ADULT));
@@ -179,6 +175,12 @@ public class Application {
 		} else{
 			player.addCapability(GameMode.SANDBOX);
 		}
+
+
+		// testing Pterodactyl - uncomment
+//		park1.at(34, 3).addActor(new Pterodactyl("Pterodactyl A (M)", 'P',Sex.Male, 60,AgeGroup.ADULT, 30));
+//		park1.at(35, 3).addActor(new Pterodactyl("Pterodactyl B (F)", 'P', Sex.Female,  60, AgeGroup.ADULT, 30));
+
 		world.run();
 	}
 }
