@@ -22,11 +22,7 @@ public class Wall extends Ground {
 	 */
 	@Override
 	public boolean canActorEnter(Actor actor) {
-		boolean retVal = false;
-		if (actor.hasCapability(Flight.YES)){
-			retVal = true;
-		}
-		return retVal;
+		return false;
 	}
 
 	/**
