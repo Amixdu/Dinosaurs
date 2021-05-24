@@ -38,7 +38,6 @@ public class FeedCarnivoreAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         String result = actor.toString() + " tries to feed " + carnivorousDinosaur.getName();
-        List<Item> inventory = actor.getInventory();
 
         int beforeFeeding = carnivorousDinosaur.getHitPoints();
         int afterFeeding;
@@ -50,7 +49,7 @@ public class FeedCarnivoreAction extends Action {
 
         // get users input
         String userInput = userInput();
-
+        List<Item> inventory = actor.getInventory();
         // Going through inventory searching for food, feed if found
         for (int i = 0; i < inventory.size(); i++){
             // feeding a corpse
@@ -82,6 +81,9 @@ public class FeedCarnivoreAction extends Action {
                     afterFeeding = carnivorousDinosaur.getHitPoints();
                     return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
                 }
+            }
+            else{
+                System.out.println("Please enter a valid input");
             }
 
         }

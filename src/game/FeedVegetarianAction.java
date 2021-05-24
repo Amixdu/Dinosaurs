@@ -34,7 +34,7 @@ public class FeedVegetarianAction extends Action {
     public String execute(Actor actor, GameMap map) {
 
         String result = actor.toString() + " tries to feed " + vegetarianDinosaur.getName();
-        List<Item> inventory = actor.getInventory();
+
 
         int beforeFeeding = vegetarianDinosaur.getHitPoints();
         int afterFeeding;
@@ -44,12 +44,14 @@ public class FeedVegetarianAction extends Action {
             return (result + ", but " + vegetarianDinosaur.getName() + " is full!");
         }
 
+        List<Item> inventory = actor.getInventory();
         String userInput = userInput();
         // Going through inventory searching for fruit or vegetarian meal kits
         for (int i = 0; i < inventory.size(); i++){
+            char displayChar = inventory.get(i).getDisplayChar();
             if (userInput.equals("A")){
                 // feeding fruit
-                if (inventory.get(i).getDisplayChar() == 'f'){
+                if (displayChar == 'f'){
                     actor.removeItemFromInventory(inventory.get(i));
                     vegetarianDinosaur.heal(20);
                     Player.increaseEcoPoints(10);
@@ -59,12 +61,15 @@ public class FeedVegetarianAction extends Action {
             }
             else if (userInput.equals("B")){
                 // feeding vegetarian meal kit
-                if (inventory.get(i).getDisplayChar() == 'v'){
+                if (displayChar == 'v'){
                     actor.removeItemFromInventory(inventory.get(i));
                     vegetarianDinosaur.heal(vegetarianDinosaur.getMaxHitPoints());
                     afterFeeding = vegetarianDinosaur.getHitPoints();
                     return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
                 }
+            }
+            else{
+                System.out.println("Please enter a valid input");
             }
         }
 
