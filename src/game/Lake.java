@@ -12,6 +12,10 @@ import java.util.Random;
  */
 public class Lake extends Ground {
     /**
+     * Max number of sips a lake can have
+     */
+    private int maxSips = 25;
+    /**
      * number of sips this lake has
      */
     private int sips;
@@ -28,7 +32,7 @@ public class Lake extends Ground {
      */
     public Lake() {
         super('~');
-        setSips(25);
+        setSips(maxSips);
         fishCount = 5;
     }
 
@@ -49,13 +53,14 @@ public class Lake extends Ground {
 
     /**
      * sips setter
+     * A lake cannot have more than 25 sips (sips <= maxSips)
      * if sips is 0, fish count will also be 0
      * cant can't have fish in a lake with no sips
      * @param sips
      */
     public void setSips(int sips) {
-        this.sips = sips;
-        if (sips == 0)
+        this.sips = Math.min(sips, maxSips);
+        if (sips <= 0)
             setFishCount(0);
     }
 
