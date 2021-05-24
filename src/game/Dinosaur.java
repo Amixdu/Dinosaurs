@@ -214,9 +214,18 @@ public abstract class Dinosaur extends Actor {
                 turnsSinceMate++;
             }
 
-            // getting the dinos next action
+            //display state of dino
+            if (hitPoints < hungerAmount){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
+            }
+            if (waterLevel < 40){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
+            }
+
+            // getting the dino's next action
             // check if mating is possible
             if (hitPoints > mateAmount && ageGroup == AgeGroup.ADULT){
+                System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is ready to mate!");
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
                 if (mateAction != null){
@@ -306,7 +315,6 @@ public abstract class Dinosaur extends Actor {
     private Action thirst(GameMap map){
         // check if thirsty
         if (waterLevel < 40){
-            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is thirsty!");
             if (waterLevel > 0){
                 // return thirsty behaviour
                 Action thirstyAction = tBehaviour.getAction(this, map);
@@ -329,7 +337,6 @@ public abstract class Dinosaur extends Actor {
     private Action hunger(GameMap map){
         // if hungry
         if (hitPoints < hungerAmount){
-            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is hungry!");
             Action hungerMovement = hBehaviour.getAction(this, map);
             if (hungerMovement != null){
                 return hungerMovement;

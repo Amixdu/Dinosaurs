@@ -60,10 +60,13 @@ public class Pterodactyl extends CarnivorousDinosaur {
         Action superAction = super.playTurn(actions, lastAction, map, display);
         Action finalAction = superAction;
         boolean superActionSuccess = false;
+        // if breeding, moving to breed(shot radius) or laying an egg is possible,
+        // it doesn't look for tree to replenish fuel in next action
         if (superAction instanceof MateAction || superAction instanceof MoveActorToMateAction || superAction instanceof LayEggAction){
             superActionSuccess = true;
         }
         if (fuel <= 0){
+            System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is out of fuel!");
             // does not land on water
             if (map.locationOf(this).getGround().getDisplayChar() != '~'){
                 this.removeCapability(Flight.YES);
