@@ -24,7 +24,8 @@ public class Player extends Actor {
 	private int targetEcoPoints;
 
 	/**
-	 * Target number of moves - Only For Challenge Mode
+	 * Target number of moves
+	 * Only For Challenge Mode
 	 */
 	private int targetMoves;
 
