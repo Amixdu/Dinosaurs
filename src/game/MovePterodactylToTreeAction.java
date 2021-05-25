@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.Location;
 import edu.monash.fit2099.engine.MoveActorAction;
 
 /**
+ * Class for moving a Pterodactyl to a tree
  * @author Amindu Kumarasinghe
  */
 public class MovePterodactylToTreeAction extends MoveActorAction {

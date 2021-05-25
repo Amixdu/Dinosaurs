@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Implementation of BuyItemAction class
+ * Class that handles the action of buying an item from vending machine
  * @author Amindu Kaushal Kumarasinghe
  */
 

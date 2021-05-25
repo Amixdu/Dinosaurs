@@ -3,7 +3,9 @@ package game;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.Location;
 import edu.monash.fit2099.engine.MoveActorAction;
+
 /**
+ * Class for moving the actor for consuming (food/water)
  * @author Amindu Kumarasinghe
  */
 public class MoveActorToConsumeAction extends MoveActorAction {

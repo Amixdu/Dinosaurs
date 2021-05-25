@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 
 /**
+ * Class that handles Allosaurs eating Pterodactyls
  * @author Amindu Kumarasinghe
  */
 public class AllosaurEatPterodactylAction extends Action {

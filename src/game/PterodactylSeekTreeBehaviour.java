@@ -3,6 +3,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 /**
+ * Class for the behaviour of a Pterodactyl looking for a Tree
  * @author Amindu Kumarasinghe
  */
 public class PterodactylSeekTreeBehaviour implements Behaviour {

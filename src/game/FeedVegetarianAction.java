@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Implement the FeedVegetarianAction class
+ * Class responsible for the action of feeding a VegetarianDinosaur
  * @author Amindu Kaushal Kumarasinghe
  */
 public class FeedVegetarianAction extends Action {

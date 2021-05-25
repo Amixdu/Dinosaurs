@@ -2,14 +2,14 @@ package game;
 
 import edu.monash.fit2099.engine.*;
 /**
- * Implementation of AllosaurAttackBehaviour
+ * Class that defines the AllosaursAttackBehaviour
  * @author Amindu Kaushal Kumarasinghe
  * @author Abhishek Shrestha
  */
 public class AllosaurAttackBehavior implements Behaviour{
 
     /**
-     * Goes through th entire map, if an attackable stegosaur/pterodactyl is present, return a the appropriate action
+     * Goes through th entire map, if an attackable stegosaur/pterodactyl is present, return the appropriate action
      * @param actor the Actor acting
      * @param map the GameMap containing the Actor
      * @return a new AllosaurAttackAction or an EatPterodactylAction
@@ -50,15 +50,5 @@ public class AllosaurAttackBehavior implements Behaviour{
             }
         }
         return null;
-    }
-    /**
-     * Compute the Manhattan distance between two locations.
-     *
-     * @param a the first location
-     * @param b the first location
-     * @return the number of steps between a and b if you only move in the four cardinal directions.
-     */
-    private int distance(Location a, Location b) {
-        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 }

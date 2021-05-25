@@ -5,13 +5,30 @@ import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 import edu.monash.fit2099.engine.Location;
 
+/**
+ * Implementation of the DrinkWaterAction
+ * @author Amindu Kumarasinghe
+ */
 public class DrinkWaterAction extends Action {
-    Location waterLocation;
+    /**
+     * the location to travel to, for drinking water
+     */
+    private Location waterLocation;
 
+    /**
+     * Constructor
+     * @param waterLocation the location to travel to, for drinking water
+     */
     public DrinkWaterAction(Location waterLocation) {
         this.waterLocation = waterLocation;
     }
 
+    /**
+     * Checks the type of dinosaur, and increase water levels accordingly, allow pterodactyls to fish as welll
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a string describing the action
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         String outputMessage = "";
@@ -93,6 +110,11 @@ public class DrinkWaterAction extends Action {
         return outputMessage;
     }
 
+    /**
+     *
+     * @param actor The actor performing the action.
+     * @return null
+     */
     @Override
     public String menuDescription(Actor actor) {
         return null;

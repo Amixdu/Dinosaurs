@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.Action;
 import edu.monash.fit2099.engine.Actor;
 import edu.monash.fit2099.engine.GameMap;
 /**
+ * Class for handling the action of Pterodactyls resting after reaching a tree
  * @author Amindu Kumarasinghe
  */
 public class PterodactylRestAction extends Action {

@@ -51,6 +51,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     }
                 }
             }
+            // move towards food
             return new MoveActorToConsumeAction(minLocation, name, "food");
         }
     }
@@ -62,6 +63,7 @@ public class SeekFoodBehaviour implements Behaviour{
         double minDistance = Double.POSITIVE_INFINITY;
         // For Brachiosaur
         if (type == 'R' || type == 'r'){
+            // looking for trees
             location = searchMap.closest('+', "Ground");
             if (location != null){
                 Tree tree = (Tree) location.getGround();
@@ -95,6 +97,7 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Stegosaur
         else if (type == 'S' || type == 's'){
+            // looking for bushes
             location = searchMap.closest('b', "Ground");
             if (location != null){
                 Bush bush = (Bush) location.getGround();
@@ -105,6 +108,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     }
                 }
             }
+            // looking for fruit
             location = searchMap.closest('f', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){

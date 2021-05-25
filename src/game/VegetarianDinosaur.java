@@ -3,7 +3,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 /**
- * Implementation of vegetarianDinosaur class
+ * Class for vegetarian dinosaurs
  * @author Amindu Kaushal Kumarasinghe
  * @author Abhishek Shrestha
  */

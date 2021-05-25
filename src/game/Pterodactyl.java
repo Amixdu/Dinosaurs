@@ -9,6 +9,7 @@ import game.CarnivorousDinosaur;
 import game.Sex;
 
 /**
+ * Class that defines Pterodactyl
  * @author Amindu Kumarasinghe
  */
 public class Pterodactyl extends CarnivorousDinosaur {

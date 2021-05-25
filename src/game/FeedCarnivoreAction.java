@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Implement the FeedCarnivoreAction class
+ * Class responsible for the action of feeding a CarnivorousDinosaur
  * @author Amindu Kaushal Kumarasinghe
  */
 public class FeedCarnivoreAction extends Action {

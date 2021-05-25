@@ -3,7 +3,7 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 /**
- * Implement the CarnivorousDinosaur class
+ * Class for Carnivorous Dinosaurs
  * @author Amindu Kaushal Kumarasinghe
  * @author Abhishek Shreshta
  */

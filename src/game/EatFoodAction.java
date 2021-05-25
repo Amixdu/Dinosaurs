@@ -3,7 +3,9 @@ package game;
 import edu.monash.fit2099.engine.*;
 
 import java.util.List;
+
 /**
+ * Implementation of the EatFoodAction
  * @author Amindu Kumarasinghe
  */
 public class EatFoodAction extends Action {

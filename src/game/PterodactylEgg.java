@@ -1,6 +1,7 @@
 package game;
 
 /**
+ * IMplementation of PterodactylEgg
  * @author Amindu Kumarasinghe
  */
 public class PterodactylEgg extends Egg{

@@ -3,7 +3,7 @@ package game;
 import edu.monash.fit2099.engine.Location;
 
 /**
- * Implement the corpse class
+ * Implementation of the corpse class
  * @author Amindu Kaushal Kumarasinghe
  */
 public class Corpse extends PortableItem {

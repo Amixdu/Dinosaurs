@@ -6,7 +6,7 @@ import java.util.Random;
 
 
 /**
- * Implement the egg class
+ * Implementation of the egg class
  * @author Amindu Kaushal Kumarasinghe
  * @author Abhishek Shrestha
  */

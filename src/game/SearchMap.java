@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.*;
 import java.util.List;
 
 /**
+ * Class used to search the map
  * @author Amindu Kumarasinghe
  */
 public class SearchMap {

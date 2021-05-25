@@ -87,7 +87,7 @@ public class ParkGameMap extends GameMap {
         boolean rain = false;
 
         // 20% probability of raining every 10 turns
-        if (noOfTurns % 2 == 0 && rand.nextInt(100) < 20){
+        if (noOfTurns % 10 == 0 && rand.nextInt(100) < 20){
             rain = true;
             System.out.println("It started to rain!");
 
