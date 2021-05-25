@@ -87,7 +87,7 @@ public class ParkGameMap extends GameMap {
         boolean rain = false;
 
         // 20% probability of raining every 10 turns
-        if (noOfTurns % 10 == 0 && rand.nextInt(100) < 20){
+        if (noOfTurns % 2 == 0 && rand.nextInt(100) < 20){
             rain = true;
             System.out.println("It started to rain!");
 
@@ -113,6 +113,7 @@ public class ParkGameMap extends GameMap {
                             dino.setWaterLevel(10);
                             dino.setUnconsciousDueToWater(false);
                             dino.setUnconsciousCount(0);
+                            System.out.println(dino.toString() + " is back to normal due to rain!");
                         }
                     }
                 }

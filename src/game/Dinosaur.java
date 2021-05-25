@@ -132,7 +132,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
-        this.waterLevel = 60;
+        this.waterLevel = 5;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToWater = false;
         this.corpsePoints = corpsePoints;
