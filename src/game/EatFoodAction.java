@@ -30,7 +30,7 @@ public class EatFoodAction extends Action {
     public String execute(Actor actor, GameMap map) {
         String outputMessage = "";
         // for stegosaur
-        if (actor.getDisplayChar() == 'S') {
+        if (actor.getDisplayChar() == 'S' || actor.getDisplayChar() == 's') {
             Stegosaur steg = (Stegosaur) actor;
             steg.heal(10);
 
@@ -49,7 +49,7 @@ public class EatFoodAction extends Action {
             }
         }
         // for brachiosuar
-        else if (actor.getDisplayChar() == 'R'){
+        else if (actor.getDisplayChar() == 'R' || actor.getDisplayChar() == 'r' ){
             // if brachiosaur
             Brachiosaur brach = (Brachiosaur) actor;
             Tree currentTree = (Tree) foodLocation.getGround();
@@ -63,7 +63,7 @@ public class EatFoodAction extends Action {
 
         }
         // for allosaur
-        else if (actor.getDisplayChar() == 'A'){
+        else if (actor.getDisplayChar() == 'A' || actor.getDisplayChar() == 'a'){
             Allosaur allosaur = (Allosaur) actor;
             List<Item> items = foodLocation.getItems();
             for (int i = 0; i < items.size(); i++ ){
@@ -83,8 +83,9 @@ public class EatFoodAction extends Action {
                         break;
                     }
                 }
-                // q = Stegosaur egg, w = Brachiosaur egg
-                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
+                // q = Stegosaur egg, w = Brachiosaur egg, y = Pterodactyl egg
+                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'
+                        || items.get(i).getDisplayChar() == 'y'){
                     allosaur.heal(10);
                     foodLocation.removeItem(items.get(i));
                     outputMessage = menuDescription(actor);
@@ -93,7 +94,7 @@ public class EatFoodAction extends Action {
             }
         }
         // for pterodactyl
-        else if (actor.getDisplayChar() == 'P'){
+        else if (actor.getDisplayChar() == 'P' || actor.getDisplayChar() == 'p'){
             Pterodactyl pterodactyl = (Pterodactyl) actor;
             // eating fish
             // (this lake location would only have been sent here,if there was at least one fish in the lake)
@@ -143,7 +144,6 @@ public class EatFoodAction extends Action {
                 if (items.get(i).getDisplayChar() == 'C') {
                     Corpse corpse = (Corpse) items.get(i);
                     int corspePoints = corpse.getCorpsePoints();
-                    System.out.println("SEEKFOOD:" + corspePoints);
                     // count comparing with 1 to account for current round
                     if (corspePoints >= 10){
                         pterodactyl.heal(10);
@@ -152,8 +152,8 @@ public class EatFoodAction extends Action {
                         break;
                     }
                 }
-                // q = Stegosaur egg, w = Brachiosaur egg
-                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w'){
+                // q = Stegosaur egg, w = Brachiosaur egg, a =Allosaur egg
+                else if (items.get(i).getDisplayChar() == 'q' || items.get(i).getDisplayChar() == 'w' || items.get(i).getDisplayChar() == 'e'){
                     pterodactyl.heal(10);
                     foodLocation.removeItem(items.get(i));
                     outputMessage = menuDescription(actor);

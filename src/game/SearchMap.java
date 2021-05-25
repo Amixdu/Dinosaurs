@@ -40,7 +40,7 @@ public class SearchMap {
         NumberRange height = map.getYRange();
         Location dinoLocation = map.locationOf(actor);
         // This method is used to initialize bestLocation
-        Location bestLocation = firstLocation(map, target);
+        Location bestLocation = firstLocation(map, target, type);
         if (bestLocation != null){
             int minDistance = distance(dinoLocation, bestLocation);
             for (int i : width){
@@ -100,22 +100,39 @@ public class SearchMap {
     }
 
     /**
-     * Used to get the first location in the map that contains either a fruit or a bush with fruits for stegosaur
-     * or tree with fruits for brachiosaur
+     * Used to get the first location in the map that contains either the required target
      * @param map map which dinosaur is on
-     * @return first location in the map that contains either a fruit or a bush with fruits
+     * @return first location in the map that contains the specified target
      */
-    private Location firstLocation(GameMap map, char targetGround){
+    private Location firstLocation(GameMap map, char target, String type){
         NumberRange width = map.getXRange();
         NumberRange height = map.getYRange();
         for (int i : width){
             for (int j : height){
                 Location newLocation = map.at(i, j);
                 if (newLocation.getGround() != null){
-                    char groundChar = newLocation.getDisplayChar();
-                    if (groundChar == targetGround){
-                        return newLocation;
+                    char groundChar = newLocation.getGround().getDisplayChar();
+                    if (type.equals("Ground")){
+                        if (groundChar == target){
+                            return newLocation;
+                        }
                     }
+                    else if (type.equals("Item")){
+                        List<Item> items = newLocation.getItems();
+                        for (Item item : items) {
+                            if (item.getDisplayChar() == target) {
+                                return newLocation;
+                            }
+                        }
+                    }
+                    else if (type.equals("Actor")){
+                        if (newLocation.getActor() != null){
+                            if (newLocation.getActor().getDisplayChar() == target){
+                                return newLocation;
+                            }
+                        }
+                    }
+
                 }
             }
         }

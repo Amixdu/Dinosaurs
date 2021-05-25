@@ -115,6 +115,7 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Allosaur
         else if (type == 'A' || type == 'a'){
+            // corpse
             location = searchMap.closest('C', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
@@ -122,6 +123,7 @@ public class SeekFoodBehaviour implements Behaviour{
                     returnLocation = location;
                 }
             }
+            // stegosaur egg
             location = searchMap.closest('q', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
@@ -129,7 +131,16 @@ public class SeekFoodBehaviour implements Behaviour{
                     returnLocation = location;
                 }
             }
+            // barchiosaur egg
             location = searchMap.closest('w', "Item");
+            if (location != null){
+                if (distance(location, map.locationOf(actor)) < minDistance){
+                    minDistance = distance(location, map.locationOf(actor));
+                    returnLocation = location;
+                }
+            }
+            // pterodactyl egg
+            location = searchMap.closest('y', "Item");
             if (location != null){
                 if (distance(location, map.locationOf(actor)) < minDistance){
                     minDistance = distance(location, map.locationOf(actor));
@@ -139,6 +150,7 @@ public class SeekFoodBehaviour implements Behaviour{
         }
         // For Pterodactyls
         else if (type == 'P' || type == 'p'){
+            // Corpse
             location = searchMap.closest('C', "Item");
             if (location != null){
                 // will only go towards this corpse if there are no dinos in the adjacent square
@@ -147,6 +159,30 @@ public class SeekFoodBehaviour implements Behaviour{
                         minDistance = distance(location, map.locationOf(actor));
                         returnLocation = location;
                     }
+                }
+            }
+            // stegosaur egg
+            location = searchMap.closest('q', "Item");
+            if (location != null){
+                if (distance(location, map.locationOf(actor)) < minDistance){
+                    minDistance = distance(location, map.locationOf(actor));
+                    returnLocation = location;
+                }
+            }
+            // barchiosaur egg
+            location = searchMap.closest('w', "Item");
+            if (location != null){
+                if (distance(location, map.locationOf(actor)) < minDistance){
+                    minDistance = distance(location, map.locationOf(actor));
+                    returnLocation = location;
+                }
+            }
+            // allosaur egg
+            location = searchMap.closest('e', "Item");
+            if (location != null){
+                if (distance(location, map.locationOf(actor)) < minDistance){
+                    minDistance = distance(location, map.locationOf(actor));
+                    returnLocation = location;
                 }
             }
             // if flying, check for lakes as well
