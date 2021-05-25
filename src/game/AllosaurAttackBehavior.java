@@ -27,7 +27,6 @@ public class AllosaurAttackBehavior implements Behaviour{
                     // if Pterodactyl is flying, it is safe from allosaur attacks
                     if (target.hasCapability(Flight.YES)){
                         System.out.println(actor.toString() + " spots " + target.toString() + " nearby, but it is flying!");
-                        return null;
                     }
                     // pterodactyl is conscious
                     if ((target.isConscious())){
@@ -39,7 +38,6 @@ public class AllosaurAttackBehavior implements Behaviour{
                     Stegosaur target = (Stegosaur) adjacentActor;
                     if (target.isConscious()){
                         if (target.getAttackCoolDown() >= 20){
-                            target.resetAttackCoolDown();
                             Dinosaur dino = (Dinosaur) actor;
                             int damage = 20;
                             // if attacker is a baby allosaur, only do 10 damage and heal 10 points

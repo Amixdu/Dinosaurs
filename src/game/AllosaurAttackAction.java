@@ -54,6 +54,7 @@ public class AllosaurAttackAction extends Action {
         int beforeAttack = steg.getHitPoints();
         target.hurt(damage);
         actor.heal(heal);
+        steg.resetAttackCoolDown();
         return attacker.toString() + " attacks " + target.toString() + " " + steg.getName() + "'s HP reduces from " + beforeAttack + " to " + steg.getHitPoints() + ")";
 
     }
