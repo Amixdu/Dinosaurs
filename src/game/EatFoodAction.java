@@ -37,6 +37,7 @@ public class EatFoodAction extends Action {
             if (foodLocation.getGround().getDisplayChar() == 'b') {
                 Bush bush = (Bush) foodLocation.getGround();
                 bush.removeFruit();
+                outputMessage = menuDescription(actor);
             } else {
                 List<Item> items = foodLocation.getItems();
                 for (int i = 0; i < items.size(); i++) {
