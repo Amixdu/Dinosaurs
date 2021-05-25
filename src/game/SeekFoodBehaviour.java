@@ -177,14 +177,6 @@ public class SeekFoodBehaviour implements Behaviour{
                     returnLocation = location;
                 }
             }
-            // allosaur egg
-            location = searchMap.closest('e', "Item");
-            if (location != null){
-                if (distance(location, map.locationOf(actor)) < minDistance){
-                    minDistance = distance(location, map.locationOf(actor));
-                    returnLocation = location;
-                }
-            }
             // if flying, check for lakes as well
             if (actor.hasCapability(Flight.YES)){
                 location = searchMap.closest('~', "Ground");

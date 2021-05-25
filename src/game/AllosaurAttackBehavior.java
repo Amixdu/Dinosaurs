@@ -37,6 +37,7 @@ public class AllosaurAttackBehavior implements Behaviour{
                 }
             }
         }
+        // if attacking a Pterodactyl is possible, an AllosaurEatPterodactylAction will be returned
         if (pteroLocation != null){
             Pterodactyl target = (Pterodactyl) pteroLocation.getActor();
             // pterodactyl is conscious and not flying
