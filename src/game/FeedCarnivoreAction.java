@@ -57,8 +57,20 @@ public class FeedCarnivoreAction extends Action {
                 if (inventory.get(i).getDisplayChar() == 'C'){
                     Corpse corpse = (Corpse) inventory.get(i);
                     int points = corpse.getCorpsePoints();
-                    actor.removeItemFromInventory(inventory.get(i));
-                    carnivorousDinosaur.heal(points);
+                    // if not Pterodactyl, can eat the whole corpse
+                    if (carnivorousDinosaur.getDisplayChar() != 'P' && carnivorousDinosaur.getDisplayChar() != 'P'){
+                        actor.removeItemFromInventory(inventory.get(i));
+                        carnivorousDinosaur.heal(points);
+                    }
+                    // if Pterodactyl, can only eat 10 points per turn
+                    else{
+                        carnivorousDinosaur.heal(10);
+                        corpse.setCorpsePoints(points - 10);
+                        // remove corpse if all of it is fed
+                        if (corpse.getCorpsePoints() <= 0){
+                            actor.removeItemFromInventory(inventory.get(i));
+                        }
+                    }
                     afterFeeding = carnivorousDinosaur.getHitPoints();
                     return (result + ", successfully fed (Hit points increased from " + beforeFeeding + " to " + afterFeeding + ")");
                 }
