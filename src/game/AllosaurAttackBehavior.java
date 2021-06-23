@@ -29,7 +29,7 @@ public class AllosaurAttackBehavior implements Behaviour{
                         System.out.println(actor.toString() + " spots " + target.toString() + " nearby, but it is flying!");
                     }
                     // pterodactyl is conscious
-                    if ((target.isConscious())){
+                    else if ((target.isConscious())){
                         return (new AllosaurEatPterodactylAction(actor, target));
                     }
                 }

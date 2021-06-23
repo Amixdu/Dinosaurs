@@ -132,6 +132,7 @@ public abstract class Dinosaur extends Actor {
         this.ageGroup = ageGroup;
         this.timeToGrow = timeToGrow;
         this.age = 0;
+//        this.waterLevel = 60;
         this.waterLevel = 60;
         this.maxWaterLevel = maxWaterLevel;
         this.unconsciousDueToWater = false;
@@ -224,7 +225,7 @@ public abstract class Dinosaur extends Actor {
 
             // getting the dino's next action
             // check if mating is possible
-            if (hitPoints >= mateAmount && ageGroup == AgeGroup.ADULT && !hasMated){
+            if (hitPoints >= mateAmount && ageGroup == AgeGroup.ADULT){
                 System.out.println(this.name + " at (" + map.locationOf(this).x() + "," + map.locationOf(this).y() + ") is ready to mate!");
                 // can mate
                 Action mateAction = mBehavior.getAction(this, map);
